@@ -4,7 +4,7 @@ import SearchButton from './SearchButton'
 
 function SearchBar() {
   return (
-    <div>
+    <div className='flex sm:[30vw] lg:w-[50vw] justify-center p-3'>
         <Search/>
         <SearchButton/>
     </div>

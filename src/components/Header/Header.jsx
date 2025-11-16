@@ -8,16 +8,21 @@ import LoginState from './LoginStates/LoginState'
 function Header() {
 
     return (
-        <header>
+        <header className='w-full flex justify-between px-6 py-2'>
+            <div className='flex gap-10'>
                 <Hamburger />
-
                 <Logo />
+            </div>
 
-                <SearchBar/>
+            <div>
+                <SearchBar />
+            </div>
 
-                <MoreButton/>
+            <div className='flex gap-10'>
+                <MoreButton />
 
-                <LoginState/>
+                <LoginState />
+            </div>
         </header>
     )
 }
