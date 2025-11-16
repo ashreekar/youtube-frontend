@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import { appStore } from './states/appStore.js'
 
 const router = createBrowserRouter(
   [
@@ -49,7 +51,7 @@ const router = createBrowserRouter(
 )
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  <Provider store={appStore}>
     <RouterProvider router={router} />
-  </StrictMode>,
+  </Provider>,
 )
