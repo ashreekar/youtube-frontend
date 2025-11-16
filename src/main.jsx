@@ -5,6 +5,7 @@ import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { appStore } from './states/appStore.js'
+import LandingPage from './pages/LandingPage.jsx'
 
 const router = createBrowserRouter(
   [
@@ -15,7 +16,7 @@ const router = createBrowserRouter(
       children: [
         {
           path: "/",
-          element: <App />
+          element: <LandingPage />
         },
         {
           path: "/results",
