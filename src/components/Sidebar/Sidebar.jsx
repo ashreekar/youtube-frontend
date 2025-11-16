@@ -58,7 +58,7 @@ function Sidebar() {
             <div className='ml-1 flex flex-col h-[55vh] justify-evenly w-18'>
                 {
                     componentsOnClose.map(component=>(
-                        <div className='flex flex-col rounded-md hover:bg-gray-100 justify-center items-center p-3 w-full h-24'>
+                        <div key={component.name} className='flex flex-col rounded-md hover:bg-gray-100 justify-center items-center p-3 w-full h-24'>
                             {
                                 component.element
                             }
