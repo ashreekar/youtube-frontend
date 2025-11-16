@@ -1,11 +1,13 @@
-import React from 'react'
+import { FaSearch } from 'react-icons/fa'
 
 function SearchButton() {
-  return (
-    <button 
-    className='rounded-r-3xl cursor-pointer p-2 outline-none border border-gray-400 bg-gray-100 hover:bg-gray-300 w-[9%] border-l-0'
-    >o</button>
-  )
+    return (
+        <button
+            className='rounded-r-full cursor-pointer px-5 py-2 outline-none border border-gray-300 bg-gray-50 hover:bg-gray-100 border-l-0'
+        >
+            <FaSearch size={20} className="text-gray-600" />
+        </button>
+    )
 }
 
 export default SearchButton
