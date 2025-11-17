@@ -6,12 +6,14 @@ import UserSidebar from './UserSidebar'
 import YoutubeSidebar from './YoutubeSidebar'
 import { useSelector } from 'react-redux'
 
-// Icons
-import { TiHome } from "react-icons/ti";
-import { SiYoutubeshorts } from "react-icons/si";
-import { MdOutlineSubscriptions } from "react-icons/md";
-import { MdDownload } from "react-icons/md";
-import { FaUserCircle } from "react-icons/fa"
+import {
+    MdOutlineHome,
+    MdOutlineSubscriptions,
+    MdOutlinePerson,
+    MdOutlineDownload
+} from "react-icons/md";
+
+import { PiYoutubeLogoLight } from "react-icons/pi";
 
 function Sidebar() {
     const isSidebarOpen = useSelector(store => store.sidebar.open);
@@ -19,56 +21,60 @@ function Sidebar() {
     const componentsOnClose = [
         {
             name: "Home",
-            element: <TiHome size={20} />
+            element: <MdOutlineHome className="w-6 h-6" />
         },
         {
             name: "Shorts",
-            element: <SiYoutubeshorts size={20}  />
+            element: <PiYoutubeLogoLight className="w-6 h-6" />
         },
         {
             name: "Subscriptions",
-            element: <MdOutlineSubscriptions size={20}  />
+            element: <MdOutlineSubscriptions className="w-6 h-6" />
         },
         {
             name: "You",
-            element: <FaUserCircle size={20}  />
+            element: <MdOutlinePerson className="w-6 h-6" />
         },
         {
             name: "Downloads",
-            element: <MdDownload size={20}  />
+            element: <MdOutlineDownload className="w-6 h-6" />
         },
-    ]
+    ];
 
     return (
         isSidebarOpen ? (
-            <div className="w-64 ml-4">
+            <div className="fixed top-16 left-0 w-64 h-[calc(100vh-64px)] overflow-y-auto no-scrollbar bg-white">
                 <YoutubeSidebar />
-                <div className='border-t-2 w-[60] border-gray-300'></div>
+                <div className="border-t w-full border-gray-300 my-2"></div>
+
                 <UserSidebar />
-                <div className='border-t-2 w-[60] border-gray-300'></div>
+                <div className="border-t w-full border-gray-300 my-2"></div>
+
                 <SubscriptionSidebar />
-                <div className='border-t-2 w-[60] border-gray-300'></div>
+                <div className="border-t w-full border-gray-300 my-2"></div>
+
                 <ExploreSidebar />
-                <div className='border-t-2 w-[60] border-gray-300'></div>
+                <div className="border-t w-full border-gray-300 my-2"></div>
+
                 <SettingsSidebar />
-                <div className='border-t-2 w-[60] border-gray-300'></div>
+                <div className="border-t w-full border-gray-300 my-2"></div>
+
                 <SidbarFooter />
             </div>
         ) : (
-            <div className='ml-1 flex flex-col h-[55vh] justify-evenly w-18'>
-                {
-                    componentsOnClose.map(component=>(
-                        <div key={component.name} className='flex flex-col rounded-md hover:bg-gray-100 justify-center items-center p-3 w-full h-24'>
-                            {
-                                component.element
-                            }
-                            <span className='text-[12px]'>{component.name}</span>
-                        </div>
-                    ))
-                }
+            <div className="fixed top-16 left-0 w-20 h-[calc(100vh-64px)] overflow-y-auto no-scrollbar bg-white flex flex-col items-center py-4">
+                {componentsOnClose.map(component => (
+                    <div
+                        key={component.name}
+                        className="flex flex-col items-center justify-center hover:bg-gray-100 rounded-lg p-3 w-full h-20 cursor-pointer"
+                    >
+                        {component.element}
+                        <span className="text-[11px] text-center">{component.name}</span>
+                    </div>
+                ))}
             </div>
         )
-    )
+    );
 }
 
-export default Sidebar
+export default Sidebar;

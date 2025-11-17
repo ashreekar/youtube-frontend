@@ -1,22 +1,22 @@
-import { TiHome } from "react-icons/ti";
+import { AiOutlineHome } from "react-icons/ai";
 import { SiYoutubeshorts } from "react-icons/si";
 import { MdOutlineSubscriptions } from "react-icons/md";
 
 function YoutubeSidebar() {
-  const componentsOnClose = [
-    {
-      name: "Home",
-      element: <TiHome size={20} />
-    },
-    {
-      name: "Shorts",
-      element: <SiYoutubeshorts size={20} />
-    },
-    {
-      name: "Subscriptions",
-      element: <MdOutlineSubscriptions size={20} />
-    }
-  ]
+ const componentsOnClose = [
+  {
+    name: "Home",
+    element: <AiOutlineHome className="w-6 h-6" />
+  },
+  {
+    name: "Shorts",
+    element: <SiYoutubeshorts className="w-5 h-5" />
+  },
+  {
+    name: "Subscriptions",
+    element: <MdOutlineSubscriptions className="w-6 h-6" />
+  }
+];
 
   return (
     <div className="w-full flex flex-col">

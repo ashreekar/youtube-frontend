@@ -1,51 +1,72 @@
-import { useSelector } from 'react-redux'
-import { FaHistory, FaUserCircle } from 'react-icons/fa';
-import { CgProfile } from "react-icons/cg";
+import { useSelector } from 'react-redux';
+import {
+  MdAccountCircle,
+  MdOutlinePlaylistPlay,
+  MdOutlineVideoLibrary,
+  MdOutlineWorkspacePremium,
+  MdOutlineWatchLater,
+  MdOutlineDownload,
+  MdOutlineContentCut,
+} from "react-icons/md";
+
+import {
+  AiOutlineHistory,
+  AiOutlineLike,
+} from "react-icons/ai";
+
 import { FiChevronRight } from "react-icons/fi";
 
-function UserSidebar() {
+export default function UserSidebar() {
   const loggedIn = useSelector(store => store.user.loggedIn);
-  const user = useSelector(store => store.user.user);
+
+  const renderList = [
+    { name: "History", icon: <AiOutlineHistory className="w-6 h-6" />, link: "/feed/history" },
+    { name: "Playlists", icon: <MdOutlinePlaylistPlay className="w-6 h-6" />, link: "/feed/playlists" },
+    { name: "Your videos", icon: <MdOutlineVideoLibrary className="w-6 h-6" />, link: "/feed/videos" },
+    { name: "Your courses", icon: <MdOutlineWorkspacePremium className="w-6 h-6" />, link: "/feed/courses" },
+    { name: "Watch later", icon: <MdOutlineWatchLater className="w-6 h-6" />, link: "/playlist?list=WL" },
+    { name: "Liked videos", icon: <AiOutlineLike className="w-6 h-6" />, link: "/playlist?list=LL" },
+    { name: "Downloads", icon: <MdOutlineDownload className="w-6 h-6" />, link: "/feed/downloads" },
+    { name: "Your clips", icon: <MdOutlineContentCut className="w-6 h-6" />, link: "/feed/clips" },
+  ];
 
   if (!loggedIn) {
     return (
-      <div className="w-full flex flex-col">
-        <div
-          className='flex h-12 gap-4 rounded-lg hover:bg-gray-100 justify-items-start items-center py-1 px-3 w-full mb-3 mt-3'>
-          <span className='text-lg font-medium'><FaUserCircle /></span>
-          You
+      <div className="w-full flex flex-col mt-3">
+        <div className="flex h-12 gap-4 items-center px-3 rounded-lg hover:bg-gray-100 cursor-pointer">
+          <MdAccountCircle className="w-6 h-6 text-gray-700" />
+          <span>You</span>
         </div>
-        <div
-          className='flex h-12 gap-4 rounded-lg hover:bg-gray-100 justify-items-start items-center py-1 px-3 w-full mb-3'>
-          <span className='text-lg font-medium'><FaHistory /></span>
-          History
+
+        <div className="flex h-12 gap-4 items-center px-3 rounded-lg hover:bg-gray-100 cursor-pointer">
+          <AiOutlineHistory className="w-6 h-6 text-gray-700" />
+          <span>History</span>
         </div>
       </div>
-    )
+    );
   }
 
   return (
-    <div>
+    <div className="mt-3">
       <div
-      role="link"
-      tabIndex={0}
-      className="flex items-center gap-3 py-2 px-3 cursor-pointer hover:bg-gray-100 rounded transition"
-    >
-      {/* Profile Icon */}
-      <CgProfile className="w-6 h-6 text-gray-700" />
+        className="flex items-center gap-2 py-2 px-3 rounded-lg hover:bg-gray-100 cursor-pointer"
+      >
+        <span className="font-medium text-sm">You</span>
+        <FiChevronRight className="w-4 h-4 text-gray-600" />
+      </div>
 
-      {/* Title */}
-      <p className="text-sm font-medium text-gray-900">You</p>
-
-      {/* Arrow Icon */}
-      <FiChevronRight className="ml-auto w-4 h-4 text-gray-600" />
-
-      {/* Newness Dot */}
-      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+      <div className="mt-1">
+        {renderList.map(item => (
+          <a
+            key={item.name}
+            href={item.link}
+            className="flex items-center gap-4 h-12 px-3 rounded-lg hover:bg-gray-100 cursor-pointer"
+          >
+            {item.icon}
+            <span className="text-sm">{item.name}</span>
+          </a>
+        ))}
+      </div>
     </div>
-
-    </div>
-  )
+  );
 }
-
-export default UserSidebar

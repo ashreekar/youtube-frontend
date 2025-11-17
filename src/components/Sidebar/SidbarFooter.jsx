@@ -1,8 +1,53 @@
 import React from 'react'
 
 function SidbarFooter() {
+    const primaryLinks = [
+    "About",
+    "Press",
+    "Copyright",
+    "Contact us",
+    "Creators",
+    "Advertise",
+    "Developers",
+  ];
+
+  const secondaryLinks = [
+    "Terms",
+    "Privacy",
+    "Policy & Safety",
+    "How YouTube works",
+    "Test new features",
+  ];
+
   return (
-    <div>SidbarFooter</div>
+    <div className="text-xs text-gray-600 px-4 py-4 select-none">
+
+      <div className="flex flex-wrap gap-x-3 gap-y-1 mb-3">
+        {primaryLinks.map((item) => (
+          <a
+            key={item}
+            href="/features/onit"
+            className="hover:underline cursor-pointer"
+          >
+            {item}
+          </a>
+        ))}
+      </div>
+
+      <div className="flex flex-wrap gap-x-3 gap-y-1 mb-3">
+        {secondaryLinks.map((item) => (
+          <a
+            key={item}
+            href="/features/onit"
+            className="hover:underline cursor-pointer"
+          >
+            {item}
+          </a>
+        ))}
+      </div>
+
+      <p className="text-gray-500 mt-2">© 2025 Google LLC</p>
+    </div>
   )
 }
 
