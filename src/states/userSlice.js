@@ -5,15 +5,16 @@ const userSlice = createSlice(
         name: "User",
         initialState: {
             user: null,
-            loggedIn: false
+            loggedIn: true
         },
         reducers: {
+            toggelLogin:(state,action)=>{ state.loggedIn=!state.loggedIn},
             loginUser: (state, action) => { },
             logoutUser: (state, action) => { }
         }
     }
 )
 
-export const { loginUser, logoutUser } = userSlice.actions;
+export const { loginUser, logoutUser,toggelLogin } = userSlice.actions;
 
 export default userSlice.reducer;
