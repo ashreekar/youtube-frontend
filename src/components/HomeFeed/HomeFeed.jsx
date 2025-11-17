@@ -1,9 +1,8 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { toggelLogin } from '../../states/userSlice.js';
+import { useSelector } from 'react-redux';
+import VideoCard from '../cards/VideoCard.jsx';
 
 function HomeFeed() {
-    const dispatch = useDispatch();
     const isSidebarOpen = useSelector(store => store.sidebar.open);
     const videosData = [
         {
@@ -195,48 +194,13 @@ function HomeFeed() {
         `}
         >
             <div
-                onClick={() => dispatch(toggelLogin())}
-                className="p-4 bg-gray-100 cursor-pointer"
-            >
-                Click to change login state
-            </div>
-            <div
                 className={`
     grid gap-5 p-6 
-    grid-cols-3
+    grid-cols-3 mt-8
   `}
             >
                 {videosData.map(video => (
-                    <div
-                        key={video.id}
-                        className={`
-        cursor-pointer transition-transform duration-300
-        ${isSidebarOpen ? "scale-100" : "scale-x-102"}
-      `}
-                    >
-
-                        <div className="w-full aspect-video rounded-xl overflow-hidden">
-                            <img src={video.thumbnail} className="w-full h-full object-cover" />
-                        </div>
-
-                        <div className="flex gap-3 mt-3">
-                            <img
-                                src={video.channelLogo}
-                                className="w-10 h-10 rounded-full object-cover"
-                            />
-
-                            <div>
-                                <h3 className="font-semibold text-sm line-clamp-2 leading-tight">
-                                    {video.title}
-                                </h3>
-                                <p className="text-gray-600 text-xs">{video.channelName}</p>
-                                <p className="text-gray-600 text-xs">
-                                    {video.views} • {video.uploadedAt}
-                                </p>
-                            </div>
-                        </div>
-
-                    </div>
+                    <VideoCard video={video} isSidebarOpen={isSidebarOpen} />
                 ))}
             </div>
         </div>

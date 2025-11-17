@@ -43,21 +43,21 @@ function Sidebar() {
 
     return (
         isSidebarOpen ? (
-            <div className="fixed top-16 left-0 w-64 h-[calc(100vh-64px)] overflow-y-auto no-scrollbar bg-white">
+            <div className="fixed top-16 left-0 w-64 h-[calc(100vh-64px)] overflow-y-auto bg-white">
                 <YoutubeSidebar />
-                <div className="border-t w-full border-gray-300 my-2"></div>
+                <div className="border-t w-[80%] border-gray-300 my-2"></div>
 
                 <UserSidebar />
-                <div className="border-t w-full border-gray-300 my-2"></div>
+                <div className="border-t w-[80%] border-gray-300 my-2"></div>
 
                 <SubscriptionSidebar />
-                <div className="border-t w-full border-gray-300 my-2"></div>
+                <div className="border-t w-[80%] border-gray-300 my-2"></div>
 
                 <ExploreSidebar />
-                <div className="border-t w-full border-gray-300 my-2"></div>
+                <div className="border-t w-[80%] border-gray-300 my-2"></div>
 
                 <SettingsSidebar />
-                <div className="border-t w-full border-gray-300 my-2"></div>
+                <div className="border-t w-[80%] border-gray-300 my-2"></div>
 
                 <SidbarFooter />
             </div>
