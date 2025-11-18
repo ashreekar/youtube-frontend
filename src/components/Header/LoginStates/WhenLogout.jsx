@@ -1,23 +1,26 @@
 import { FaRegCircleUser } from "react-icons/fa6";
 import { toggelLogin } from '../../../states/userSlice';
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 function WhenLogout() {
-  
-      const dispatch = useDispatch();
+
+  const dispatch = useDispatch();
   return (
-    <div className="flex items-center gap-2 cursor-pointer
+
+    <Link to={'/login'}>
+      <div className="flex items-center gap-2 cursor-pointer
     border-2 border-gray-300 
     py-2 px-5 rounded-full 
     text-blue-800
     text-lg
     hover:bg-blue-50 transition font-semibold"
-     onClick={() => dispatch(toggelLogin())}
-    >
-      <FaRegCircleUser className="text-2xl" />
-      <span>sign in</span>
-    </div>
-
+        onClick={() => dispatch(toggelLogin())}
+      >
+        <FaRegCircleUser className="text-2xl" />
+        <span>sign in</span>
+      </div>
+    </Link>
   )
 }
 

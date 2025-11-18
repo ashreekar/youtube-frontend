@@ -3,8 +3,8 @@ import { toggelLogin } from '../../../states/userSlice';
 import { useDispatch } from "react-redux";
 
 function WhenLogin() {
-  
-      const dispatch = useDispatch();
+
+  const dispatch = useDispatch();
   return (
     <div className="flex items-center gap-4">
       <div
@@ -22,7 +22,7 @@ function WhenLogin() {
       </div>
 
       <div
-       onClick={() => dispatch(toggelLogin())}
+        onClick={() => dispatch(toggelLogin())}
         className="
             rounded-full bg-pink-900 text-white 
             h-9 w-9 flex items-center justify-center 
