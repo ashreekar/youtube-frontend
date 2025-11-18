@@ -9,6 +9,7 @@ import { appStore } from './states/appStore.js'
 import LandingPage from './pages/LandingPage.jsx'
 import Login from './pages/Login.jsx'
 import CreateAccount from './pages/createAccount.jsx'
+import ResultsPage from './pages/ResultsPage.jsx'
 
 const router = createBrowserRouter(
   [
@@ -23,7 +24,7 @@ const router = createBrowserRouter(
         },
         {
           path: "/results",
-          element: <App />
+          element: <ResultsPage />
         },
         {
           path: "/feed/you",
