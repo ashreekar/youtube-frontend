@@ -1,8 +1,11 @@
-import React from 'react'
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
 import VideoCard from '../cards/VideoCard.jsx';
+import { setDataList } from '../../states/searchSlic.js'
 
 function HomeFeed() {
+    const dispatch = useDispatch();
+
     const isSidebarOpen = useSelector(store => store.sidebar.open);
     const videosData = [
         {
@@ -186,6 +189,11 @@ function HomeFeed() {
             thumbnail: "https://i.ytimg.com/vi/bG0u3yY5E7E/maxresdefault.jpg"
         }
     ];
+
+    useEffect(() => {
+        dispatch(setDataList(videosData));
+    }, [videosData])
+
     return (
         <div
             className={`
