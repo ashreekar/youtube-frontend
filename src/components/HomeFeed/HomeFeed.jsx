@@ -190,13 +190,13 @@ function HomeFeed() {
         <div
             className={`
           flex-1 transition-all duration-300 
-          ${isSidebarOpen ? "ml-64" : "ml-20"}
+          ${isSidebarOpen ? "ml-4 md:ml-64" : "ml-4 sm:ml-20"}
         `}
         >
             <div
                 className={`
-    grid gap-5 p-6 
-    grid-cols-3 mt-8
+    grid gap-5 p-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3
+     mt-8
   `}
             >
                 {videosData.map(video => (

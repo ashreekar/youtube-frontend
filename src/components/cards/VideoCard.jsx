@@ -1,15 +1,11 @@
-import React from 'react'
+import { BsDot } from 'react-icons/bs';
 
 function VideoCard({ video, isSidebarOpen }) {
     return (
         <div
             key={video.id}
-            className={`
-        cursor-pointer transition-transform duration-300
-        ${isSidebarOpen ? "scale-100" : "scale-x-102"}
-      `}
+            className={`cursor-pointer transition-transform duration-300 ${isSidebarOpen ? "scale-100" : "scale-x-102"}`}
         >
-
             <div className="w-full aspect-video rounded-xl overflow-hidden">
                 <img src={video.thumbnail} className="w-full h-full object-cover" />
             </div>
@@ -25,8 +21,8 @@ function VideoCard({ video, isSidebarOpen }) {
                         {video.title}
                     </h3>
                     <p className="text-gray-600 text-xs">{video.channelName}</p>
-                    <p className="text-gray-600 text-xs">
-                        {video.views} • {video.uploadedAt}
+                    <p className="text-gray-600 text-xs flex gap-1">
+                        {video.views} <BsDot/> {video.uploadedAt}
                     </p>
                 </div>
             </div>

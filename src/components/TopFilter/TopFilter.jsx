@@ -45,7 +45,7 @@ function TopFilter() {
     bg-white/90   
     dark:bg-[#0f0f0f]/90 
     dark:border-white/10
-    ${isSidebarOpen ? "ml-64" : "ml-20"}
+    ${isSidebarOpen ? "ml-4 md:ml-64" : "ml-4 sm:ml-20"}
   `}
     >
       <button

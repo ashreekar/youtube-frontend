@@ -1,5 +1,8 @@
+import { Link } from "react-router-dom"
+
 function Logo() {
     return (
+        <Link to={'/'}>
         <div className="flex items-center cursor-pointer" title='YouTube Home'>
             <span className="yt-icon-shape style-scope yt-icon ytSpecIconShapeHost">
                 <div
@@ -45,6 +48,7 @@ function Logo() {
                 </div>
             </span>
         </div>
+        </Link>
     )
 }
 

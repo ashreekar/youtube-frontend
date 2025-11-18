@@ -13,19 +13,17 @@ function ResultVideoCard({ video }) {
                     className="w-full h-full object-cover"
                     alt={video.title}
                 />
-
-                <span className="absolute top-2 right-2 text-white bg-black/40 p-1 rounded-full">
-                    <HiOutlineDotsVertical size={18} />
-                </span>
             </div>
 
-            <div className="flex flex-col gap-3 mt-3">
+            <div className="flex flex-col gap-3 mt-3 w-[45%]">
                 <div className="flex items-center justify-between gap-4">
-                    <h3 className="font-semibold text-sm line-clamp-2 leading-tight">
+                    <h3 className="text-2xl font-medium line-clamp-2 leading-tight">
                         {video.title}
                     </h3>
 
-
+                    <span>
+                        <HiDotsVertical size={22} />
+                    </span>
                 </div>
 
                 <div className="flex items-center">
