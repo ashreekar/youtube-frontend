@@ -1,11 +1,12 @@
 import Search from './Search'
 import SearchButton from './SearchButton'
 
-function SearchBar() {
+function SearchBar({needSearchbar,setneedSearchbar}) {
+
     return (
         <div className='flex w-full'>
-            <Search />
-            <SearchButton />
+            <Search needSearchbar={needSearchbar} />
+            <SearchButton needSearchbar={needSearchbar} setneedSearchbar={setneedSearchbar} />
         </div>
     )
 }
