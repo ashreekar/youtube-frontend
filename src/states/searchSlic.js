@@ -10,13 +10,14 @@ const searchSlice = createSlice({
     reducers: {
         setSearchResults: (state, action) => {
             const query = action.payload;
-
+            console.log(action.payload)
             state.results = state.dataList.filter((data) => {
                 return (
-                    data.title.includes(query) ||
-                    data.channel.includes(query) ||
-                    data.description.includes(query)
+                    data.title.toLowerCase().includes(query.toLowerCase()) ||
+                    data.channelName.toLowerCase().includes(query.toLowerCase()) 
                 )
+                // ||
+                //     data.description.includes(query)
             })
         },
         clearSearchResults: (state) => {

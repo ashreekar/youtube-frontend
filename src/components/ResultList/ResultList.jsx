@@ -1,10 +1,18 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
 import ResultVideoCard from '../cards/ResultVideoCard';
+import { clearSearchResults } from '../../states/searchSlic';
 
 function ResultList() {
+    const dispatch = useDispatch();
     const isSidebarOpen = useSelector(store => store.sidebar.open);
     const videosData = useSelector(store => store.search.results);
+
+    useEffect(() => {
+        return () => {
+            dispatch(clearSearchResults());
+        }
+    },[])
 
     return (
         <div

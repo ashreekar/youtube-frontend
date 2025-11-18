@@ -15,7 +15,7 @@ function SearchBar({ needSearchbar, setneedSearchbar }) {
         if (query === "") {
             return;
         }
-        dispatch(setDataList(query));
+        dispatch(setSearchResults(query));
         navigate('/results');
     }
 
