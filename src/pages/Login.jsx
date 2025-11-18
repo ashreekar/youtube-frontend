@@ -27,24 +27,29 @@ function Login() {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
 
-      <div className="bg-white shadow-md p-10 w-full max-w-md border border-gray-200 rounded-xl">
+      <div className="bg-white flex justify-between items-center shadow-md p-10 w-full max-w-[65%] h-full min-h-[70vh] border border-gray-200 rounded-xl">
+        <div className='w-1/2 flex flex-col items-center justify-center h-full gap-3'>
+          <img src="youtube.png" className='h-12 w-14' alt="youtube-logo" />
+          <h2 className="text-5xl font-semibold text-center mb-8">
+            Sign In
+          </h2>
+          <p className='text-xl text-gray-600 font-medium'>to continue to youtube</p>
+        </div>
 
-        <h2 className="text-3xl font-semibold text-center mb-8">
-          Sign In
-        </h2>
+        <div className='w-1/2'>
+          <LoginMode start={start} setMode={setMode} setStart={setStart} />
 
-        <LoginMode start={start} setMode={setMode} setStart={setStart} />
+          {start && (
+            <form onSubmit={handleSubmit(signIn)} className="space-y-5">
 
-        {start && (
-          <form onSubmit={handleSubmit(signIn)} className="space-y-5">
+              <LoginStep1 step={step} mode={mode} register={register} errors={errors} trigger={trigger} setStep={setStep} />
 
-            <LoginStep1 step={step} mode={mode} register={register} errors={errors} trigger={trigger} setStep={setStep} />
+              <LoginStep2 step={step} register={register} errors={errors} />
 
-            <LoginStep2 step={step} register={register} errors={errors} />
+            </form>
+          )}
 
-          </form>
-        )}
-
+        </div>
       </div>
     </div>
   );

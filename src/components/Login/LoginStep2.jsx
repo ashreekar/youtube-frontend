@@ -1,5 +1,6 @@
 import InputField from '../ButtonsAndInput/InputField'
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function LoginStep2({ step, register, errors }) {
     const [hidden, setHidden] = useState(true);
@@ -9,11 +10,11 @@ function LoginStep2({ step, register, errors }) {
             {step === 1 && (
                 <div className="space-y-5">
 
-                    <div className="flex items-center gap-2">
+                    <div className="w-[70%]">
                         <InputField
                             placeholder="Enter your password"
                             type={hidden ? "password" : "text"}
-                            className="w-full border border-gray-300 rounded-xl py-2 px-3 
+                            className="w-full border border-gray-300 rounded-xl py-2 px-3
                                focus:ring-red-600 focus:border-red-600 outline-none"
                             {...register("password", { required: "Password is required" })}
                         />
@@ -21,7 +22,7 @@ function LoginStep2({ step, register, errors }) {
                         <button
                             type="button"
                             onClick={() => setHidden(!hidden)}
-                            className="text-red-600 font-medium"
+                            className="text-red-600 font-medium z-10"
                         >
                             {hidden ? "Show" : "Hide"}
                         </button>
@@ -33,14 +34,23 @@ function LoginStep2({ step, register, errors }) {
                         </p>
                     )}
 
-                    <button
-                        type="submit"
-                        className="w-full px-6 py-3 bg-red-600 hover:bg-red-700 
-                             text-white rounded-full text-lg font-medium transition"
-                    >
-                        Login
-                    </button>
+                    <div className='w-full flex gap-4'>
+                        <button
+                            type="submit"
+                            className="w-[30%] mt-6 px-6 py-3 bg-red-600 hover:bg-red-700 
+                             text-white rounded-full text-lg font-medium transition self-end"
+                        >
+                            Login
+                        </button>
 
+                        <Link to="/create-account"
+                            type="button"
+                            className="w-auto mt-6 px-6 py-3 hover:text-blue-800
+                             text-blue-700 text-lg font-medium transition self-end"
+                        >
+                            Create account
+                        </Link>
+                    </div>
                 </div>
             )}
         </>
