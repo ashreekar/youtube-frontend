@@ -7,7 +7,7 @@ import { appStore } from './states/appStore.js'
 
 import LandingPage from './pages/LandingPage.jsx'
 import Login from './pages/Login.jsx'
-import CreateAccount from './pages/createAccount.jsx'
+import CreateAccount from './pages/CreateAccount.jsx'
 import ResultsPage from './pages/ResultsPage.jsx'
 import VideoPlayerPage from './pages/VideoPlayerPage.jsx'
 
