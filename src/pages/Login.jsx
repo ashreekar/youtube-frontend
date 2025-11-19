@@ -1,8 +1,16 @@
-import { useState } from 'react'
+import { useState, lazy, Suspense } from 'react'
 import { useForm } from 'react-hook-form'
-import LoginMode from '../components/Login/LoginMode';
-import LoginStep1 from '../components/Login/LoginStep1';
-import LoginStep2 from '../components/Login/LoginStep2';
+// import LoginMode from '../components/Login/LoginMode';
+// import LoginStep1 from '../components/Login/LoginStep1';
+// import LoginStep2 from '../components/Login/LoginStep2';
+
+const LoginMode = lazy(() => import('../components/Login/LoginMode'));
+const LoginStep1 = lazy(() => import('../components/Login/LoginStep1'));
+const LoginStep2 = lazy(() => import('../components/Login/LoginStep2'));
+
+function Loading() {
+  return <h1>Loaidng...</h1>
+}
 
 function Login() {
   const { register, handleSubmit, setValue, trigger, formState: { errors } } = useForm();
@@ -37,15 +45,20 @@ function Login() {
         </div>
 
         <div className='w-full md:w-1/2'>
-          <LoginMode start={start} setMode={setMode} setStart={setStart} />
+          <Suspense fallback={<Loading />}>
+            <LoginMode start={start} setMode={setMode} setStart={setStart} />
+          </Suspense>
 
           {start && (
             <form onSubmit={handleSubmit(signIn)} className="space-y-5">
+              
+              <Suspense fallback={<Loading />}>
+                <LoginStep1 step={step} mode={mode} register={register} errors={errors} trigger={trigger} setStep={setStep} />
+              </Suspense>
 
-              <LoginStep1 step={step} mode={mode} register={register} errors={errors} trigger={trigger} setStep={setStep} />
-
-              <LoginStep2 step={step} register={register} errors={errors} />
-
+              <Suspense fallback={<Loading />}>
+                <LoginStep2 step={step} register={register} errors={errors} />
+              </Suspense>
             </form>
           )}
 

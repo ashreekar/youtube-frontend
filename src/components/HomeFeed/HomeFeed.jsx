@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import VideoCard from '../cards/VideoCard.jsx';
 import { setDataList } from '../../states/searchSlic.js'
+import { Link } from 'react-router-dom';
 
 function HomeFeed() {
     const dispatch = useDispatch();
@@ -208,7 +209,9 @@ function HomeFeed() {
   `}
             >
                 {videosData.map(video => (
-                    <VideoCard video={video} isSidebarOpen={isSidebarOpen} />
+                    <Link to={`watch/${video.id}`}>
+                        <VideoCard video={video} isSidebarOpen={isSidebarOpen} />
+                    </Link>
                 ))}
             </div>
         </div>
