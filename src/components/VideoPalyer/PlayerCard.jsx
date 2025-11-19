@@ -1,10 +1,15 @@
 import React from 'react'
 import Player from './Player'
+import VideoMeata from './VideoMeata';
 
-function PlayerCard() {
+function PlayerCard({ data }) {
+
   return (
-    <div className='h-[47vh] md:h-[70vh] border rounded-xl m-2 p-4'>
-      <Player/>
+    <div className='h-[47vh] md:h-[80vh]'>
+
+      <Player source={data.video.videoUrl} />
+
+      <VideoMeata data={data} />
     </div>
   )
 }

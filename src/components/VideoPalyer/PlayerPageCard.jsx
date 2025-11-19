@@ -103,9 +103,9 @@ function PlayerPageCard() {
   }
 
   return (
-    <div className='w-full md:w-2/3 border rounded-2xl p-4 m-3'>
-      <PlayerCard />
-      <CommentSection />
+    <div className='w-full md:w-2/3 flex flex-col gap-10'>
+      <PlayerCard data={{...data}} />
+      <CommentSection data={data} />
     </div>
   )
 }
