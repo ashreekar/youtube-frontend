@@ -1,14 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CommentItem from "./CommentItem";
 
 function CommentSection({ data }) {
   const comments = data.comments;
 
-  const [openComments,setOpenComments]=useState(false);
+  const [openComments, setOpenComments] = useState(false);
+
+  useEffect(() => {
+    if (window.innerWidth > 768) {
+      setOpenComments(true);
+    }
+  })
 
   return (
     <>
-      {!openComments && (<div className="w-full flex flex-col h-20 bg-gray-100 gap-2 rounded-lg md:hidden" onClick={()=>{setOpenComments(true)}}>
+      {!openComments && (<div className="w-full flex flex-col h-20 bg-gray-100 gap-2 rounded-lg md:hidden" onClick={() => { setOpenComments(true) }}>
         <p className="font-medium text-md">Comments 12</p>
         <div className="flex gap-2">
           <img src={comments[0].avatar} alt="" className="h-4 w-4 roudned-full" />

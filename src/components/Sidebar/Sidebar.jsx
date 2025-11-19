@@ -62,7 +62,7 @@ function Sidebar() {
                 <SidbarFooter />
             </div>
         ) : (
-            <div className="fixed hidden top-16 left-0 z-50 w-20 h-[calc(100vh-64px)] overflow-y-auto no-scrollbar bg-white sm:flex flex-col items-center py-4">
+            <div className="fixed hidden top-14 left-0 z-50 w-20 h-[calc(100vh-64px)] overflow-y-auto no-scrollbar bg-white sm:flex flex-col items-center py-4">
                 {componentsOnClose.map(component => (
                     <div
                         key={component.name}

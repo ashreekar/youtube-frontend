@@ -10,6 +10,7 @@ import Login from './pages/Login.jsx'
 import CreateAccount from './pages/CreateAccount.jsx'
 import ResultsPage from './pages/ResultsPage.jsx'
 import VideoPlayerPage from './pages/VideoPlayerPage.jsx'
+import ChannelPage from './pages/ChannelPage.jsx'
 
 const router = createBrowserRouter(
   [
@@ -28,7 +29,7 @@ const router = createBrowserRouter(
         },
         {
           path: "/feed/you",
-          element: <App />
+          element: <ChannelPage />
         },
         {
           path: "/watch/:videoId",
@@ -36,7 +37,7 @@ const router = createBrowserRouter(
         },
         {
           path: "/channel/:channelId",
-          element: <App />
+          element: <ChannelPage />
         },
         {
           path: "/:id",
