@@ -10,7 +10,7 @@ function Header() {
     return (
         <header
             className="
-                sticky top-0 z-50
+                sticky top-0 z-49
                 w-[99vw] h-14
                 flex justify-between items-center
                 px-4
