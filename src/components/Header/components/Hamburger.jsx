@@ -1,6 +1,8 @@
 import { useDispatch } from 'react-redux'
 import { toggleSidebar } from '../../../states/sidebarSlice.js'
 
+import { AiOutlineMenu } from "react-icons/ai";
+
 function Hamburger() {
     const dispatch = useDispatch();
 
@@ -10,7 +12,7 @@ function Hamburger() {
 
     return (
         <div className='p-2 rounded-full hover:bg-gray-100 cursor-pointer' onClick={handleHamburgerClick}>
-            <img src="header/burger-menu-svgrepo-com.svg" alt="menu" className="h-6 w-6" />
+           <AiOutlineMenu  className="h-6 w-6 font-medium" />
         </div>
     )
 }

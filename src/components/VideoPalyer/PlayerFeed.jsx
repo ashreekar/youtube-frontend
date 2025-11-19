@@ -187,18 +187,12 @@ function PlayerFeed() {
     ];
 
   return (
-    <div className='w-full md:w-1/3 p-4 m-3'>
-        <div className="hidden md:block">
-        <TopFilter player={true} />
-        </div>
-
-        <div className="flex flex-col w-full gap-3">
+    <div className='w-full md:w-1/3 p-4 m-3 flex flex-col gap-3'>
             {
                 videosData.map((video)=>(
                     <ResultVideoCard video={video} adjust="player" />
                 ))
             }
-        </div>
     </div>
   )
 }

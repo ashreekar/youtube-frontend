@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
-function TopFilter({ player = false }) {
+function TopFilter() {
   const isSidebarOpen = useSelector(store => store.sidebar.open);
   const [selected, setSelected] = useState("All");
 
@@ -46,7 +46,6 @@ function TopFilter({ player = false }) {
     dark:bg-[#0f0f0f]/90 
     dark:border-white/10 
     ${isSidebarOpen ? "ml-4 md:ml-64" : "ml-4 sm:ml-20"}
-    ${player==true?"ml-0":""}
   `}
     >
       <button
