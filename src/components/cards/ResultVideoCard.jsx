@@ -1,11 +1,11 @@
 import { HiDotsVertical } from "react-icons/hi";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 
-function ResultVideoCard({ video }) {
+function ResultVideoCard({ video, adjust }) {
     return (
         <div
             key={video.id}
-            className="cursor-pointer flex transition-transform duration-300 gap-4"
+            className={`${adjust==="player"?"gap-2":"gap-4"} cursor-pointer flex transition-transform duration-300 `}
         >
             <div className="w-[45%] aspect-video rounded-xl overflow-hidden bg-gray-200">
                 <img
@@ -21,7 +21,7 @@ function ResultVideoCard({ video }) {
                         {video.title}
                     </h3>
 
-                    <span>
+                    <span className={adjust==="player"?"hidden":"flex"}>
                         <HiDotsVertical size={22} />
                     </span>
                 </div>
@@ -41,7 +41,7 @@ function ResultVideoCard({ video }) {
                     <p className="text-gray-600 text-xs">{video.channelName}</p>
                 </div>
 
-                <div>
+                <div className={adjust==="player"?"hidden":"flex"}>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia, repudiandae.</p>
                 </div>
             </div>
