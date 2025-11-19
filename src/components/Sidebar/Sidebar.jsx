@@ -43,7 +43,7 @@ function Sidebar() {
 
     return (
         isSidebarOpen ? (
-            <div className="fixed z-10 top-14 pt-4 left-0 w-64 h-[calc(100vh-64px)] overflow-y-auto bg-white">
+            <div className="fixed z-50 top-14 pt-4 left-0 w-64 h-[calc(100vh-64px)] overflow-y-auto bg-white">
                 <YoutubeSidebar />
                 <div className="border-t w-[80%] border-gray-300 my-2"></div>
 
@@ -62,7 +62,7 @@ function Sidebar() {
                 <SidbarFooter />
             </div>
         ) : (
-            <div className="fixed hidden top-16 left-0 w-20 h-[calc(100vh-64px)] overflow-y-auto no-scrollbar bg-white sm:flex flex-col items-center py-4">
+            <div className="fixed hidden top-16 left-0 z-50 w-20 h-[calc(100vh-64px)] overflow-y-auto no-scrollbar bg-white sm:flex flex-col items-center py-4">
                 {componentsOnClose.map(component => (
                     <div
                         key={component.name}

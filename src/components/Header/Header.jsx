@@ -11,7 +11,7 @@ function Header() {
         <header
             className="
                 sticky top-0 z-50
-                w-full h-14
+                w-[99vw] h-14
                 flex justify-between items-center
                 px-4
                 backdrop-blur-xl  
