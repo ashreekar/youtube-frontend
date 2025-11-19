@@ -2,7 +2,7 @@ import React from 'react'
 
 function CommentSection() {
   return (
-    <div>CommentSection</div>
+    <div className='mt-10'>CommentSection</div>
   )
 }
 

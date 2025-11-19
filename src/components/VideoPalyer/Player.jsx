@@ -10,7 +10,7 @@ function Player({ source }) {
       ></video> */}
 
         <iframe 
-                className='w-[85vw] md:w-full h-full' 
+                className='h-[55vh] md:h-[72vh] w-full md:w-[60vw] rounded-2xl mt-6'
                 src="https://www.youtube.com/embed/k2MOfVOUU78?si=6SEzDwYgeUbok77L" 
                 title="YouTube video player" 
                 frameborder="0" 

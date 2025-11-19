@@ -5,7 +5,7 @@ import VideoMeata from './VideoMeata';
 function PlayerCard({ data }) {
 
   return (
-    <div className='h-[47vh] md:h-[80vh]'>
+    <div className='flex gap-4 flex-col'>
 
       <Player source={data.video.videoUrl} />
 
