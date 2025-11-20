@@ -3,6 +3,7 @@ import { toggelLogin } from '../../../states/userSlice';
 import { useDispatch } from "react-redux";
 import Sidebar from "../../SidebarAndPopUp/Sidebar";
 import { useState } from "react";
+import { toggleOverlay } from "../../../states/overlaySlice";
 
 function WhenLogin() {
   const dispatch = useDispatch();
@@ -18,11 +19,11 @@ function WhenLogin() {
   }
 
   const logoutHandler = () => {
-    alert("logout")
+    dispatch(toggelLogin());
   }
 
-  const handleCreate=()=>{
-    alert("Video added")
+  const handleCreate = () => {
+    dispatch(toggleOverlay());
   }
 
   return (
@@ -57,7 +58,7 @@ function WhenLogin() {
         </div>
       </div>
 
-      {isOpenUser && <Sidebar key="user" closePopup={() => { setIsOpenUser(false) }} children={
+      {isOpenUser && <Sidebar sidebarKey="user" closePopup={() => { setIsOpenUser(false) }} children={
         [
           {
             "name": "Logout",
@@ -72,7 +73,7 @@ function WhenLogin() {
         ]
       } />}
 
-      {isOpenCreate && <Sidebar key="create" closePopup={() => { setIsOpenCreate(false) }} children={
+      {isOpenCreate && <Sidebar sidebarKey="create" closePopup={() => { setIsOpenCreate(false) }} children={
         [
           {
             "name": "Create video",
