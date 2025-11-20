@@ -7,7 +7,8 @@ function Step3({ step, register, setStep }) {
       <InputField
         type="file"
         accept="image/png, image/jpg, image/jpeg, image/gif"
-        className="w-full border border-gray-300 rounded-xl py-2 px-3 file:bg-black file:text-white file:border-none file:rounded-xl file:px-3 file:py-2"
+        className="w-full border border-gray-300 rounded-xl py-2 px-3 
+          file:bg-black file:text-white file:px-4 file:py-2 file:rounded-xl"
         {...register("image")}
       />
 
@@ -16,14 +17,16 @@ function Step3({ step, register, setStep }) {
         <button
           type="button"
           onClick={() => setStep(1)}
-          className="px-6 bg-gray-300 hover:bg-gray-400 text-black py-2.5 rounded-full text-md cursor-pointer"
+          className="px-6 py-2.5 bg-gray-300 hover:bg-gray-400 
+            text-black rounded-full text-md"
         >
           Back
         </button>
 
         <button
           type="submit"
-          className="px-6 bg-red-600 hover:bg-red-700 text-white py-2.5 rounded-full text-lg cursor-pointer"
+          className="px-6 py-2.5 bg-red-600 hover:bg-red-700 
+            text-white rounded-full text-lg"
         >
           Create
         </button>
@@ -34,4 +37,4 @@ function Step3({ step, register, setStep }) {
   )
 }
 
-export default Step3
+export default Step3;

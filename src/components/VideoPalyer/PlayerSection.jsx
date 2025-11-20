@@ -1,18 +1,22 @@
-import React from 'react'
-import PlayerPageCard from './PlayerPageCard'
-import PlayerFeed from './PlayerFeed'
+import React from "react";
+import PlayerPageCard from "./PlayerPageCard";
+import PlayerFeed from "./PlayerFeed";
 
 function PlayerSection() {
-    return (
-        // <div className='grid grid-cols-1 md:grid-cols-3'>
-        <div className='flex flex-1 min-h-screen ml-4 sm:ml-24 mr-4 sm:mr-8 flex-col lg:flex-row items-stretch'>
-            {/* Video,comment and like part */}
+  return (
+    <main className="flex-1 min-h-screen px-3 sm:px-6 py-6">
+      <div className="mx-auto max-w-[1400px] w-full">
+        <div className="flex flex-col lg:flex-row gap-8">
+          <div className="w-full lg:w-2/3">
             <PlayerPageCard />
-
-            {/* Feed part and filter part */}
+          </div>
+          <aside className="w-full lg:w-1/3">
             <PlayerFeed />
+          </aside>
         </div>
-    )
+      </div>
+    </main>
+  );
 }
 
-export default PlayerSection
+export default PlayerSection;

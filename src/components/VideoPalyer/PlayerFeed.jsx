@@ -1,9 +1,8 @@
-import TopFilter from "../TopFilter/TopFilter"
-import ResultVideoCard from "../cards/ResultVideoCard"
+import React from "react";
+import PlayerCard from "./PlayerCard";
 
 function PlayerFeed() {
-
-      const videosData = [
+     const videosData = [
         {
             id: "1",
             title: "React Tutorial for Beginners – Full Course",
@@ -185,16 +184,16 @@ function PlayerFeed() {
             thumbnail: "https://i.ytimg.com/vi/bG0u3yY5E7E/maxresdefault.jpg"
         }
     ];
-
   return (
-    <div className='w-full md:w-1/3 p-4 m-3 flex flex-col gap-3'>
-            {
-                videosData.map((video)=>(
-                    <ResultVideoCard video={video} adjust="player" />
-                ))
-            }
+    <div className="w-full p-2 sm:p-4">
+      <h3 className="text-lg font-semibold mb-3">More to watch</h3>
+      <div className="flex flex-col gap-4">
+        {videosData.map((video) => (
+          <PlayerCard key={video} video={video} />
+        ))}
+      </div>
     </div>
-  )
+  );
 }
 
-export default PlayerFeed
+export default PlayerFeed;

@@ -1,24 +1,20 @@
-import React from 'react'
+import React from "react";
 
 function Player({ source }) {
   return (
-    <div className='w-full h-[85%]'>
-      {/* <video 
-        src={source} 
-        className="w-full rounded-lg h-full" 
-        controls 
-      ></video> */}
-
-        <iframe 
-                className='h-[55vh] md:h-[72vh] w-full md:w-[60vw] rounded-2xl mt-6'
-                src="https://www.youtube.com/embed/k2MOfVOUU78?si=6SEzDwYgeUbok77L" 
-                title="YouTube video player" 
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                referrerPolicy="strict-origin-when-cross-origin" 
-                allowFullScreen></iframe>
+    <div className="w-full">
+      <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
+        <iframe
+          src={source + "?autoplay=0&rel=0"}
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+          className="absolute top-0 left-0 w-full h-full rounded-lg"
+        />
+      </div>
     </div>
-  )
+  );
 }
 
-export default Player
+export default Player;

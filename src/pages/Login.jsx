@@ -1,16 +1,10 @@
 import { useState, lazy, Suspense } from 'react'
 import { useForm } from 'react-hook-form'
-// import LoginMode from '../components/Login/LoginMode';
-// import LoginStep1 from '../components/Login/LoginStep1';
-// import LoginStep2 from '../components/Login/LoginStep2';
+import LineLoader from '../components/Loaders/LineLoader';
 
 const LoginMode = lazy(() => import('../components/Login/LoginMode'));
 const LoginStep1 = lazy(() => import('../components/Login/LoginStep1'));
 const LoginStep2 = lazy(() => import('../components/Login/LoginStep2'));
-
-function Loading() {
-  return <h1>Loaidng...</h1>
-}
 
 function Login() {
   const { register, handleSubmit, setValue, trigger, formState: { errors } } = useForm();
@@ -33,35 +27,55 @@ function Login() {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+      <div className="bg-white shadow-md p-6 md:p-10 w-full max-w-[900px]
+          min-h-[60vh] border border-gray-200 rounded-xl
+          flex flex-col md:flex-row gap-6 md:gap-10 items-center">
 
-      <div className="bg-white flex justify-between items-center shadow-md p-10 w-full max-w-[65%] h-full min-h-[70vh] border border-gray-200 rounded-xl">
-        <div className='w-1/2 hidden md:flex flex-col items-center justify-center h-full gap-3'>
-          <img src="youtube.png" className='h-12 w-14' alt="youtube-logo" />
-          <h2 className="text-5xl font-semibold text-center mb-8">
-            Sign In
-          </h2>
-          <p className='text-xl text-gray-600 font-medium'>to continue to youtube</p>
+        {/* LEFT SIDE – hidden on mobile */}
+        <div className="hidden md:flex flex-col items-center justify-center w-1/2 gap-3 text-center">
+          <img src="youtube.png" className="h-14 w-16" alt="youtube-logo" />
+          <h2 className="text-4xl font-semibold">Sign In</h2>
+          <p className="text-lg text-gray-600 font-medium">to continue to YouTube</p>
         </div>
 
-        <div className='w-full md:w-1/2'>
-          <Suspense fallback={<Loading />}>
+        {/* RIGHT SIDE */}
+        <div className="w-full md:w-1/2">
+          {/* Mobile header */}
+          <div className="md:hidden flex flex-col items-center mb-6">
+            <img src="youtube.png" className="h-10 w-12" alt="youtube-logo" />
+            <h2 className="text-3xl font-semibold mt-2">Sign In</h2>
+            <p className="text-sm text-gray-600">to continue to YouTube</p>
+          </div>
+
+          <Suspense fallback={<LineLoader />}>
             <LoginMode start={start} setMode={setMode} setStart={setStart} />
           </Suspense>
 
           {start && (
             <form onSubmit={handleSubmit(signIn)} className="space-y-5">
-              
-              <Suspense fallback={<Loading />}>
-                <LoginStep1 step={step} mode={mode} register={register} errors={errors} trigger={trigger} setStep={setStep} />
+              <Suspense fallback={<LineLoader />}>
+                <LoginStep1
+                  step={step}
+                  mode={mode}
+                  register={register}
+                  errors={errors}
+                  trigger={trigger}
+                  setStep={setStep}
+                />
               </Suspense>
 
-              <Suspense fallback={<Loading />}>
-                <LoginStep2 step={step} register={register} errors={errors} />
-              </Suspense>
+              {
+                step == 1 && <Suspense fallback={<LineLoader />}>
+                  <LoginStep2
+                    step={step}
+                    register={register}
+                    errors={errors}
+                  />
+                </Suspense>
+              }
             </form>
           )}
-
         </div>
       </div>
     </div>

@@ -1,20 +1,26 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import Sidebar from '../components/Sidebar/Sidebar'
-import TopFilter from '../components/TopFilter/TopFilter'
-import ResultList from '../components/ResultList/ResultList'
+const TopFilter = lazy(() => import('../components/TopFilter/TopFilter'));
+const ResultList = lazy(() => import('../components/ResultList/ResultList'));
 
 function ResultsPage() {
   return (
-     <div className="flex">
-      <Sidebar/>
+    <div className="flex w-full">
+      <Sidebar />
+
       <div className="flex-1 min-h-screen overflow-x-hidden">
-        <TopFilter/>
-        <div className="px-4">
-          <ResultList />
+        <Suspense>
+          <TopFilter />
+        </Suspense>
+
+        <div className="px-2 sm:px-4">
+          <Suspense>
+            <ResultList />
+          </Suspense>
         </div>
       </div>
     </div>
   )
 }
 
-export default ResultsPage
+export default ResultsPage;

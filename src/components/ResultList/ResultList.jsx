@@ -5,29 +5,37 @@ import { clearSearchResults } from '../../states/searchSlic';
 
 function ResultList() {
     const dispatch = useDispatch();
-    const isSidebarOpen = useSelector(store => store.sidebar.open);
-    const videosData = useSelector(store => store.search.results);
+    const isSidebarOpen = useSelector(s => s.sidebar.open);
+    const videosData = useSelector(s => s.search.results);
 
     useEffect(() => {
-        return () => {
-            dispatch(clearSearchResults());
-        }
-    },[])
+        return () => dispatch(clearSearchResults());
+    }, []);
 
     return (
         <div
             className={`
-          flex-1 transition-all duration-300 
-          ${isSidebarOpen ? "ml-64" : "ml-20"}
-        `}
+              flex-1 transition-all duration-300 
+              ${isSidebarOpen ? "ml-64" : "ml-20"}
+              max-w-full
+            `}
         >
-            <div className={` grid grid-cols-1 gap-6 mt-12`}>
+            <div className="
+                grid 
+                grid-cols-1
+                gap-6 
+                mt-12
+            ">
                 {videosData.map(video => (
-                    <ResultVideoCard video={video} isSidebarOpen={isSidebarOpen} />
+                    <ResultVideoCard 
+                        key={video.id} 
+                        video={video} 
+                        isSidebarOpen={isSidebarOpen}
+                    />
                 ))}
             </div>
         </div>
     )
 }
 
-export default ResultList
+export default ResultList;
