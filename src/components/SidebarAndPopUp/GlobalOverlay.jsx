@@ -1,0 +1,45 @@
+import React from 'react'
+import { useDispatch, useSelector } from "react-redux"
+import { toggleOverlay } from "../../states/overlaySlice";
+import { toggleUserOverlay, toggleCreateOverlay } from "../../states/sideOverlaySlice";
+
+import Popup from "../SidebarAndPopUp/Popup";
+import CreateVideo from "../Popups/CreateVideo";
+import Sidebar from './Sidebar';
+import CreateInfo from '../Popup/CreateInfo';
+import UserInfo from '../Popup/UserInfo';
+
+function GlobalOverlay() {
+  const dispatch = useDispatch();
+  const popup = useSelector(state => state.overlay.open);
+
+  const isOpenUser = useSelector((state) => state.sideOverlay.user);
+  const isOpenCreate = useSelector((state) => state.sideOverlay.create);
+
+    return (
+        <>
+            {
+                popup && <Popup popupkey="video" closePopup={() => dispatch(toggleOverlay())}>
+                    <CreateVideo />
+                </Popup>
+            }
+
+            {isOpenUser && (
+                <Sidebar
+                    sidebarKey="user"
+                    closePopup={() => dispatch(toggleUserOverlay())}
+                >
+                    <UserInfo />
+                </Sidebar>
+            )}
+
+            {isOpenCreate && (
+                <Sidebar sidebarKey="create" closePopup={() => dispatch(toggleCreateOverlay())}>
+                    <CreateInfo />
+                </Sidebar>
+            )}
+        </>
+    )
+}
+
+export default GlobalOverlay

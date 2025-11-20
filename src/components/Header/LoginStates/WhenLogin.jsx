@@ -10,9 +10,6 @@ import { toggleCreateOverlay, toggleUserOverlay } from "../../../states/sideOver
 function WhenLogin() {
   const dispatch = useDispatch();
 
-  const isOpenUser = useSelector((state) => state.sideOverlay.user);
-  const isOpenCreate = useSelector((state) => state.sideOverlay.create);
-
   const handleClickProfile = () => {
     dispatch(toggleUserOverlay());
   };
@@ -53,21 +50,6 @@ function WhenLogin() {
           A
         </div>
       </div>
-
-      {isOpenUser && (
-        <Sidebar
-          sidebarKey="user"
-          closePopup={() => dispatch(toggleUserOverlay())}
-        >
-          <UserInfo />
-        </Sidebar>
-      )}
-
-      {isOpenCreate && (
-        <Sidebar sidebarKey="create" closePopup={() => dispatch(toggleCreateOverlay())}>
-          <CreateInfo />
-        </Sidebar>
-      )}
     </>
   );
 }
