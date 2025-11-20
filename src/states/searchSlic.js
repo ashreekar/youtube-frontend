@@ -9,15 +9,13 @@ const searchSlice = createSlice({
     },
     reducers: {
         setSearchResults: (state, action) => {
-            const query = action.payload;
-            console.log(action.payload)
+            const query = action.payload.toLowerCase();
             state.results = state.dataList.filter((data) => {
-                return (
-                    data.title.toLowerCase().includes(query.toLowerCase()) ||
-                    data.channelName.toLowerCase().includes(query.toLowerCase()) 
-                )
-                // ||
-                //     data.description.includes(query)
+                 return (
+                    data.title.toLowerCase().includes(query) ||
+                    data.channelName.toLowerCase().includes(query) ||
+                    data.description.toLowerCase().includes(query)
+                );
             })
         },
         clearSearchResults: (state) => {

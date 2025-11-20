@@ -5,7 +5,7 @@ function Player({ source }) {
     <div className="w-full">
       <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
         <iframe
-          src={source + "?autoplay=0&rel=0"}
+          src={source + "?autoplay=1&rel=0"}
           title="YouTube video player"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

@@ -31,22 +31,42 @@ function CommentItem({ comment }) {
 
   return (
     <div className="flex gap-4">
-      <img src={comment.avatar} alt={comment.author} className="w-10 h-10 rounded-full" />
+      <img
+        src={comment.avatar}
+        alt={comment.author}
+        className="w-10 h-10 rounded-full"
+      />
+
       <div className="flex-1">
         <div className="flex items-center gap-3">
           <span className="font-medium text-sm">{comment.author}</span>
-          <span className="text-xs text-gray-500">{comment.posted}</span>
+          <span className="text-xs text-gray-500">
+            {new Date(comment.posted).toDateString()}
+          </span>
         </div>
 
-        <p className="text-sm mt-1 text-gray-800">{comment.text}</p>
+        <p
+          className="text-sm mt-1 text-gray-800"
+          dangerouslySetInnerHTML={{ __html: comment.text }}
+        />
 
         <div className="flex items-center gap-4 mt-2">
-          <button onClick={handleLike} className={`flex items-center gap-1 text-sm ${liked ? "text-blue-600" : "text-gray-600"}`}>
+          <button
+            onClick={handleLike}
+            className={`flex items-center gap-1 text-sm ${
+              liked ? "text-blue-600" : "text-gray-600"
+            }`}
+          >
             <AiOutlineLike />
             <span>{likes}</span>
           </button>
 
-          <button onClick={handleDislike} className={`text-sm ${disliked ? "text-blue-600" : "text-gray-600"}`}>
+          <button
+            onClick={handleDislike}
+            className={`text-sm ${
+              disliked ? "text-blue-600" : "text-gray-600"
+            }`}
+          >
             <AiOutlineDislike />
           </button>
 

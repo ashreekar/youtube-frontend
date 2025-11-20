@@ -1,32 +1,53 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { AiFillLike, AiOutlineDislike } from "react-icons/ai";
 import { RiShareForwardLine } from "react-icons/ri";
 import { TfiDownload } from "react-icons/tfi";
 import VideoDetails from "./VideoDetails";
+import { useFetch } from "../../utils/useFetch";
 
-function VideoMeata({ data }) {
+function VideoMeata({ video }) {
   const [isSubscribed, setIsSubscribed] = useState(false);
+
+  const channelId = video.snippet.channelId;
+
+  const { data, error, loading } = useFetch(
+    `https://youtube.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=${channelId}&key=AIzaSyApkq1vX5ecF8ghABa7uRrxiN7ndQslxCA`,
+    "get"
+  );
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Channel data error</p>;
+  if (!data || data.items.length === 0) return <p>No channel found</p>;
+
+  const channel = data.items[0];
 
   return (
     <div className="w-full">
       <h1 className="text-lg sm:text-2xl font-semibold leading-tight">
-        {data.video.title}
+        {video.snippet.title}
       </h1>
 
       <div className="flex flex-col gap-3 mt-4 md:flex-row md:items-center md:justify-between">
-
+        
         <div className="flex items-center justify-between w-full md:justify-start md:gap-4">
-
           <div className="flex items-center gap-3">
+            <Link to={`/channel/${channelId}`}>
             <img
-              src={data.channel.avatar}
-              alt={data.channel.name}
+              src={channel.snippet.thumbnails.default.url}
+              alt={channel.snippet.title}
               className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover"
             />
-
+          </Link>
             <div className="flex flex-col">
-              <span className="font-medium text-sm sm:text-base">{data.channel.name}</span>
-              <span className="text-xs text-gray-500">{data.channel.subscribers} subscribers</span>
+              <Link to={`/channel/${channelId}`}>
+              <span className="font-medium text-sm sm:text-base">
+                {channel.snippet.title}
+              </span>
+              </Link>
+              <span className="text-xs text-gray-500">
+                {Number(channel.statistics.subscriberCount).toLocaleString()} subscribers
+              </span>
             </div>
           </div>
 
@@ -47,18 +68,13 @@ function VideoMeata({ data }) {
           )}
         </div>
 
-        <div
-          className="
-            flex gap-3 items-center 
-            overflow-x-auto no-scrollbar 
-            md:overflow-visible md:justify-evenly
-            pb-2 md:pb-0
-          "
-        >
+        <div className="flex gap-3 items-center overflow-x-auto no-scrollbar md:overflow-visible md:justify-evenly pb-2 md:pb-0">
           <div className="flex items-center bg-gray-100 rounded-full overflow-hidden h-10">
             <div className="flex items-center gap-2 px-3 border-r border-gray-300">
               <AiFillLike size={18} />
-              <span className="text-sm">22K</span>
+              <span className="text-sm">
+                {(video.statistics.likeCount / 1000).toFixed(1)}k
+              </span>
             </div>
             <div className="flex items-center px-3">
               <AiOutlineDislike size={18} />
@@ -78,7 +94,7 @@ function VideoMeata({ data }) {
       </div>
 
       <div className="mt-4">
-        <VideoDetails />
+        <VideoDetails data={video} />
       </div>
     </div>
   );

@@ -16,11 +16,9 @@ function VideoCards({ video }) {
         </h3>
 
         <p className="text-xs text-gray-600 mt-1">
-          {video.views} views • {video.uploadedAt}
+          {video.uploadedAt?.slice(0, 10)}
         </p>
-
       </div>
-
     </div>
   );
 }

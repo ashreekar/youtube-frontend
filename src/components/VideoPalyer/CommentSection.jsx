@@ -2,7 +2,20 @@ import React, { useEffect, useState } from "react";
 import CommentItem from "./CommentItem";
 
 function CommentSection({ data }) {
-  const comments = data.comments || [];
+  const threads = data.items || [];
+
+  const comments = threads.map((item) => {
+    const c = item.snippet.topLevelComment.snippet;
+    return {
+      id: item.id,
+      author: c.authorDisplayName,
+      avatar: c.authorProfileImageUrl,
+      text: c.textDisplay,
+      likes: c.likeCount,
+      posted: c.publishedAt,
+    };
+  });
+
   const [openComments, setOpenComments] = useState(false);
 
   useEffect(() => {
@@ -20,6 +33,7 @@ function CommentSection({ data }) {
             <div className="font-medium">Comments {comments.length}</div>
             <div className="text-sm text-gray-600">• Tap to expand</div>
           </div>
+
           {comments[0] && (
             <div className="mt-2 text-sm text-gray-700 line-clamp-1">
               {comments[0].text}
@@ -39,15 +53,23 @@ function CommentSection({ data }) {
           </div>
 
           <div className="flex gap-3 mb-4">
-            <img className="w-10 h-10 rounded-full" src="https://randomuser.me/api/portraits/men/10.jpg" alt="user" />
+            <img
+              className="w-10 h-10 rounded-full"
+              src="https://randomuser.me/api/portraits/men/10.jpg"
+              alt="user"
+            />
             <div className="flex-1">
               <input
                 className="w-full border-b border-gray-300 pb-2 focus:outline-none"
                 placeholder="Add a public comment..."
               />
               <div className="flex justify-end gap-2 mt-3">
-                <button className="px-3 py-1 rounded-full text-sm">Cancel</button>
-                <button className="px-3 py-1 rounded-full bg-blue-600 text-white text-sm">Comment</button>
+                <button className="px-3 py-1 rounded-full text-sm">
+                  Cancel
+                </button>
+                <button className="px-3 py-1 rounded-full bg-blue-600 text-white text-sm">
+                  Comment
+                </button>
               </div>
             </div>
           </div>

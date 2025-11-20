@@ -8,7 +8,7 @@ function VideoPlayerPage() {
   return (
     <div className="flex w-full bg-white">
       <Sidebar player={Boolean(videoId)} />
-      <PlayerSection />
+      <PlayerSection videoId={videoId} />
     </div>
   );
 }
