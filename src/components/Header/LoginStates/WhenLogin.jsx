@@ -1,34 +1,30 @@
-import { FaPlus } from "react-icons/fa"
-import { toggelLogin } from '../../../states/userSlice';
-import { useDispatch } from "react-redux";
+import { FaPlus } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+
 import Sidebar from "../../SidebarAndPopUp/Sidebar";
-import { useState } from "react";
-import { toggleOverlay } from "../../../states/overlaySlice";
+import UserInfo from "../../Popup/UserInfo";
+import CreateInfo from "../../Popup/CreateInfo";
+
+import { toggleCreateOverlay, toggleUserOverlay } from "../../../states/sideOverlaySlice";
 
 function WhenLogin() {
   const dispatch = useDispatch();
 
-  const [isOpenUser, setIsOpenUser] = useState(false);
-  const [isOpenCreate, setIsOpenCreate] = useState(false);
+  const isOpenUser = useSelector((state) => state.sideOverlay.user);
+  const isOpenCreate = useSelector((state) => state.sideOverlay.create);
 
   const handleClickProfile = () => {
-    setIsOpenUser(true);
-  }
+    dispatch(toggleUserOverlay());
+  };
+
   const handleClickCreate = () => {
-    setIsOpenCreate(true);
-  }
-
-  const logoutHandler = () => {
-    dispatch(toggelLogin());
-  }
-
-  const handleCreate = () => {
-    dispatch(toggleOverlay());
-  }
+    dispatch(toggleCreateOverlay());
+  };
 
   return (
     <>
       <div className="flex items-center gap-4">
+
         <div
           className="
             px-3 py-2 flex items-center gap-2 
@@ -36,64 +32,44 @@ function WhenLogin() {
             hover:bg-gray-200 transition 
             cursor-pointer select-none
             w-fit
-        "
+          "
           title="Create"
           onClick={handleClickCreate}
         >
-          <span><FaPlus /></span>
+          <FaPlus />
           <span className="capitalize">create</span>
         </div>
 
         <div
-          onClick={handleClickProfile}
           className="
             rounded-full bg-pink-900 text-white 
             h-9 w-9 flex items-center justify-center 
             font-semibold cursor-pointer 
             hover:opacity-80 transition
-        "
+          "
+          onClick={handleClickProfile}
           title="Profile"
         >
           A
         </div>
       </div>
 
-      {isOpenUser && <Sidebar sidebarKey="user" closePopup={() => { setIsOpenUser(false) }} children={
-        [
-          {
-            "name": "Logout",
-            "handler": logoutHandler,
-            "to": null
-          },
-          {
-            "name": "View channel",
-            "handler": null,
-            "to": "/feed/you"
-          },
-        ]
-      } />}
+      {isOpenUser && (
+        <Sidebar
+          sidebarKey="user"
+          closePopup={() => dispatch(toggleUserOverlay())}
+        >
+          <UserInfo />
+        </Sidebar>
+      )}
 
-      {isOpenCreate && <Sidebar sidebarKey="create" closePopup={() => { setIsOpenCreate(false) }} children={
-        [
-          {
-            "name": "Create video",
-            "handler": handleCreate,
-            "to": null
-          },
-          {
-            "name": "Live stream",
-            "handler": null,
-            "to": null
-          },
-          {
-            "name": "Create post",
-            "handler": null,
-            "to": null
-          },
-        ]
-      } />}
+      {isOpenCreate && (
+        <Sidebar sidebarKey="create" closePopup={() => dispatch(toggleCreateOverlay())}>
+          <CreateInfo />
+        </Sidebar>
+      )}
     </>
-  )
+  );
 }
 
-export default WhenLogin
+export default WhenLogin;

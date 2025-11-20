@@ -3,6 +3,7 @@ import sidebar from './sidebarSlice.js'
 import user from './userSlice.js'
 import search from './searchSlic.js'
 import overlay from './overlaySlice.js'
+import sideOverlay from './sideOverlaySlice.js'
 
 const appStore = configureStore(
     {
@@ -10,7 +11,8 @@ const appStore = configureStore(
             sidebar,
             user,
             search,
-            overlay
+            overlay,
+            sideOverlay
         }
     }
 )
