@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function ChannelMeta() {
+function ChannelMeta({setIsInfo}) {
   const [isSubscribed, setIsSubscribed] = useState(true);
   const [self, setSelf] = useState(false);
 
@@ -25,8 +25,8 @@ function ChannelMeta() {
           <p>143 videos</p>
         </div>
 
-        <p className="text-gray-700 mt-2 text-sm md:text-base max-w-2xl">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Delectus, facere!
+        <p className="text-gray-700 mt-2 text-sm md:text-base max-w-2xl" onClick={()=>setIsInfo(true)}>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Delectus, facere!...more
         </p>
 
         {

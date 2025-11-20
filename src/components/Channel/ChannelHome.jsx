@@ -5,12 +5,12 @@ import ChannelMeta from './ChannelMeta';
 import SwitchTabs from './SwitchTabs';
 import ChannelVideo from './ChannelVideo';
 
-function ChannelHome() { 
+function ChannelHome({setIsInfo}) { 
     const isSidebarOpen=useSelector(state=>state.sidebar.open);
   return (
     <div className={`${isSidebarOpen?"ml-4 md:ml-64":"ml-4 md:ml-24"} flex flex-col`}>
         <ChannelBanner isSidebarOpen={isSidebarOpen}/>
-        <ChannelMeta/>
+        <ChannelMeta setIsInfo={setIsInfo} />
         <SwitchTabs/>
         <ChannelVideo/>
     </div>
