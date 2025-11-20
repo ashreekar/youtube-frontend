@@ -1,13 +1,22 @@
 import React from 'react';
 import { MdOutlineVideoCall } from "react-icons/md";
 import { FaBroadcastTower } from "react-icons/fa";
+import { useDispatch } from 'react-redux'
 import { RiMessage2Line } from "react-icons/ri";
 
+import { toggleOverlay } from '../../states/overlaySlice'
+
 function CreateInfo() {
+  const dispatch = useDispatch();
+
+  const handleCreateVideo = () => {
+    dispatch(toggleOverlay())
+  }
+
   return (
     <div className="w-56 bg-white py-3 px-0 text-sm rounded-lg">
 
-      <div className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+      <div onClick={handleCreateVideo} className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer">
         <MdOutlineVideoCall className="text-xl" />
         <p>Upload video</p>
       </div>

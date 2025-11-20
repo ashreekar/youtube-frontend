@@ -5,7 +5,17 @@ import { PiSignOut } from "react-icons/pi";
 import { IoMoonOutline } from "react-icons/io5";
 import { RiFeedbackLine } from "react-icons/ri";
 
+import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { toggelLogin } from "../../states/userSlice"
+
 function UserInfo() {
+    const dispatch = useDispatch();
+
+    const handleSignOut = () => {
+        dispatch(toggelLogin());
+    }
+
     return (
         <div className="flex flex-col p-4 w-full rounded-lg">
 
@@ -18,23 +28,26 @@ function UserInfo() {
                     <p className="font-semibold text-sm">Ashreek A R</p>
                     <p className="text-xs text-gray-600">@ashreek123</p>
 
-                    <p className="text-blue-600 text-xs cursor-pointer hover:underline">
-                        View your channel
-                    </p>
+                    <Link to={'/feed/you'}>
+                        <p className="text-blue-600 text-xs cursor-pointer hover:underline">
+                            View your channel
+                        </p>
+                    </Link>
                 </div>
             </div>
 
             <div className="flex flex-col py-2 border-b border-gray-300 text-sm">
-
-                <button disabled className="flex items-center gap-3 p-2 text-gray-400 cursor-not-allowed">
-                    <FaYoutube /> Your channel
-                </button>
+                <Link to={'/feed/you'}>
+                    <button className="flex items-center gap-3 p-2 text-black cursor-pointer">
+                        <FaYoutube /> Your channel
+                    </button>
+                </Link>
 
                 <button disabled className="flex items-center gap-3 p-2 text-gray-400 cursor-not-allowed">
                     <MdOutlineSwitchAccount /> Switch account
                 </button>
 
-                <button className="flex items-center gap-3 p-2 hover:bg-gray-100 rounded cursor-pointer">
+                <button onClick={handleSignOut} className="flex items-center gap-3 p-2 hover:bg-gray-100 rounded cursor-pointer">
                     <PiSignOut /> Sign out
                 </button>
             </div>
