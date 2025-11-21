@@ -1,13 +1,18 @@
 import { useState, lazy, Suspense } from 'react'
+import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import LineLoader from '../components/Loaders/LineLoader';
+import axios from 'axios';
+import { loginUser } from '../states/userSlice';
 
 const Step1 = lazy(() => import('../components/CreateAccount/Step1'));
 const Step2 = lazy(() => import('../components/CreateAccount/Step2'));
 const Step3 = lazy(() => import('../components/CreateAccount/Step3'));
 
 function CreateAccount() {
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -19,8 +24,24 @@ function CreateAccount() {
   const [step, setStep] = useState(0)
   const navigate = useNavigate()
 
-  const onSubmit = (data) => {
-    console.log(data)
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+
+    formData.append("avatar", data.avatar[0]);
+    formData.append("coverImage", data.coverImage[0]);
+    formData.append("username", data.username);
+    formData.append("fullName", data.fullName);
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+
+    const user = await axios.post("http://localhost:3317/api/v1/user/create", formData, {
+      headers: { "Content-Type": "multipart/form-data" }
+    });
+
+    if (user) {
+      localStorage.setItem("acceasToken", user.data.data.acceastoken);
+      dispatch(loginUser(user.data.data.loggeduser));
+    }
     navigate('/')
   }
 
@@ -45,7 +66,7 @@ function CreateAccount() {
 
         <form className="space-y-5 w-full md:w-1/2" onSubmit={handleSubmit(onSubmit)}>
 
-          {step==0 && <Suspense fallback={<LineLoader/>}>
+          {step == 0 && <Suspense fallback={<LineLoader />}>
             <Step1
               step={step}
               register={register}
@@ -55,7 +76,7 @@ function CreateAccount() {
             />
           </Suspense>}
 
-        { step==1 && <Suspense fallback={<LineLoader/>}>
+          {step == 1 && <Suspense fallback={<LineLoader />}>
             <Step2
               step={step}
               register={register}
@@ -66,7 +87,7 @@ function CreateAccount() {
             />
           </Suspense>}
 
-        { step==2 && <Suspense fallback={<LineLoader/>}>
+          {step == 2 && <Suspense fallback={<LineLoader />}>
             <Step3
               step={step}
               register={register}

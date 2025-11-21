@@ -4,29 +4,39 @@ import { MdOutlineSwitchAccount, MdOutlineSettings, MdOutlineHelpOutline } from 
 import { PiSignOut } from "react-icons/pi";
 import { IoMoonOutline } from "react-icons/io5";
 import { RiFeedbackLine } from "react-icons/ri";
+import axios from 'axios';
 
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
-import { toggelLogin } from "../../states/userSlice"
+import { useDispatch,useSelector } from 'react-redux';
+import { logoutUser, toggelLogin } from "../../states/userSlice"
+import { toggleUserOverlay } from '../../states/sideOverlaySlice';
 
 function UserInfo() {
     const dispatch = useDispatch();
+    const user = useSelector(state => state.user.user);
 
-    const handleSignOut = () => {
-        dispatch(toggelLogin());
+    const handleSignOut =async () => {
+        const token=JSON.stringify(localStorage.getItem("acceasToken"))
+        axios.post("http://localhost:3317/api/v1/user/logout",null,
+            {
+                headers:{
+                    "Authorization":`Bearer ${token}`
+                }
+            }
+        )
+        dispatch(logoutUser());
+        dispatch(toggleUserOverlay());
     }
 
     return (
         <div className="flex flex-col p-4 w-full rounded-lg">
 
             <div className="flex gap-3 pb-3 border-b border-gray-300">
-                <div className="rounded-full h-12 w-12 bg-pink-700 text-white flex items-center justify-center text-xl font-bold">
-                    A
-                </div>
+                <img className="rounded-full h-12 w-12 flex items-center justify-center" src={user?.avatar}/>
 
                 <div className="flex flex-col">
-                    <p className="font-semibold text-sm">Ashreek A R</p>
-                    <p className="text-xs text-gray-600">@ashreek123</p>
+                    <p className="font-semibold text-sm">{user?.fullName}</p>
+                    <p className="text-xs text-gray-600">@{user?.username}</p>
 
                     <Link to={'/feed/you'}>
                         <p className="text-blue-600 text-xs cursor-pointer hover:underline">

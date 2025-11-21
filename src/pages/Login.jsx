@@ -1,6 +1,10 @@
 import { useState, lazy, Suspense } from 'react'
 import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux';
 import LineLoader from '../components/Loaders/LineLoader';
+import axios from 'axios';
+import { loginUser } from '../states/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const LoginMode = lazy(() => import('../components/Login/LoginMode'));
 const LoginStep1 = lazy(() => import('../components/Login/LoginStep1'));
@@ -8,22 +12,32 @@ const LoginStep2 = lazy(() => import('../components/Login/LoginStep2'));
 
 function Login() {
   const { register, handleSubmit, setValue, trigger, formState: { errors } } = useForm();
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
 
   const [start, setStart] = useState(false);
   const [mode, setMode] = useState(null);
   const [step, setStep] = useState(0);
 
-  async function signIn() {
+  async function signIn(data) {
     const valid = await trigger([mode, "password"]);
     if (!valid) return;
 
-    alert("Login success!");
-    setStart(false);
-    setMode(null);
-    setStep(0);
-    setValue("email", "");
-    setValue("password", "");
-    setValue("username", "");
+    const user = await axios.post("http://localhost:3317/api/v1/user/login", data);
+
+    if (user) {
+      localStorage.setItem("acceasToken", user.data.data.acceastoken);
+      dispatch(loginUser(user.data.data.user));
+      navigate('/');
+      setStart(false);
+      setMode(null);
+      setStep(0);
+      setValue("email", "");
+      setValue("password", "");
+      setValue("username", "");
+    }else{
+      //error boundary
+    }
   }
 
   return (

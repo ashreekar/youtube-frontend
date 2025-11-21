@@ -2,14 +2,14 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import InputField from "../ButtonsAndInput/InputField";
 
-function CreateVideo() {
+function CreatePost() {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const addVideoFunction = (data) => {
+  const addPostFunction = (data) => {
     alert(JSON.stringify(data, null, 2));
   };
 
@@ -23,16 +23,16 @@ function CreateVideo() {
         <img src="youtube.png" className="h-14 w-16 mb-4" alt="youtube-logo" />
 
         <h2 className="text-4xl md:text-5xl font-semibold mb-4">
-          Create Video
+          Add a post
         </h2>
 
         <p className="text-lg text-gray-600 font-medium">
-          Enter your video details below
+          What's on your mind
         </p>
       </div>
 
       <form
-        onSubmit={handleSubmit(addVideoFunction)}
+        onSubmit={handleSubmit(addPostFunction)}
         className="w-full lg:w-1/2 max-w-xl bg-gray-50 p-4 rounded-2xl shadow-md space-y-2"
       >
         <InputField
@@ -50,7 +50,7 @@ function CreateVideo() {
           placeholder="Enter the video description"
           className={inputStyles}
           {...register("description", {
-            required: "Video description is required",
+            required: "Post description is required",
           })}
         />
         {errors.description && (
@@ -61,37 +61,19 @@ function CreateVideo() {
 
         <InputField
           type="text"
-          placeholder="Enter the video URL"
-          className={inputStyles}
-          {...register("videourl", {
-            required: "Video URL is required",
-            pattern: {
-              value: /^(http|https):\/\/[^ "]+$/,
-              message: "Enter a valid URL",
-            },
-          })}
-        />
-        {errors.videourl && (
-          <p className="text-red-500 text-sm">
-            {errors.videourl.message}
-          </p>
-        )}
-
-        <InputField
-          type="text"
           placeholder="Enter the thumbnail URL"
           className={inputStyles}
-          {...register("thumbnail", {
-            required: "Thumbnail URL is required",
+          {...register("images", {
+            required: "Image URL is required",
             pattern: {
               value: /^(http|https):\/\/[^ "]+$/,
               message: "Enter a valid URL",
             },
           })}
         />
-        {errors.thumbnail && (
+        {errors.images && (
           <p className="text-red-500 text-sm">
-            {errors.thumbnail.message}
+            {errors.images.message}
           </p>
         )}
 
@@ -106,4 +88,4 @@ function CreateVideo() {
   );
 }
 
-export default CreateVideo;
+export default CreatePost;

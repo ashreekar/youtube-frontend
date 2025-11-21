@@ -9,7 +9,15 @@ function Step3({ step, register, setStep }) {
         accept="image/png, image/jpg, image/jpeg, image/gif"
         className="w-full border border-gray-300 rounded-xl py-2 px-3 
           file:bg-black file:text-white file:px-4 file:py-2 file:rounded-xl"
-        {...register("image")}
+        {...register("avatar")}
+      />
+
+      <InputField
+        type="file"
+        accept="image/png, image/jpg, image/jpeg, image/gif"
+        className="w-full border border-gray-300 rounded-xl py-2 px-3 
+          file:bg-black file:text-white file:px-4 file:py-2 file:rounded-xl"
+        {...register("coverImage")}
       />
 
       <div className="flex justify-between w-full mt-6">

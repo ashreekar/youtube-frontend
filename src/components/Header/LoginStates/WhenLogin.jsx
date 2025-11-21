@@ -1,14 +1,11 @@
 import { FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 
-import Sidebar from "../../SidebarAndPopUp/Sidebar";
-import UserInfo from "../../Popup/UserInfo";
-import CreateInfo from "../../Popup/CreateInfo";
-
 import { toggleCreateOverlay, toggleUserOverlay } from "../../../states/sideOverlaySlice";
 
 function WhenLogin() {
   const dispatch = useDispatch();
+  const user=useSelector(state=>state.user.user);
 
   const handleClickProfile = () => {
     dispatch(toggleUserOverlay());
@@ -37,18 +34,17 @@ function WhenLogin() {
           <span className="capitalize">create</span>
         </div>
 
-        <div
+        <img
+        src={user.avatar}
           className="
-            rounded-full bg-pink-900 text-white 
+            rounded-full 
             h-9 w-9 flex items-center justify-center 
-            font-semibold cursor-pointer 
+            cursor-pointer 
             hover:opacity-80 transition
           "
           onClick={handleClickProfile}
           title="Profile"
-        >
-          A
-        </div>
+       />
       </div>
     </>
   );

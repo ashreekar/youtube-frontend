@@ -16,9 +16,9 @@ function Step1({ step, register, errors, setStep, trigger }) {
         placeholder="Full Name"
         className="w-full border border-gray-300 rounded-xl py-2 px-3 
           focus:ring-red-600 focus:border-red-600 outline-none"
-        {...register("name", { required: "Name is required" })}
+        {...register("fullName", { required: "Name is required" })}
       />
-      {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
+      {errors.fullName && <p className="text-red-500 text-sm">{errors.fullName.message}</p>}
 
       <InputField
         placeholder="Username"

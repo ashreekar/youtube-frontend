@@ -10,16 +10,16 @@ import CreateInfo from '../Popup/CreateInfo';
 import UserInfo from '../Popup/UserInfo';
 
 function GlobalOverlay() {
-  const dispatch = useDispatch();
-  const popup = useSelector(state => state.overlay.open);
+    const dispatch = useDispatch();
+    const videopopup = useSelector(state => state.overlay.open);
 
-  const isOpenUser = useSelector((state) => state.sideOverlay.user);
-  const isOpenCreate = useSelector((state) => state.sideOverlay.create);
+    const isOpenUser = useSelector((state) => state.sideOverlay.user);
+    const isOpenCreate = useSelector((state) => state.sideOverlay.create);
 
     return (
         <>
             {
-                popup && <Popup popupkey="video" closePopup={() => dispatch(toggleOverlay())}>
+                videopopup && <Popup popupkey="video" closePopup={() => dispatch(toggleOverlay())}>
                     <CreateVideo />
                 </Popup>
             }

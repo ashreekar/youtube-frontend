@@ -1,37 +1,37 @@
-import React, { useId } from 'react';
+import React, { useId, forwardRef } from 'react';
 
-const InputField = (
-    {
-      type = "text",
-      className = "",
-      label,
-      id,
-      labelHidden = false,
-      ...props
-    },
-    ref
-  ) => {
-    const uid = useId();
-    const inputId=id || uid;
+const InputField = forwardRef(function InputField(
+  {
+    type = "text",
+    className = "",
+    label,
+    id,
+    labelHidden = false,
+    ...props
+  },
+  ref
+) {
+  const uid = useId();
+  const inputId = id || uid;
 
-    return (
-      <div>
-        <label
-          htmlFor={inputId}
-          className={labelHidden ? "hidden" : "block"}
-        >
-          {label}
-        </label>
+  return (
+    <div>
+      <label
+        htmlFor={inputId}
+        className={labelHidden ? "hidden" : "block"}
+      >
+        {label}
+      </label>
 
-        <input
-          id={id}
-          ref={ref}
-          type={type}
-          className={className}
-          {...props}
-        />
-      </div>
-    );
-  }
+      <input
+        id={inputId}
+        ref={ref}
+        type={type}
+        className={className}
+        {...props}
+      />
+    </div>
+  );
+});
 
 export default InputField;
