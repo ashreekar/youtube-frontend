@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom'
 import LineLoader from '../components/Loaders/LineLoader';
 import axios from 'axios';
 import { loginUser } from '../states/userSlice';
+import Errorlogin from '../components/Popups/Errorlogin';
+import Popup from '../components/SidebarAndPopUp/Popup';
+import SpinLoader from '../components/Loaders/SpinLoader';
 
 const Step1 = lazy(() => import('../components/CreateAccount/Step1'));
 const Step2 = lazy(() => import('../components/CreateAccount/Step2'));
@@ -21,32 +24,61 @@ function CreateAccount() {
     formState: { errors },
   } = useForm()
 
-  const [step, setStep] = useState(0)
+  const [step, setStep] = useState(0);
+  const [laoding,setloading]=useState(false);
+  const [error,setError]=useState(null);
+
   const navigate = useNavigate()
 
   const onSubmit = async (data) => {
-    const formData = new FormData();
+    try {
+      setloading(true);
+      const formData = new FormData();
 
-    formData.append("avatar", data.avatar[0]);
-    formData.append("coverImage", data.coverImage[0]);
-    formData.append("username", data.username);
-    formData.append("fullName", data.fullName);
-    formData.append("email", data.email);
-    formData.append("password", data.password);
+      formData.append("avatar", data.avatar[0]);
+      formData.append("coverImage", data.coverImage[0]);
+      formData.append("username", data.username);
+      formData.append("fullName", data.fullName);
+      formData.append("email", data.email);
+      formData.append("password", data.password);
 
-    const user = await axios.post("http://localhost:3317/api/v1/user/create", formData, {
-      headers: { "Content-Type": "multipart/form-data" }
-    });
+      const user = await axios.post("http://localhost:3317/api/v1/user/create", formData, {
+        headers: { "Content-Type": "multipart/form-data" }
+      });
 
-    if (user) {
-      localStorage.setItem("acceasToken", user.data.data.acceastoken);
-      dispatch(loginUser(user.data.data.loggeduser));
+      if (user) {
+        localStorage.setItem("acceasToken", user.data.data.acceastoken);
+        dispatch(loginUser(user.data.data.loggeduser));
+      }
+      setStep(0);
+      navigate('/')
+    } catch (error) {
+      setError({
+        title: "Sigup Failed",
+        description: error.response?.data?.message || "Invalid credential",
+        customUrl: window.location.hostname,
+      });
+      setStep(0);
+      navigate('/create-account');
+    }finally{
+      setloading(false);
     }
-    navigate('/')
+  }
+
+   if (laoding) {
+    return <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4"><SpinLoader></SpinLoader></div>
+
   }
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+      {
+        error && (
+        <Popup popupkey="channel" closePopup={() => setError(null)}>
+          <Errorlogin {...error} />
+        </Popup>
+        )
+      }
 
       <div className="bg-white shadow-md p-6 md:p-10 w-full max-w-[900px]
         min-h-[60vh] border border-gray-200 rounded-xl 
@@ -92,6 +124,7 @@ function CreateAccount() {
               step={step}
               register={register}
               setStep={setStep}
+              errors={errors}
             />
           </Suspense>}
 

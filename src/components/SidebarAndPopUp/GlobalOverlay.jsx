@@ -8,6 +8,7 @@ import CreateVideo from "../Popups/CreateVideo";
 import Sidebar from './Sidebar';
 import CreateInfo from '../Popup/CreateInfo';
 import UserInfo from '../Popup/UserInfo';
+import ChannelCreation from '../Popups/ChannelCreation';
 
 function GlobalOverlay() {
     const dispatch = useDispatch();
@@ -16,11 +17,15 @@ function GlobalOverlay() {
     const isOpenUser = useSelector((state) => state.sideOverlay.user);
     const isOpenCreate = useSelector((state) => state.sideOverlay.create);
 
+    const user=useSelector((state)=>state.user.user);
+
     return (
         <>
             {
-                videopopup && <Popup popupkey="video" closePopup={() => dispatch(toggleOverlay())}>
-                    <CreateVideo />
+                videopopup && <Popup popupkey="channel" closePopup={() => dispatch(toggleOverlay())}>
+                   {
+                    user.channel.length === 0 ?<ChannelCreation/> : <CreateVideo />
+                   } 
                 </Popup>
             }
 

@@ -21,10 +21,10 @@ function CreateInfo() {
         <p>Upload video</p>
       </div>
 
-      <div className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+      <button disabled className="flex items-center gap-3 outline-none border-none w-full px-4 py-2 hover:bg-gray-100 cursor-not-allowed">
         <FaBroadcastTower className="text-lg" />
         <p>Go live</p>
-      </div>
+      </button>
 
       <div className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer">
         <RiMessage2Line className="text-lg" />

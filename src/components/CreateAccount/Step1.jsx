@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function Step1({ step, register, errors, setStep, trigger }) {
 
   async function handleNext() {
-    const valid = await trigger(["name", "username"]);
+    const valid = await trigger(["fullName", "username"]);
     if (!valid) return;
     setStep(1);
   }
