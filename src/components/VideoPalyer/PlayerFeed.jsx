@@ -4,7 +4,7 @@ import { useFetch } from "../../utils/useFetch";
 
 function PlayerFeed() {
   const { data, error, loading } = useFetch(
-    "https://youtube.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&chart=mostPopular&maxResults=50&regionCode=IN&key=AIzaSyApkq1vX5ecF8ghABa7uRrxiN7ndQslxCA",
+    "https://youtube.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&chart=mostPopular&maxResults=50&regionCode=IN&key=yt-api",
     "get"
   );
 

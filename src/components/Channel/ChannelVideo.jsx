@@ -5,7 +5,7 @@ import { useFetch } from '../../utils/useFetch';
 function ChannelVideo({ playListId }) {
 
   const { data, error, loading } = useFetch(
-    `https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId=${playListId}&maxResults=50&key=AIzaSyApkq1vX5ecF8ghABa7uRrxiN7ndQslxCA`,
+    `https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId=${playListId}&maxResults=50&key=yt-api-key`,
     "get"
   );
 

@@ -12,7 +12,7 @@ function VideoMeata({ video }) {
   const channelId = video.snippet.channelId;
 
   const { data, error, loading } = useFetch(
-    `https://youtube.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=${channelId}&key=AIzaSyApkq1vX5ecF8ghABa7uRrxiN7ndQslxCA`,
+    `https://youtube.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=${channelId}&key=yt-api-key`,
     "get"
   );
 

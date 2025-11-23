@@ -18,7 +18,7 @@ function ChannelPage() {
   }, [channelId])
 
   const { data, error, loading } = useFetch(
-    `https://youtube.googleapis.com/youtube/v3/channels?part=snippet,statistics,brandingSettings,contentDetails&id=${channelId || "UC2GC9I467mJttOXUbb_2uaQ"}&key=AIzaSyApkq1vX5ecF8ghABa7uRrxiN7ndQslxCA`,
+    `https://youtube.googleapis.com/youtube/v3/channels?part=snippet,statistics,brandingSettings,contentDetails&id=${channelId || "UC2GC9I467mJttOXUbb_2uaQ"}&key=ytapikey`,
     "get"
   );
 

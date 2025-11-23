@@ -3,7 +3,7 @@ import { useFetch } from '../../utils/useFetch';
 import Skeleton from '../Loaders/Skeleton';
 
 function VideoCard({ video, isSidebarOpen }) {
-    const { data, error, loading } = useFetch(`https://youtube.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=${video.snippet.channelId}&key=AIzaSyApkq1vX5ecF8ghABa7uRrxiN7ndQslxCA`, "get");
+    const { data, error, loading } = useFetch(`https://youtube.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=${video.snippet.channelId}&key=yt-api-key`, "get");
 
     if (!data) {
         return <div className="w-full max-w-5xl mx-auto p-4 flex flex-col gap-6">

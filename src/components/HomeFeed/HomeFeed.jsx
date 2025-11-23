@@ -7,7 +7,7 @@ import { useFetch } from '../../utils/useFetch.js';
 
 function HomeFeed() {
     const dispatch = useDispatch();
-    const { data, error, loading } = useFetch("https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=IN&key=AIzaSyApkq1vX5ecF8ghABa7uRrxiN7ndQslxCA", "get");
+    const { data, error, loading } = useFetch("https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=IN&key=yt-api", "get");
 
     const videosData = data?.items || [];
 

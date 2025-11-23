@@ -6,7 +6,7 @@ import { useFetch } from "../../utils/useFetch";
 
 function PlayerPageCard({ videoId }) {
   const { data, error, loading } = useFetch(
-    `https://youtube.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoId}&key=AIzaSyApkq1vX5ecF8ghABa7uRrxiN7ndQslxCA`,
+    `https://youtube.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoId}&key=yt-api-key`,
     "get"
   );
 
@@ -15,7 +15,7 @@ function PlayerPageCard({ videoId }) {
     loading: commentLoading,
     error: commentError,
   } = useFetch(
-    `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=${videoId}&maxResults=50&key=AIzaSyApkq1vX5ecF8ghABa7uRrxiN7ndQslxCA`,
+    `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=${videoId}&maxResults=50&key=yt-api-key`,
     "get"
   );
 
