@@ -1,55 +1,33 @@
 import React, { useEffect, useState } from "react";
 import CommentItem from "./CommentItem";
+import { useFetch } from "../../utils/useFetch";
 
-function CommentSection({ data }) {
-  const threads = data.items || [];
+function CommentSection({ id }) {
+  const { data, loading, error } = useFetch(`http://localhost:3317/api/v1/comment/video/${id}`,"get")
 
-  const comments = threads.map((item) => {
-    const c = item.snippet.topLevelComment.snippet;
+  console.log(data)
+
+  const comments = data?.data?.comments?.map((comment) => {
     return {
-      id: item.id,
-      author: c.authorDisplayName,
-      avatar: c.authorProfileImageUrl,
-      text: c.textDisplay,
-      likes: c.likeCount,
-      posted: c.publishedAt,
+      id: comment._id,
+      author: comment.commenter[0].username,
+      avatar: comment.commenter[0].avatar,
+      text: comment.content,
+      likes: comment.likes,
+      posted: comment.createdAt
     };
-  });
+  }) || [];
 
-  const [openComments, setOpenComments] = useState(false);
 
-  useEffect(() => {
-    setOpenComments(window.innerWidth >= 768);
-  }, []);
+  if(loading){
+    return <p>Loading</p>
+  }
 
   return (
     <section className="w-full">
-      {!openComments ? (
-        <button
-          onClick={() => setOpenComments(true)}
-          className="w-full text-left bg-gray-100 p-3 rounded-lg md:hidden"
-        >
-          <div className="flex items-center gap-3">
-            <div className="font-medium">Comments {comments.length}</div>
-            <div className="text-sm text-gray-600">• Tap to expand</div>
-          </div>
-
-          {comments[0] && (
-            <div className="mt-2 text-sm text-gray-700 line-clamp-1">
-              {comments[0].text}
-            </div>
-          )}
-        </button>
-      ) : (
         <div className="w-full mt-4">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">{comments.length} Comments</h2>
-            <button
-              onClick={() => setOpenComments(false)}
-              className="md:hidden text-sm text-gray-600"
-            >
-              Close
-            </button>
+            <h2 className="text-lg font-semibold">{data?.data?.totalComments} Comments</h2>
           </div>
 
           <div className="flex gap-3 mb-4">
@@ -75,12 +53,11 @@ function CommentSection({ data }) {
           </div>
 
           <div className="flex flex-col gap-6">
-            {comments.map((c) => (
-              <CommentItem key={c.id} comment={c} />
+            {comments.map((comment) => (
+              <CommentItem key={comment.id} comment={comment} />
             ))}
           </div>
         </div>
-      )}
     </section>
   );
 }

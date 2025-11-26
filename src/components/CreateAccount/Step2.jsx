@@ -1,5 +1,7 @@
 import InputField from '../ButtonsAndInput/InputField'
 import { useState } from 'react'
+import { FaEye } from "react-icons/fa"
+import { FaRegEyeSlash } from 'react-icons/fa6';
 
 function Step2({ step, register, errors, watch, setStep, trigger }) {
   const [showPassword, setShowPassword] = useState(false)
@@ -23,30 +25,36 @@ function Step2({ step, register, errors, watch, setStep, trigger }) {
       />
       {errors.email && <p className="text-red-500 text-sm">Email is required</p>}
 
-      <div className="flex items-center gap-2 mt-5">
+      <div className="relative w-full mt-5">
         <InputField
           placeholder="Password"
           type={showPassword ? "text" : "password"}
-          className="w-full border border-gray-300 rounded-xl py-2 px-3"
-          {...register("password", { required: true })}
+          className="w-full border border-gray-300 rounded-xl py-2 px-3 pr-10"
+          {...register("password", {
+            required: true,
+            pattern: {
+              value: /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$/gm,
+              message: "password must contain 1 number (0-9), 1 uppercase letters, 1 lowercase letters, 1 non-alpha numeric number, password is 8-16 characters with no space"
+            }
+          })}
         />
         <button
           type="button"
           onClick={() => setShowPassword(!showPassword)}
-          className="text-red-600 font-medium"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 cursor-pointer"
         >
-          {showPassword ? "Hide" : "Show"}
+          {showPassword ? <FaEye /> : <FaRegEyeSlash />}
         </button>
       </div>
-      {errors.password && <p className="text-red-500 text-sm">Password is required</p>}
+      {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
 
       <InputField
         placeholder="Confirm Password"
-        type={showPassword ? "text" : "password"}
+        type="password"
         className="w-full mt-5 border border-gray-300 rounded-xl py-2 px-3"
         {...register("confirmPassword", {
           required: "Confirm your password",
-          validate: (v) => v === passwordValue || "Passwords do not match",
+          validate: (value) => value === passwordValue || "Passwords do not match",
         })}
       />
       {errors.confirmPassword && (
@@ -59,7 +67,7 @@ function Step2({ step, register, errors, watch, setStep, trigger }) {
           type="button"
           onClick={() => setStep(0)}
           className="px-6 py-2.5 bg-gray-300 hover:bg-gray-400 text-black
-            rounded-full text-md"
+            rounded-full text-md cursor-pointer"
         >
           Back
         </button>
@@ -68,7 +76,7 @@ function Step2({ step, register, errors, watch, setStep, trigger }) {
           type="button"
           onClick={handleNext}
           className="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white
-            rounded-full text-lg"
+            rounded-full text-lg cursor-pointer"
         >
           Next
         </button>

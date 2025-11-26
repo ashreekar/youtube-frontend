@@ -22,9 +22,9 @@ function GlobalOverlay() {
     return (
         <>
             {
-                videopopup && <Popup popupkey="channel" closePopup={() => dispatch(toggleOverlay())}>
+                videopopup && <Popup popupkey={user?.channel?.length===0?"channel":"video"} closePopup={() => dispatch(toggleOverlay())}>
                    {
-                    user.channel.length === 0 ?<ChannelCreation/> : <CreateVideo />
+                    user?.channel.length === 0 ?<ChannelCreation/> : <CreateVideo />
                    } 
                 </Popup>
             }

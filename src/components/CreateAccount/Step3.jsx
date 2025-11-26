@@ -2,11 +2,11 @@ import InputField from '../ButtonsAndInput/InputField'
 
 function Step3({ step, register, setStep,errors }) {
   return (
-    <div className={`w-full ${step === 2 ? "block" : "hidden"}`}>
+    <div className={`w-full ${step === 2 ? "flex flex-col gap-4 items-center" : "hidden"}`}>
 
       <InputField
         type="file"
-        label="Avatar image"
+        label="Avatar image *"
         accept="image/png, image/jpg, image/jpeg, image/gif"
         className="w-full border border-gray-300 rounded-xl py-2 px-3 
           file:bg-black file:text-white file:px-4 mt-2
@@ -34,7 +34,7 @@ function Step3({ step, register, setStep,errors }) {
           type="button"
           onClick={() => setStep(1)}
           className="px-6 py-2.5 bg-gray-300 hover:bg-gray-400 
-            text-black rounded-full text-md"
+            text-black rounded-full text-md cursor-pointer"
         >
           Back
         </button>
@@ -42,7 +42,7 @@ function Step3({ step, register, setStep,errors }) {
         <button
           type="submit"
           className="px-6 py-2.5 bg-red-600 hover:bg-red-700 
-            text-white rounded-full text-lg"
+            text-white rounded-full text-lg cursor-pointer"
         >
           Create
         </button>

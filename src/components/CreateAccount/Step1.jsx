@@ -33,14 +33,14 @@ function Step1({ step, register, errors, setStep, trigger }) {
           type="button"
           onClick={handleNext}
           className="w-full sm:w-[40%] px-6 py-3 bg-red-600 hover:bg-red-700 
-            text-white rounded-full text-lg font-medium"
+            text-white rounded-full text-lg font-medium cursor-pointer"
         >
           Next
         </button>
 
         <Link
           to="/login"
-          className="text-blue-700 hover:text-blue-800 text-lg font-medium self-center"
+          className="text-blue-700 hover:text-blue-800 text-lg font-medium self-center cursor-pointer"
         >
           Sign in
         </Link>

@@ -7,7 +7,7 @@ import { RiFeedbackLine } from "react-icons/ri";
 import axios from 'axios';
 
 import { Link } from 'react-router-dom'
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser, toggelLogin } from "../../states/userSlice"
 import { toggleUserOverlay } from '../../states/sideOverlaySlice';
 
@@ -15,15 +15,16 @@ function UserInfo() {
     const dispatch = useDispatch();
     const user = useSelector(state => state.user.user);
 
-    const handleSignOut =async () => {
-        const token=JSON.stringify(localStorage.getItem("acceasToken"))
-        axios.post("http://localhost:3317/api/v1/user/logout",null,
+    const handleSignOut = async () => {
+        const token = localStorage.getItem("acceasToken")
+        axios.post("http://localhost:3317/api/v1/user/logout", null,
             {
-                headers:{
-                    "Authorization":`Bearer ${token}`
+                headers: {
+                    "Authorization": `Bearer ${token}`
                 }
             }
         )
+        localStorage.clear();
         dispatch(logoutUser());
         dispatch(toggleUserOverlay());
     }
@@ -32,7 +33,7 @@ function UserInfo() {
         <div className="flex flex-col p-4 w-full rounded-lg">
 
             <div className="flex gap-3 pb-3 border-b border-gray-300">
-                <img className="rounded-full h-12 w-12 flex items-center justify-center" src={user?.avatar}/>
+                <img className="rounded-full h-12 w-12 flex items-center justify-center" src={user?.avatar} />
 
                 <div className="flex flex-col">
                     <p className="font-semibold text-sm">{user?.fullName}</p>

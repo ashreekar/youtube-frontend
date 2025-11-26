@@ -8,8 +8,8 @@ const userSlice = createSlice(
             loggedIn: false
         },
         reducers: {
-            toggelLogin: (state, action) => { state.loggedIn = !state.loggedIn },
             loginUser: (state, action) => {
+                console.log(action.payload)
                 state.user = action.payload;
                 state.loggedIn= true;
             },

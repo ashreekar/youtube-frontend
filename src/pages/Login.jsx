@@ -85,16 +85,13 @@ function Login() {
           min-h-[60vh] border border-gray-200 rounded-xl
           flex flex-col md:flex-row gap-6 md:gap-10 items-center">
 
-        {/* LEFT SIDE – hidden on mobile */}
         <div className="hidden md:flex flex-col items-center justify-center w-1/2 gap-3 text-center">
           <img src="youtube.png" className="h-14 w-16" alt="youtube-logo" />
           <h2 className="text-4xl font-semibold">Sign In</h2>
           <p className="text-lg text-gray-600 font-medium">to continue to YouTube</p>
         </div>
 
-        {/* RIGHT SIDE */}
         <div className="w-full md:w-1/2">
-          {/* Mobile header */}
           <div className="md:hidden flex flex-col items-center mb-6">
             <img src="youtube.png" className="h-10 w-12" alt="youtube-logo" />
             <h2 className="text-3xl font-semibold mt-2">Sign In</h2>

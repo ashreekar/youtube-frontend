@@ -18,7 +18,7 @@ function LoginMode({ start, setMode, setStart }) {
           <button
             onClick={emailLogin}
             className="w-2/3 py-3 bg-red-600 hover:bg-red-700 text-white
-               rounded-full text-sm md:text-md font-medium transition"
+               rounded-full text-sm md:text-md font-medium transition cursor-pointer"
           >
             Login using Email
           </button>
@@ -26,7 +26,7 @@ function LoginMode({ start, setMode, setStart }) {
           <button
             onClick={usernameLogin}
             className="w-2/3 py-3 bg-red-600 hover:bg-red-700 text-white
-               rounded-full text-sm md:text-md font-medium transition"
+               rounded-full text-sm md:text-md font-medium transition cursor-pointer"
           >
             Login using Username
           </button>

@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-function Popup({ children, popupkey, closePopup }) {
+function Popup({ children, popupkey="channel", closePopup }) {
     const popupRef = useRef(null);
 
     const outerStyles = {
@@ -13,10 +13,10 @@ function Popup({ children, popupkey, closePopup }) {
 
     const innerStyles = {
         video:
-            "bg-white rounded-lg shadow-lg p-3 w-[90vw] h-[85vh] sm:w-[70vw] sm:h-[80vh]",
+            "bg-white rounded-lg shadow-lg p-3 w-[90vw] h-[85vh] sm:w-[70vw] sm:h-[97vh]",
         
         channel:
-            "bg-white rounded-xl shadow-lg p-4 w-[95vw] sm:w-[450px] max-h-[85vh] overflow-y-auto",
+            "bg-white rounded-xl shadow-lg p-4 w-[95vw] sm:w-[500px] max-h-[85vh] overflow-y-auto",
 
         share:
             "bg-white rounded-t-xl sm:rounded-xl shadow-lg p-4 w-full sm:w-[400px] h-auto sm:h-auto",

@@ -6,7 +6,7 @@ import { useFetch } from "../../utils/useFetch";
 
 function PlayerPageCard({ videoId }) {
   const { data, error, loading } = useFetch(
-    `https://youtube.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoId}&key=yt-api-key`,
+    `http://localhost:3317/api/v1/video/${videoId}`,
     "get"
   );
 
@@ -15,19 +15,19 @@ function PlayerPageCard({ videoId }) {
     loading: commentLoading,
     error: commentError,
   } = useFetch(
-    `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=${videoId}&maxResults=50&key=yt-api-key`,
+    `http://localhost:3317/api/v1/comment/video/${videoId}`,
     "get"
   );
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error loading video</p>;
-  if (!data || data.items.length === 0) return <p>No video found</p>;
+  if (!data || data.data.length === 0) return <p>No video found</p>;
 
-  const video = data.items[0];
+  const video = data.data[0];
 
   return (
     <div className="flex flex-col gap-6">
-      <Player source={`https://www.youtube.com/embed/${video.id}`} />
+      <Player source={`${video.url}`} />
 
       <div className="space-y-6">
         <VideoMeata video={video} />
@@ -35,7 +35,7 @@ function PlayerPageCard({ videoId }) {
         {commentLoading ? (
           <p>Loading comments...</p>
         ) : (
-          <CommentSection data={commentData} />
+          <CommentSection id={video._id} />
         )}
       </div>
     </div>

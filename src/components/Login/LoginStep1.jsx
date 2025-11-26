@@ -31,7 +31,7 @@ function LoginStep1({ step, mode, register, errors, trigger, setStep }) {
               type="button"
               onClick={handleNextClick}
               className="sm:w-[40%] w-full px-6 py-3 bg-red-600 hover:bg-red-700
-                text-white rounded-full text-lg font-medium transition"
+                text-white rounded-full text-lg font-medium transition cursor-pointer"
             >
               Next
             </button>

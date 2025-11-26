@@ -7,32 +7,12 @@ import { useFetch } from '../../utils/useFetch.js';
 
 function HomeFeed() {
     const dispatch = useDispatch();
-    const { data, error, loading } = useFetch("https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=IN&key=yt-api", "get");
-
-    const videosData = data?.items || [];
+    const { data, error, loading } = useFetch("http://localhost:3317/api/v1/video", "get");
 
     const isSidebarOpen = useSelector(store => store.sidebar.open);
 
-    useEffect(() => {
-        if (videosData.length > 0) {
-            const normalized = videosData.map((v) => ({
-                id: v.id,
-                title: v.snippet?.title || "",
-                channelName: v.snippet?.channelTitle || "",
-                description: v.snippet?.description || "",
-                thumbnail: v.snippet?.thumbnails?.medium?.url || "",
-                views: v.statistics?.viewCount || "0",
-                publishedAt: v.snippet?.publishedAt || "",
-                raw: v
-            }));
-
-            dispatch(setDataList(normalized));
-        }
-    }, [videosData]);
-
-
-    if (loading) {
-        return null;
+    if (!data) {
+        return <p>Loading</p>;
     }
 
     return (
@@ -48,8 +28,8 @@ function HomeFeed() {
      mt-8
   `}
             >
-                {videosData.map(video => (
-                    <Link to={`watch/${video.id}`}>
+                {data.data.map(video => (
+                    <Link to={`watch/${video._id}`} key={video._id}>
                         <VideoCard video={video} isSidebarOpen={isSidebarOpen} />
                     </Link>
                 ))}

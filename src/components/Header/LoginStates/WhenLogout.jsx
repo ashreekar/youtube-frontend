@@ -1,11 +1,8 @@
 import { FaRegCircleUser } from "react-icons/fa6";
-import { toggelLogin } from '../../../states/userSlice';
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 function WhenLogout() {
 
-  const dispatch = useDispatch();
   return (
 
     <Link to={'/login'}>
@@ -15,7 +12,6 @@ function WhenLogout() {
     text-blue-800
     text-lg
     hover:bg-blue-50 transition font-semibold"
-        onClick={() => dispatch(toggelLogin())}
       >
         <FaRegCircleUser className="text-2xl" />
         <span>sign in</span>
