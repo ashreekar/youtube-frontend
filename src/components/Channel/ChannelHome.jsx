@@ -5,27 +5,27 @@ import ChannelMeta from './ChannelMeta';
 import SwitchTabs from './SwitchTabs';
 import ChannelVideo from './ChannelVideo';
 
-function ChannelHome({ setIsInfo, self, data }) {
+function ChannelHome({ setIsInfo, self, data, id, changeSubscription,isSubscribed }) {
   const isSidebarOpen = useSelector(state => state.sidebar.open);
-
-  const channel = data.items[0];
 
   return (
     <div className={`${isSidebarOpen ? "ml-4 md:ml-64" : "ml-4 md:ml-24"} flex flex-col`}>
-      
-      <ChannelBanner url={channel.brandingSettings.image.bannerExternalUrl} />
 
-      <ChannelMeta 
-        setIsInfo={setIsInfo} 
-        self={self} 
-        data={channel} 
+      <ChannelBanner url={data.meta.avatar} />
+
+      <ChannelMeta
+        setIsInfo={setIsInfo}
+        self={self}
+        data={data}
+        isSubscribed={isSubscribed}
+        changeSubscription={changeSubscription}
       />
 
       <SwitchTabs />
 
-      <ChannelVideo 
-        channelId={channel.id} 
-        playListId={channel.contentDetails.relatedPlaylists.uploads} 
+      <ChannelVideo
+        channelId={id}
+        video={data?.content?.videos || []}
       />
 
     </div>
