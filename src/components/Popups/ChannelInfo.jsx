@@ -2,22 +2,25 @@ import React from 'react';
 import { FaGlobe, FaInfo, FaSubscript, FaTiktok, FaVideo } from 'react-icons/fa';
 import { FaX } from 'react-icons/fa6';
 
-function ChannelInfo({ data }) {
-  const channel = data?.items?.[0];
+function ChannelInfo({ data, channelId }) {
 
-  const title = channel?.snippet?.title || "Unknown Channel";
-  const description = channel?.snippet?.description || "No description available.";
-  const customUrl = channel?.snippet?.customUrl
-    ? `https://www.youtube.com/${channel.snippet.customUrl}`
-    : "No custom URL";
+  const description = `
+${data?.meta?.name} is a channel that delivers engaging and easy-to-watch content for all audiences. 
+With over ${data?.stats?.total_videos} videos uploaded so far and a growing community of ${data?.stats?.total_subscribers} subscribers, 
+this channel shares fresh perspectives, reviews, reactions, and interesting breakdowns across different topics. 
+Stay connected for more updates, new uploads, and enjoyable content from ${data?.meta?.handle}.
+`.trim();
 
-  const published = new Date(channel?.snippet?.publishedAt).toDateString();
+  const title = data?.meta?.name || "Unknown Channel";
+  const customUrl = `https://www.youtube.com/${channelId}` || "https://www.youtube.com/"
 
-  const subscribers = channel?.statistics?.subscriberCount
-    ? Number(channel.statistics.subscriberCount).toLocaleString()
+  const published = new Date(data?.meta?.createdAt).toLocaleDateString() || "1 year ago";
+
+  const subscribers = data?.stats?.total_subscribers
+    ? Number(data.stats.total_subscribers).toLocaleString()
     : "—";
 
-  const videos = channel?.statistics?.videoCount || "—";
+  const videos = data?.stats?.total_videos || "—";
 
   return (
     <div className="flex flex-col h-full">
