@@ -3,20 +3,22 @@ import { SiYoutubeshorts } from "react-icons/si";
 import { MdOutlineSubscriptions } from "react-icons/md";
 
 function YoutubeSidebar() {
- const componentsOnClose = [
-  {
-    name: "Home",
-    element: <AiOutlineHome className="w-6 h-6" />
-  },
-  {
-    name: "Shorts",
-    element: <SiYoutubeshorts className="w-5 h-5" />
-  },
-  {
-    name: "Subscriptions",
-    element: <MdOutlineSubscriptions className="w-6 h-6" />
-  }
-];
+  const componentsOnClose = [
+    {
+      name: "Home",
+      element: <AiOutlineHome className="w-6 h-6" />,
+      link: "/"
+    },
+    {
+      name: "Shorts",
+      element: <SiYoutubeshorts className="w-5 h-5" />,
+      link: "/features/onit"
+    },
+    {
+      name: "Subscriptions",
+      element: <MdOutlineSubscriptions className="w-6 h-6" />
+    }
+  ];
 
   return (
     <div className="w-full flex flex-col">

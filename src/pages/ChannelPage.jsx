@@ -84,7 +84,6 @@ function ChannelPage() {
         const token = localStorage.getItem("acceasToken")
         await axios.delete(
           `http://localhost:3317/api/v1/channel/${channelId}`,
-          {},
           { headers: { Authorization: `Bearer ${token}` } }
         );
       } else {

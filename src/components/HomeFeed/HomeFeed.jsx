@@ -16,18 +16,8 @@ function HomeFeed() {
     }
 
     return (
-        <div
-            className={`
-          flex-1 transition-all duration-300 
-          ${isSidebarOpen ? "ml-4 md:ml-64" : "ml-4 sm:ml-20"}
-        `}
-        >
-            <div
-                className={`
-    grid gap-5 p-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3
-     mt-8
-  `}
-            >
+        <div className={`flex-1 transition-all duration-300 ${isSidebarOpen ? "ml-4 md:ml-64" : "ml-4 sm:ml-20"}`}>
+            <div className={`grid gap-5 p-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-8`}>
                 {data.data.map(video => (
                     <Link to={`watch/${video._id}`} key={video._id}>
                         <VideoCard video={video} isSidebarOpen={isSidebarOpen} />

@@ -1,13 +1,28 @@
 import React, { useEffect, useState } from "react";
 import CommentItem from "./CommentItem";
 import { useFetch } from "../../utils/useFetch";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import InputField from "../ButtonsAndInput/InputField";
+import { useForm } from 'react-hook-form';
 
 function CommentSection({ id }) {
-  const { data, loading, error } = useFetch(`http://localhost:3317/api/v1/comment/video/${id}`,"get")
+  const { data, loading, error } = useFetch(`http://localhost:3317/api/v1/comment/video/${id}`, "get")
+  const user = useSelector(state => state.user.user);
 
-  console.log(data)
+  const [commentData, setCommentData] = useState(null);
+  const [visibleButton, setVisibleButton] = useState(false);
 
-  const comments = data?.data?.comments?.map((comment) => {
+  useEffect(() => {
+    if (data) {
+      setCommentData(data);
+    }
+  }, [data])
+
+  const { register, handleSubmit, reset, watch } = useForm();
+  const commentVal = watch("comment", "")
+
+  const comments = commentData?.data?.comments?.map((comment) => {
     return {
       id: comment._id,
       author: comment.commenter[0].username,
@@ -18,46 +33,72 @@ function CommentSection({ id }) {
     };
   }) || [];
 
+  async function addComment(data) {
+    try {
+      const token = localStorage.getItem("acceasToken")
+      await axios.post(`http://localhost:3317/api/v1/comment/video/${id}`, {
+        content: data.comment
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
 
-  if(loading){
+      const updated = await axios.get(
+        `http://localhost:3317/api/v1/comment/video/${id}`
+      );
+
+      setCommentData(updated.data);
+      setIsActiveButton(false)
+
+      reset();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+  if (loading) {
     return <p>Loading</p>
   }
 
   return (
     <section className="w-full">
-        <div className="w-full mt-4">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">{data?.data?.totalComments} Comments</h2>
-          </div>
-
-          <div className="flex gap-3 mb-4">
-            <img
-              className="w-10 h-10 rounded-full"
-              src="https://randomuser.me/api/portraits/men/10.jpg"
-              alt="user"
-            />
-            <div className="flex-1">
-              <input
-                className="w-full border-b border-gray-300 pb-2 focus:outline-none"
-                placeholder="Add a public comment..."
-              />
-              <div className="flex justify-end gap-2 mt-3">
-                <button className="px-3 py-1 rounded-full text-sm">
-                  Cancel
-                </button>
-                <button className="px-3 py-1 rounded-full bg-blue-600 text-white text-sm">
-                  Comment
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-6">
-            {comments.map((comment) => (
-              <CommentItem key={comment.id} comment={comment} />
-            ))}
-          </div>
+      <div className="w-full mt-4">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold">{data?.data?.totalComments} Comments</h2>
         </div>
+
+        <div className="flex gap-3 mb-4">
+          <img
+            className="w-10 h-10 rounded-full"
+            src={user?.avatar || "https://randomuser.me/api/portraits/men/10.jpg"}
+            alt="user"
+          />
+          <form className="flex-1" onSubmit={handleSubmit(addComment)}>
+            <InputField
+              onClick={() => setVisibleButton(true)}
+              className="w-full border-b border-gray-300 pb-2 focus:outline-none"
+              placeholder="Add a public comment..."
+              {...register("comment")}
+            />
+            <div className={visibleButton ? "flex justify-end gap-2 mt-3" : "hidden"}>
+              <button onClick={() => setVisibleButton(false)} type="button" className="px-3 py-2 rounded-full text-sm hover:bg-gray-100 cursor-pointer font-medium">
+                Cancel
+              </button>
+              <button type="submit" disabled={commentVal.trim() === ""} className={commentVal.trim() !== "" ? "px-3 py-2 font-medium rounded-full bg-blue-600 text-white text-sm cursor-pointer" : "px-3 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-500 cursor-pointer"}>
+                Comment
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div className="flex flex-col gap-6">
+          {comments.map((comment) => (
+            <CommentItem key={comment.id} comment={comment} />
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

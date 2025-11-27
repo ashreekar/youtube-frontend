@@ -23,7 +23,7 @@ function VideoCard({ video, isSidebarOpen }) {
                     </h3>
                     <p className="text-gray-600 text-xs">{video.owner?.name}</p>
                     <p className="text-gray-600 text-xs flex gap-1">
-                        {Math.floor(video.views / 100000)} L <BsDot /> {video.createdAt}
+                        {Math.floor(video.views / 100000)} L <BsDot /> {new Date(video.createdAt).toLocaleDateString()}
                     </p>
                 </div>
             </div>

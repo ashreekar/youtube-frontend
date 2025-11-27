@@ -1,6 +1,6 @@
 import { useState, lazy, Suspense } from 'react'
 import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LineLoader from '../components/Loaders/LineLoader';
 import axios from 'axios';
 import { loginUser } from '../states/userSlice';
@@ -25,6 +25,12 @@ function Login() {
   // fetch states
   const [laoding, setLoding] = useState(false);
   const [loginError, setLoginError] = useState(null);
+
+  const user = useSelector(state => state.user.user);
+
+  if (user) {
+    navigate('/');
+  }
 
   async function signIn(data) {
     setLoding(true);

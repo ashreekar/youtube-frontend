@@ -45,10 +45,7 @@ function CommentItem({ comment }) {
           </span>
         </div>
 
-        <p
-          className="text-sm mt-1 text-gray-800"
-          dangerouslySetInnerHTML={{ __html: comment.text }}
-        />
+        <p className="text-sm mt-1 text-gray-800">{comment.text}</p>
 
         <div className="flex items-center gap-4 mt-2">
           <button

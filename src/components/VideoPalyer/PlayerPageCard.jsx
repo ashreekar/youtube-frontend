@@ -10,15 +10,6 @@ function PlayerPageCard({ videoId }) {
     "get"
   );
 
-  const {
-    data: commentData,
-    loading: commentLoading,
-    error: commentError,
-  } = useFetch(
-    `http://localhost:3317/api/v1/comment/video/${videoId}`,
-    "get"
-  );
-
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error loading video</p>;
   if (!data || data.data.length === 0) return <p>No video found</p>;
@@ -32,11 +23,7 @@ function PlayerPageCard({ videoId }) {
       <div className="space-y-6">
         <VideoMeata video={video} />
 
-        {commentLoading ? (
-          <p>Loading comments...</p>
-        ) : (
           <CommentSection id={video._id} />
-        )}
       </div>
     </div>
   );

@@ -10,10 +10,15 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser, toggelLogin } from "../../states/userSlice"
 import { toggleUserOverlay } from '../../states/sideOverlaySlice';
+import { toggleOverlay } from '../../states/overlaySlice';
 
 function UserInfo() {
     const dispatch = useDispatch();
     const user = useSelector(state => state.user.user);
+
+    const handleCreateVideo = () => {
+        dispatch(toggleOverlay())
+    }
 
     const handleSignOut = async () => {
         const token = localStorage.getItem("acceasToken")
@@ -39,20 +44,30 @@ function UserInfo() {
                     <p className="font-semibold text-sm">{user?.fullName}</p>
                     <p className="text-xs text-gray-600">@{user?.username}</p>
 
-                    <Link to={'/feed/you'}>
-                        <p className="text-blue-600 text-xs cursor-pointer hover:underline">
-                            View your channel
-                        </p>
-                    </Link>
+                    {
+                        user?.channel.length === 0 ?
+                            <p onClick={handleCreateVideo} className="text-blue-600 text-xs cursor-pointer hover:underline">
+                                Create channel
+                            </p> :
+                            <Link to={'/feed/you'}>
+                                <p className="text-blue-600 text-xs cursor-pointer hover:underline">
+                                    View your channel
+                                </p>
+                            </Link>
+                    }
                 </div>
             </div>
 
             <div className="flex flex-col py-2 border-b border-gray-300 text-sm">
-                <Link to={'/feed/you'}>
-                    <button className="flex items-center gap-3 p-2 text-black cursor-pointer">
-                        <FaYoutube /> Your channel
-                    </button>
-                </Link>
+                {
+                    user?.channel.length === 0 ?
+                        null :
+                        <Link to={'/feed/you'}>
+                            <button className="flex items-center gap-3 p-2 text-black cursor-pointer">
+                                <FaYoutube /> Your channel
+                            </button>
+                        </Link>
+                }
 
                 <button disabled className="flex items-center gap-3 p-2 text-gray-400 cursor-not-allowed">
                     <MdOutlineSwitchAccount /> Switch account

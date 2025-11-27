@@ -1,5 +1,5 @@
 import { useState, lazy, Suspense } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import LineLoader from '../components/Loaders/LineLoader';
@@ -29,6 +29,12 @@ function CreateAccount() {
   const [error, setError] = useState(null);
 
   const navigate = useNavigate()
+
+  const user = useSelector(state => state.user.user);
+
+  if (user) {
+    navigate('/');
+  }
 
   const onSubmit = async (data) => {
     try {
