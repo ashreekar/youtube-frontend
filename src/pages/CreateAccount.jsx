@@ -25,8 +25,8 @@ function CreateAccount() {
   } = useForm()
 
   const [step, setStep] = useState(0);
-  const [laoding,setloading]=useState(false);
-  const [error,setError]=useState(null);
+  const [laoding, setloading] = useState(false);
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate()
 
@@ -60,23 +60,26 @@ function CreateAccount() {
       });
       setStep(0);
       navigate('/create-account');
-    }finally{
+    } finally {
       setloading(false);
     }
   }
 
-   if (laoding) {
-    return <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4"><SpinLoader></SpinLoader></div>
-
+  if (laoding) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+        <SpinLoader></SpinLoader>
+      </div>
+    )
   }
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
       {
         error && (
-        <Popup popupkey="channel" closePopup={() => setError(null)}>
-          <Errorlogin {...error} />
-        </Popup>
+          <Popup popupkey="channel" closePopup={() => setError(null)}>
+            <Errorlogin {...error} />
+          </Popup>
         )
       }
 
