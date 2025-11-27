@@ -13,6 +13,13 @@ function CommentSection({ id }) {
   const [commentData, setCommentData] = useState(null);
   const [visibleButton, setVisibleButton] = useState(false);
 
+
+  const [activeMenu, setActiveMenu] = useState({
+    author: null,
+    id: null,
+    state: false
+  });
+
   useEffect(() => {
     if (data) {
       setCommentData(data);
@@ -33,7 +40,7 @@ function CommentSection({ id }) {
     };
   }) || [];
 
-  async function addComment(data) {
+  const addComment = async (data) => {
     try {
       const token = localStorage.getItem("acceasToken")
       await axios.post(`http://localhost:3317/api/v1/comment/video/${id}`, {
@@ -49,7 +56,7 @@ function CommentSection({ id }) {
       );
 
       setCommentData(updated.data);
-      setIsActiveButton(false)
+      setVisibleButton(false)
 
       reset();
     } catch (error) {
@@ -57,6 +64,33 @@ function CommentSection({ id }) {
     }
   }
 
+  const editComment = async (comment) => {
+
+  }
+
+  const deleteComment = async (comment) => {
+    try {
+      const token = localStorage.getItem("acceasToken");
+      const deleted = await axios.delete(`http://localhost:3317/api/v1/comment/${comment.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      const updated = await axios.get(
+        `http://localhost:3317/api/v1/comment/video/${id}`
+      );
+
+      setCommentData(updated.data);
+      setVisibleButton(false)
+
+      reset();
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   if (loading) {
     return <p>Loading</p>
@@ -95,7 +129,7 @@ function CommentSection({ id }) {
 
         <div className="flex flex-col gap-6">
           {comments.map((comment) => (
-            <CommentItem key={comment.id} comment={comment} />
+            <CommentItem key={comment.id} deleteComment={deleteComment} comment={comment} activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
           ))}
         </div>
       </div>
