@@ -1,6 +1,10 @@
 import React from "react";
+import { dateFormatter } from "../../utils/dateFormatter"
+import { viewsFormatter } from "../../utils/viewsFormatter"
 
 function PlayerCard({ video }) {
+  const createdAt = dateFormatter(video.publishedAt);
+  const views = viewsFormatter(video.views);
 
   return (
     <article className="w-full flex flex-col sm:flex-row gap-3 cursor-pointer">
@@ -29,7 +33,7 @@ function PlayerCard({ video }) {
         </h4>
 
         <p className="text-xs text-gray-500">
-          {video.channelName} • {video.views} • {video.publishedAt}
+          {video.channelName}  {views} views  {createdAt}
         </p>
       </div>
     </article>

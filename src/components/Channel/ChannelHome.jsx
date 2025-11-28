@@ -4,9 +4,16 @@ import ChannelBanner from './ChannelBanner';
 import ChannelMeta from './ChannelMeta';
 import SwitchTabs from './SwitchTabs';
 import ChannelVideo from './ChannelVideo';
+import { useNavigate } from 'react-router-dom';
 
-function ChannelHome({ setIsInfo, self, data, id, changeSubscription,isSubscribed }) {
+function ChannelHome({ setIsInfo, self, data, id, changeSubscription, isSubscribed }) {
+  const navigate = useNavigate();
   const isSidebarOpen = useSelector(state => state.sidebar.open);
+  const user = useSelector(state => state.user.loggedIn);
+
+  if (self && !user) {
+    return navigate('/login');
+  }
 
   return (
     <div className={`${isSidebarOpen ? "ml-4 md:ml-64" : "ml-4 md:ml-24"} flex flex-col`}>

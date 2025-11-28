@@ -1,6 +1,10 @@
 import { HiDotsVertical } from "react-icons/hi";
+import { dateFormatter } from "../../utils/dateFormatter"
+import { viewsFormatter } from "../../utils/viewsFormatter"
 
 function ResultVideoCard({ video }) {
+    const createdAt = dateFormatter(video.createdAt);
+    const views = viewsFormatter(video.views);
     return (
         <div
             className="
@@ -49,22 +53,22 @@ function ResultVideoCard({ video }) {
                 </div>
 
                 <p className="text-gray-600 text-xs sm:text-sm">
-                    {video.views} • {video.publishedAt}
+                    {views} views  {createdAt}
                 </p>
 
                 <div className="flex items-center gap-3">
                     <img
                         src={video.thumbnail}
                         className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover"
-                        alt={video.channelName}
+                        alt={video.owner.name}
                     />
                     <p className="text-gray-600 text-xs sm:text-sm">
-                        {video.channelName}
+                        {video.owner.name}
                     </p>
                 </div>
 
                 <p className="hidden sm:block text-gray-700 text-sm">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    {video.description.slice(0,150)}....
                 </p>
             </div>
         </div>

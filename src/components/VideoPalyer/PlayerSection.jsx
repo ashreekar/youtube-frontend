@@ -11,7 +11,7 @@ function PlayerSection({videoId}) {
             <PlayerPageCard videoId={videoId} />
           </div>
           <aside className="w-full lg:w-1/3">
-            <PlayerFeed />
+            <PlayerFeed videoId={videoId} />
           </aside>
         </div>
       </div>

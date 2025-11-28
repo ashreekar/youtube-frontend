@@ -1,8 +1,9 @@
 import React from "react";
 import PlayerCard from "./PlayerCard";
 import { useFetch } from "../../utils/useFetch";
+import { Link } from "react-router-dom";
 
-function PlayerFeed() {
+function PlayerFeed({ videoId }) {
   const { data, error, loading } = useFetch(
     "http://localhost:3317/api/v1/video", "get"
   );
@@ -28,8 +29,10 @@ function PlayerFeed() {
 
       <div className="flex flex-col gap-4">
         {videosData.map((video, index) => (
-          index <= 19 &&
-          <PlayerCard key={video.id} video={video} />
+          index <= 19 && video.id !== videoId &&
+          <Link key={video.id} to={`/watch/${video.id}`}>
+            <PlayerCard key={video.id} video={video} />
+          </Link>
         ))}
       </div>
     </div>

@@ -1,6 +1,10 @@
 import React from "react";
+import { dateFormatter } from "../../utils/dateFormatter"
+import { viewsFormatter } from "../../utils/viewsFormatter"
 
 function VideoCards({ video }) {
+  const createdAt = dateFormatter(video.uploadedAt);
+  const views = viewsFormatter(video.views);
   return (
     <div className="w-full max-w-sm cursor-pointer">
 
@@ -16,7 +20,7 @@ function VideoCards({ video }) {
         </h3>
 
         <p className="text-xs text-gray-600 mt-1">
-          {video.uploadedAt?.slice(0, 10)}
+          {createdAt}
         </p>
       </div>
     </div>

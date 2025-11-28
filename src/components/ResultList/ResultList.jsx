@@ -27,9 +27,9 @@ function ResultList() {
                 mt-12
             ">
                 {videosData.map(video => (
-                    <ResultVideoCard 
-                        key={video.id} 
-                        video={video} 
+                    <ResultVideoCard
+                        key={video._id}
+                        video={video}
                         isSidebarOpen={isSidebarOpen}
                     />
                 ))}

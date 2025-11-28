@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import VideoCard from '../cards/VideoCard.jsx';
-import { setDataList } from '../../states/searchSlic.js'
 import { Link } from 'react-router-dom';
 import { useFetch } from '../../utils/useFetch.js';
 
 function HomeFeed() {
-    const dispatch = useDispatch();
     const { data, error, loading } = useFetch("http://localhost:3317/api/v1/video", "get");
 
     const isSidebarOpen = useSelector(store => store.sidebar.open);

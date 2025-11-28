@@ -1,7 +1,12 @@
 import { BsDot } from 'react-icons/bs';
 import Skeleton from '../Loaders/Skeleton';
+import { dateFormatter } from "../../utils/dateFormatter"
+import { viewsFormatter } from "../../utils/viewsFormatter"
 
 function VideoCard({ video, isSidebarOpen }) {
+    const createdAt = dateFormatter(video.createdAt);
+    const views = viewsFormatter(video.views);
+
     return (
         <div
             key={video?._id}
@@ -23,7 +28,7 @@ function VideoCard({ video, isSidebarOpen }) {
                     </h3>
                     <p className="text-gray-600 text-xs">{video.owner?.name}</p>
                     <p className="text-gray-600 text-xs flex gap-1">
-                        {Math.floor(video.views / 100000)} L <BsDot /> {new Date(video.createdAt).toLocaleDateString()}
+                        {views} views <BsDot /> {createdAt}
                     </p>
                 </div>
             </div>
