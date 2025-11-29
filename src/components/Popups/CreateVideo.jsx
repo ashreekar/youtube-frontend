@@ -19,10 +19,9 @@ function CreateVideo() {
   } = useForm();
 
   const thumbnailFile = watch("thumbnail");
-  const preview =
-    thumbnailFile && thumbnailFile.length > 0
-      ? URL.createObjectURL(thumbnailFile[0])
-      : null;
+  const preview = thumbnailFile && thumbnailFile.length > 0
+    ? URL.createObjectURL(thumbnailFile[0])
+    : null;
 
   const addVideoFunction = async (data) => {
     try {

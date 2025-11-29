@@ -6,7 +6,7 @@ import SwitchTabs from './SwitchTabs';
 import ChannelVideo from './ChannelVideo';
 import { useNavigate } from 'react-router-dom';
 
-function ChannelHome({ setIsInfo, self, data, id, changeSubscription, isSubscribed }) {
+function ChannelHome({ setIsInfo, self, data, id, changeSubscription, isSubscribed, setManageVideosVisible }) {
   const navigate = useNavigate();
   const isSidebarOpen = useSelector(state => state.sidebar.open);
   const user = useSelector(state => state.user.loggedIn);
@@ -26,6 +26,7 @@ function ChannelHome({ setIsInfo, self, data, id, changeSubscription, isSubscrib
         data={data}
         isSubscribed={isSubscribed}
         changeSubscription={changeSubscription}
+        setManageVideosVisible={setManageVideosVisible}
       />
 
       <SwitchTabs />

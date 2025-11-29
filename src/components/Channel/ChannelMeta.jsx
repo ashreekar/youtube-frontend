@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function ChannelMeta({ setIsInfo, self, data, isSubscribed, changeSubscription }) {
+function ChannelMeta({ setIsInfo, self, data, isSubscribed, changeSubscription, setManageVideosVisible }) {
 
   const description = `
 ${data.meta.name} is a channel that delivers engaging and easy-to-watch content for all audiences. 
@@ -42,7 +42,7 @@ Stay connected for more updates, new uploads, and enjoyable content from ${data.
             (
               <div className="mt-4 flex gap-10">
                 <button className="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 font-medium">Customise channel</button>
-                <button className="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 font-medium">Manage Videos</button>
+                <button onClick={() => setManageVideosVisible(true)} className="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 font-medium">Manage Videos</button>
               </div>
             ) :
             (

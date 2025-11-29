@@ -12,7 +12,8 @@ function ChannelVideo({ channelId, video }) {
             id: videoItem._id,
             title: videoItem.title,
             thumbnail: videoItem.thumbnail,
-            uploadedAt: videoItem.createdAt
+            uploadedAt: videoItem.createdAt,
+            views: videoItem.views
           }}
         />
       ))}

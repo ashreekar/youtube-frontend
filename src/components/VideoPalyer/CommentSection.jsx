@@ -65,7 +65,13 @@ function CommentSection({ id }) {
   }
 
   const editComment = async (comment) => {
+    try {
+      const token = localStorage.getItem("acceasToken");
 
+      
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const deleteComment = async (comment) => {

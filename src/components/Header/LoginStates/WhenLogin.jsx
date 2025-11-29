@@ -35,9 +35,9 @@ function WhenLogin() {
         </div>
 
         <img
-        src={user?.avatar}
+          src={user?.avatar}
           className="
-            rounded-full 
+            rounded-full relative
             h-9 w-9 flex items-center justify-center 
             cursor-pointer 
             hover:opacity-80 transition

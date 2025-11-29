@@ -6,6 +6,7 @@ import ChannelInfo from "../components/Popups/ChannelInfo";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ManageVideos from "../components/Channel/Videos/ManageVideos";
 
 function ChannelPage() {
 
@@ -20,6 +21,11 @@ function ChannelPage() {
   const [error, setError] = useState(null);
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [changeSubs, setChangeSubs] = useState(true);
+
+  // states for managing videos
+  const [manageVideosVisible, setManageVideosVisible] = useState(false);
+  const [videoChanged, setvideoChanged] = useState(false);
+  const [videoDeleted, setvideoDeleted] = useState(false);
 
   useEffect(() => {
     async function fetchDetails() {
@@ -50,7 +56,7 @@ function ChannelPage() {
     }
 
     fetchDetails();
-  }, [channelId, changeSubs]);
+  }, [channelId, changeSubs, videoChanged,videoDeleted]);
 
   useEffect(() => {
     try {
@@ -66,13 +72,13 @@ function ChannelPage() {
         setIsSubscribed(subscription?.data?.data?.subscribed || false)
       }
 
-      getSubscription();
+      if (channelId) getSubscription();
     } catch (error) {
       setIsSubscribed(false);
     } finally {
       setLoading(false)
     }
-  }, [channelId, changeSubs])
+  }, [channelId, changeSubs, videoDeleted])
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error loading channel</p>;
@@ -109,7 +115,11 @@ function ChannelPage() {
       <div className="flex">
         <Sidebar />
         <div className="flex-1 min-h-screen overflow-x-hidden">
-          <ChannelHome changeSubscription={changeSubscription} setIsInfo={setIsInfo} self={self} data={data} id={channelId} isSubscribed={isSubscribed} />
+          <ChannelHome
+            changeSubscription={changeSubscription}
+            setIsInfo={setIsInfo} self={self} data={data}
+            id={channelId} isSubscribed={isSubscribed}
+            setManageVideosVisible={setManageVideosVisible} />
         </div>
       </div>
 
@@ -118,6 +128,14 @@ function ChannelPage() {
           <ChannelInfo data={data} channelId={channelId} />
         </Popup>
       )}
+
+      {
+        manageVideosVisible && (
+          <Popup popupkey="manageContent" closePopup={() => setManageVideosVisible(false)}>
+            <ManageVideos closePopup={() => setManageVideosVisible(false)} videos={data?.content?.videos || []} setvideoChanged={setvideoChanged} setvideoDeleted={setvideoDeleted} />
+          </Popup>
+        )
+      }
     </>
   );
 }

@@ -49,7 +49,7 @@ function UserInfo() {
                             <p onClick={handleCreateVideo} className="text-blue-600 text-xs cursor-pointer hover:underline">
                                 Create channel
                             </p> :
-                            <Link to={'/feed/you'}>
+                            <Link to={'/feed/you'} onClick={()=>dispatch(toggleUserOverlay())}>
                                 <p className="text-blue-600 text-xs cursor-pointer hover:underline">
                                     View your channel
                                 </p>
@@ -62,7 +62,7 @@ function UserInfo() {
                 {
                     user?.channel.length === 0 ?
                         null :
-                        <Link to={'/feed/you'}>
+                        <Link to={'/feed/you'} onClick={()=>dispatch(toggleUserOverlay())}>
                             <button className="flex items-center gap-3 p-2 text-black cursor-pointer">
                                 <FaYoutube /> Your channel
                             </button>

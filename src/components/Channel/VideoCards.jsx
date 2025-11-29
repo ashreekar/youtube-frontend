@@ -18,10 +18,14 @@ function VideoCards({ video }) {
         <h3 className="font-semibold text-sm leading-tight line-clamp-2">
           {video.title}
         </h3>
-
-        <p className="text-xs text-gray-600 mt-1">
-          {createdAt}
-        </p>
+        <div className="flex w-full gap-4">
+          <p className="text-xs text-gray-600 mt-1">
+            {views} views
+          </p>
+          <p className="text-xs text-gray-600 mt-1">
+            {createdAt}
+          </p>
+        </div>
       </div>
     </div>
   );

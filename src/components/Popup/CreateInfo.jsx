@@ -5,11 +5,13 @@ import { useDispatch } from 'react-redux'
 import { RiMessage2Line } from "react-icons/ri";
 
 import { toggleOverlay } from '../../states/overlaySlice'
+import { toggleCreateOverlay } from '../../states/sideOverlaySlice';
 
 function CreateInfo() {
   const dispatch = useDispatch();
 
   const handleCreateVideo = () => {
+    dispatch(toggleCreateOverlay())
     dispatch(toggleOverlay())
   }
 

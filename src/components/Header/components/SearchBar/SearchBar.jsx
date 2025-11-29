@@ -23,10 +23,10 @@ function SearchBar({ needSearchbar, setneedSearchbar }) {
     }
 
     return (
-        <form className='flex w-full' method='get' onSubmit={handleSearch}>
+        <div className='flex w-full'>
             <Search needSearchbar={needSearchbar} setQuery={setQuery} query={query} />
             <SearchButton needSearchbar={needSearchbar} setneedSearchbar={setneedSearchbar} handleSearch={handleSearch} />
-        </form>
+        </div>
     )
 }
 
