@@ -70,6 +70,7 @@ function ChannelPage() {
         })
 
         setIsSubscribed(subscription?.data?.data?.subscribed || false)
+        setSelf(subscription?.data?.data?.owner || false)
       }
 
       if (channelId) getSubscription();

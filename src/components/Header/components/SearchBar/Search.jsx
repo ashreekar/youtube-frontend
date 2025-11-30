@@ -4,7 +4,7 @@ import { FaTimes } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-function Search({ needSearchbar, setQuery, query }) {
+function Search({ needSearchbar, setQuery, query, handleSearch }) {
     const search_ref = useRef();
     const navigate = useNavigate();
     const recentSearches = useSelector(state => state.search.recentSearch);
@@ -19,10 +19,13 @@ function Search({ needSearchbar, setQuery, query }) {
         if (search_ref.current && search_ref.current.contains(e.target)) {
             return;
         }
+        if (e.target.id === "search_button") {
+            handleSearch();
+        }
         setSearchOn(false);
     };
 
-    const handleSearch = (value) => {
+    const handleSearchFromHistory = (value) => {
         const encodedQuery = encodeURIComponent(value.trim());
         navigate(`/results?search_query=${encodedQuery}`);
     };
@@ -65,7 +68,7 @@ function Search({ needSearchbar, setQuery, query }) {
                                         onClick={() => {
                                             setSearchOn(false)
                                             setQuery(search)
-                                            handleSearch(search)
+                                            handleSearchFromHistory(search)
                                         }}
                                         className="flex items-center gap-3 font-semibold text-left flex-1"
                                     >

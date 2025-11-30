@@ -4,12 +4,19 @@ import user from './userSlice.js'
 import search from './searchSlic.js'
 import overlay from './overlaySlice.js'
 import sideOverlay from './sideOverlaySlice.js'
+import video from './videoSlice.js'
 
 const loadState = () => {
     // loading the loadstore on start state
     const storedState = localStorage.getItem('reduxStatestore');
     if (storedState === null) return undefined;
-    return JSON.parse(storedState);
+    const loadedState = JSON.parse(storedState);
+    return {
+        ...loadedState,
+        video: {
+            videosItem: []
+        }
+    }
 };
 
 // save store to save after every update(action dispatch)
@@ -27,7 +34,8 @@ const appStore = configureStore(
             user,
             search,
             overlay,
-            sideOverlay
+            sideOverlay,
+            video
         },
         preloadedState: persistedState
     }

@@ -24,7 +24,7 @@ function SearchBar({ needSearchbar, setneedSearchbar }) {
 
     return (
         <div className='flex w-full'>
-            <Search needSearchbar={needSearchbar} setQuery={setQuery} query={query} />
+            <Search needSearchbar={needSearchbar} setQuery={setQuery} query={query} handleSearch={handleSearch} />
             <SearchButton needSearchbar={needSearchbar} setneedSearchbar={setneedSearchbar} handleSearch={handleSearch} />
         </div>
     )

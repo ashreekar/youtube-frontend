@@ -36,7 +36,7 @@ function PlayerPageCard({ videoId }) {
     } catch (error) {
       console.log(error)
     }
-  }, [changeSubs,reactionState])
+  }, [changeSubs, reactionState, videoId])
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error loading video</p>;
@@ -47,7 +47,7 @@ function PlayerPageCard({ videoId }) {
       <Player source={`${video.url}`} />
 
       <div className="space-y-6">
-        <VideoMeata video={video} changeSubs={changeSubs} setChangeSubs={setChangeSubs} setreactionState={setreactionState} />
+        <VideoMeata video={video} videoId={videoId} changeSubs={changeSubs} setChangeSubs={setChangeSubs} setreactionState={setreactionState} />
 
         <CommentSection id={video._id} />
       </div>
