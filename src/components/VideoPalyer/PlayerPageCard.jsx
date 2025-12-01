@@ -49,7 +49,7 @@ function PlayerPageCard({ videoId }) {
       <div className="space-y-6">
         <VideoMeata video={video} videoId={videoId} changeSubs={changeSubs} setChangeSubs={setChangeSubs} setreactionState={setreactionState} />
 
-        <CommentSection id={video._id} />
+        <CommentSection id={videoId} />
       </div>
     </div>
   );

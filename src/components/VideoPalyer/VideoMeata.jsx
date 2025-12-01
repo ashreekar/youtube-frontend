@@ -19,6 +19,8 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [likes, setLikes] = useState(video.likes);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -118,9 +120,12 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
           `http://localhost:3317/api/v1/reaction/video/${video._id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        
+
         setIsDisliked(false);
         setIsLiked(false);
+        if (isLiked) {
+          setLikes(prev => prev - 1);
+        }
       } else {
         const input = type ? "like" : "dislike";
 
@@ -131,9 +136,12 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
         );
         setIsDisliked(!type);
         setIsLiked(type);
+        if (type) {
+          setLikes(prev => prev + 1);
+        } else {
+          setLikes(prev => prev - 1);
+        }
       }
-
-      setreactionState((prev) => !prev);
     } catch (error) {
       console.log(error);
     }
@@ -201,7 +209,7 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
               ) : (
                 <AiOutlineLike size={18} />
               )}
-              <span className="text-sm">{video.likes}</span>
+              <span className="text-sm">{likes}</span>
             </div>
 
             <div

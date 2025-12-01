@@ -12,7 +12,7 @@ function CommentSection({ id }) {
 
   const [commentData, setCommentData] = useState(null);
   const [visibleButton, setVisibleButton] = useState(false);
-
+  const [commentChanegd, setcommentChanegd] = useState(false);
 
   const [activeMenu, setActiveMenu] = useState({
     author: null,
@@ -25,6 +25,18 @@ function CommentSection({ id }) {
       setCommentData(data);
     }
   }, [data])
+
+  useEffect(() => {
+    const getUpdatedComment = async () => {
+      const updated = await axios.get(
+        `http://localhost:3317/api/v1/comment/video/${id}`
+      );
+
+      setCommentData(updated.data);
+    }
+
+    getUpdatedComment();
+  }, [commentChanegd, id])
 
   const { register, handleSubmit, reset, watch } = useForm();
   const commentVal = watch("comment", "")
@@ -51,11 +63,12 @@ function CommentSection({ id }) {
         }
       })
 
-      const updated = await axios.get(
-        `http://localhost:3317/api/v1/comment/video/${id}`
-      );
+      // const updated = await axios.get(
+      //   `http://localhost:3317/api/v1/comment/video/${id}`
+      // );
 
-      setCommentData(updated.data);
+      // setCommentData(updated.data);
+      setcommentChanegd(!commentChanegd);
       setVisibleButton(false)
 
       reset();
@@ -68,7 +81,7 @@ function CommentSection({ id }) {
     try {
       const token = localStorage.getItem("acceasToken");
 
-      
+
     } catch (error) {
       console.log(error)
     }
@@ -85,11 +98,12 @@ function CommentSection({ id }) {
         }
       );
 
-      const updated = await axios.get(
-        `http://localhost:3317/api/v1/comment/video/${id}`
-      );
+      // const updated = await axios.get(
+      //   `http://localhost:3317/api/v1/comment/video/${id}`
+      // );
 
-      setCommentData(updated.data);
+      // setCommentData(updated.data);
+      setcommentChanegd(!commentChanegd);
       setVisibleButton(false)
 
       reset();
