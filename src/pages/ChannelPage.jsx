@@ -61,7 +61,7 @@ function ChannelPage() {
     }
 
     fetchDetails();
-  }, [channelId, changeSubs, videoChanged,videoDeleted]);
+  }, [channelId, changeSubs, videoChanged,videoDeleted,changeChannelData]);
 
   useEffect(() => {
     try {
@@ -149,15 +149,15 @@ function ChannelPage() {
        {
         updateBanner && (
           <Popup popupkey="managePicture" closePopup={() => setUpdateBanner(false)} >
-           <UpdateBanner banner={data.meta.banner? data.meta.banner :data.meta.avatar} />
+           <UpdateBanner setchangeChannelData={setchangeChannelData} banner={data.meta.banner? data.meta.banner :data.meta.avatar} closePopup={() => setUpdateBanner(false)} />
           </Popup>
         )
       }
 
        {
         updateAvatar && (
-          <Popup popupkey="managePicture" closePopup={() => setUpdateAvatar(false)} >
-           <UpdateAvatar avatar={data.meta.avatar} />
+          <Popup popupkey="managePicture" closePopup={() => setUpdateAvatar(false)}>
+           <UpdateAvatar setchangeChannelData={setchangeChannelData} avatar={data.meta.avatar} closePopup={() => setUpdateAvatar(false)} />
           </Popup>
         )
       }

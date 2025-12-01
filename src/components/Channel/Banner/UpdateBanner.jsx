@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import SpinLoader from '../../Loaders/SpinLoader';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
 
-function UpdateBanner({banner}) {
+function UpdateBanner({banner,closePopup,setchangeChannelData}) {
     const [loading, setLoading] = useState(false);
 
     const {
@@ -26,12 +27,13 @@ function UpdateBanner({banner}) {
                 formdata.append("banner", data.banner[0]);
                 const token = localStorage.getItem("acceasToken")
 
-                const resurl = await axios.put(`http://localhost:3317/api/v1/channel/banner/${selectedVideo._id}`, formdata, {
+                const resurl = await axios.put(`http://localhost:3317/api/v1/channel/banner`, formdata, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "multipart/form-data"
                     }
                 })
+                setchangeChannelData(prev=>!prev)
             }
         } catch (error) {
             console.log(error)

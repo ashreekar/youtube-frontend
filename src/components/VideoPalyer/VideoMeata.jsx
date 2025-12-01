@@ -139,7 +139,9 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
         if (type) {
           setLikes(prev => prev + 1);
         } else {
-          setLikes(prev => prev - 1);
+          setLikes(prev => {
+            return prev === 0 ? 0 : prev - 1;
+          });
         }
       }
     } catch (error) {

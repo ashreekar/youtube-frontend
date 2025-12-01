@@ -18,7 +18,7 @@ function ChannelHome({ setIsInfo, self, data, id, changeSubscription, isSubscrib
   return (
     <div className={`${isSidebarOpen ? "ml-4 md:ml-64" : "ml-4 md:ml-24"} flex flex-col`}>
 
-      <ChannelBanner url={data.meta.avatar} self={self} setUpdateBanner={setUpdateBanner} />
+      <ChannelBanner url={data.meta.banner || data.meta.avatar} self={self} setUpdateBanner={setUpdateBanner} />
 
       <ChannelMeta
         setIsInfo={setIsInfo}

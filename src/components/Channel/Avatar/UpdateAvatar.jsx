@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import SpinLoader from '../../Loaders/SpinLoader';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
 
-function UpdateAvatar({avatar}) {
+function UpdateAvatar({ avatar, closePopup, setchangeChannelData }) {
     const [loading, setLoading] = useState(false);
 
     const {
@@ -13,26 +14,28 @@ function UpdateAvatar({avatar}) {
         setValue
     } = useForm();
 
-    const bannerFile = watch("avatar");
-    const preview = bannerFile && bannerFile.length > 0
-        ? URL.createObjectURL(bannerFile[0])
+    const avatarFile = watch("avatar");
+    const preview = avatarFile && avatarFile.length > 0
+        ? URL.createObjectURL(avatarFile[0])
         : avatar || null;
 
     const updateAvatarFunction = async (data) => {
         try {
             setLoading(true)
-            if (data?.banner.length > 0) {
+            if (data?.avatar.length > 0) {
                 const formdata = new FormData();
-                formdata.append("avatar", data.banner[0]);
+                formdata.append("avatar", data.avatar[0]);
                 const token = localStorage.getItem("acceasToken")
 
-                const resurl = await axios.put(`http://localhost:3317/api/v1/channel/avatar/${selectedVideo._id}`, formdata, {
+                const resurl = await axios.put(`http://localhost:3317/api/v1/channel/avatar/`, formdata, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "multipart/form-data"
                     }
                 })
             }
+
+            setchangeChannelData(prev=>!prev)
         } catch (error) {
             console.log(error)
         } finally {
