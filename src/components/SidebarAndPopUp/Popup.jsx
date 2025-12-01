@@ -10,6 +10,7 @@ function Popup({ children, popupkey = "channel", closePopup }) {
         download: "fixed inset-0 flex items-center justify-center z-50 bg-black/20",
         default: "fixed inset-0 flex items-center justify-center z-50 bg-black/20",
         manageContent: "fixed inset-0 flex items-center justify-center z-50 bg-black/20",
+        managePicture: "fixed inset-0 flex items-center justify-center z-50 bg-black/20",
     };
 
     const innerStyles = {
@@ -18,7 +19,8 @@ function Popup({ children, popupkey = "channel", closePopup }) {
         share: "bg-white rounded-t-xl sm:rounded-xl shadow-lg p-4 w-full sm:w-[400px] h-auto sm:h-auto",
         download: "bg-white rounded-xl shadow-lg p-4 w-[80vw] sm:w-[350px] h-auto",
         default: "bg-white rounded-lg shadow-lg p-4 w-[80vw] sm:w-[400px]",
-        manageContent: "bg-white rounded-lg shadow-lg p-4 w-39/40 h-full"
+        manageContent: "bg-white rounded-lg shadow-lg p-4 w-39/40 h-full",
+        managePicture: "bg-white rounded-lg shadow-lg p-3 w-[90vw] h-[85vh] sm:w-[70vw] sm:h-[97vh]",
     };
 
     const handleOutsideClick = (e) => {

@@ -7,9 +7,10 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ManageVideos from "../components/Channel/Videos/ManageVideos";
+import UpdateBanner from "../components/Channel/Banner/UpdateBanner";
+import UpdateAvatar from "../components/Channel/Avatar/UpdateAvatar";
 
 function ChannelPage() {
-
   const { channelId } = useParams();
   const navigate = useNavigate();
 
@@ -17,15 +18,19 @@ function ChannelPage() {
   const [self, setSelf] = useState(false);
 
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isSubscribed, setIsSubscribed] = useState(false);
-  const [changeSubs, setChangeSubs] = useState(true);
+
+  const [changeSubs, setChangeSubs] = useState(false);
+  const [changeChannelData, setchangeChannelData] = useState(false);
 
   // states for managing videos
   const [manageVideosVisible, setManageVideosVisible] = useState(false);
   const [videoChanged, setvideoChanged] = useState(false);
   const [videoDeleted, setvideoDeleted] = useState(false);
+  const [updateBanner, setUpdateBanner] = useState(false);
+  const [updateAvatar, setUpdateAvatar] = useState(false);
 
   useEffect(() => {
     async function fetchDetails() {
@@ -120,7 +125,10 @@ function ChannelPage() {
             changeSubscription={changeSubscription}
             setIsInfo={setIsInfo} self={self} data={data}
             id={channelId} isSubscribed={isSubscribed}
-            setManageVideosVisible={setManageVideosVisible} />
+            setManageVideosVisible={setManageVideosVisible}
+            setUpdateBanner={setUpdateBanner}
+            setUpdateAvatar={setUpdateAvatar}
+             />
         </div>
       </div>
 
@@ -134,6 +142,22 @@ function ChannelPage() {
         manageVideosVisible && (
           <Popup popupkey="manageContent" closePopup={() => setManageVideosVisible(false)}>
             <ManageVideos closePopup={() => setManageVideosVisible(false)} videos={data?.content?.videos || []} setvideoChanged={setvideoChanged} setvideoDeleted={setvideoDeleted} />
+          </Popup>
+        )
+      }
+
+       {
+        updateBanner && (
+          <Popup popupkey="managePicture" closePopup={() => setUpdateBanner(false)} >
+           <UpdateBanner banner={data.meta.banner? data.meta.banner :data.meta.avatar} />
+          </Popup>
+        )
+      }
+
+       {
+        updateAvatar && (
+          <Popup popupkey="managePicture" closePopup={() => setUpdateAvatar(false)} >
+           <UpdateAvatar avatar={data.meta.avatar} />
           </Popup>
         )
       }

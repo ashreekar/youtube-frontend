@@ -11,6 +11,7 @@ import CreateAccount from './pages/CreateAccount.jsx'
 import ResultsPage from './pages/ResultsPage.jsx'
 import VideoPlayerPage from './pages/VideoPlayerPage.jsx'
 import ChannelPage from './pages/ChannelPage.jsx'
+import CustomizeChannel from './components/Channel/CustomizeChannel.jsx'
 
 const router = createBrowserRouter(
   [
@@ -30,6 +31,10 @@ const router = createBrowserRouter(
         {
           path: "/feed/you",
           element: <ChannelPage />
+        },
+        {
+          path: "/feed/you/settings/",
+          element: <CustomizeChannel />
         },
         {
           path: "/watch/:videoId",

@@ -6,7 +6,7 @@ import SwitchTabs from './SwitchTabs';
 import ChannelVideo from './ChannelVideo';
 import { useNavigate } from 'react-router-dom';
 
-function ChannelHome({ setIsInfo, self, data, id, changeSubscription, isSubscribed, setManageVideosVisible }) {
+function ChannelHome({ setIsInfo, self, data, id, changeSubscription, isSubscribed, setManageVideosVisible, setUpdateBanner, setUpdateAvatar }) {
   const navigate = useNavigate();
   const isSidebarOpen = useSelector(state => state.sidebar.open);
   const user = useSelector(state => state.user.loggedIn);
@@ -18,7 +18,7 @@ function ChannelHome({ setIsInfo, self, data, id, changeSubscription, isSubscrib
   return (
     <div className={`${isSidebarOpen ? "ml-4 md:ml-64" : "ml-4 md:ml-24"} flex flex-col`}>
 
-      <ChannelBanner url={data.meta.avatar} />
+      <ChannelBanner url={data.meta.avatar} self={self} setUpdateBanner={setUpdateBanner} />
 
       <ChannelMeta
         setIsInfo={setIsInfo}
@@ -27,6 +27,7 @@ function ChannelHome({ setIsInfo, self, data, id, changeSubscription, isSubscrib
         isSubscribed={isSubscribed}
         changeSubscription={changeSubscription}
         setManageVideosVisible={setManageVideosVisible}
+        setUpdateAvatar={setUpdateAvatar}
       />
 
       <SwitchTabs />

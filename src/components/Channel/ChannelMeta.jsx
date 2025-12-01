@@ -1,23 +1,27 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { BiEdit } from 'react-icons/bi'
 
-function ChannelMeta({ setIsInfo, self, data, isSubscribed, changeSubscription, setManageVideosVisible }) {
+function ChannelMeta({ setIsInfo, self, data, isSubscribed, changeSubscription, setManageVideosVisible,setUpdateAvatar }) {
+  const [showEdit, setShowEdit] = useState(false);
 
-  const description = `
-${data.meta.name} is a channel that delivers engaging and easy-to-watch content for all audiences. 
-With over ${data.stats.total_videos} videos uploaded so far and a growing community of ${data.stats.total_subscribers} subscribers, 
-this channel shares fresh perspectives, reviews, reactions, and interesting breakdowns across different topics. 
-Stay connected for more updates, new uploads, and enjoyable content from ${data.meta.handle}.
-`.trim();
+  const description = `${data.meta.name} is a channel that delivers engaging and easy-to-watch content for all audiences. With over ${data.stats.total_videos} videos uploaded so far and a growing community of ${data.stats.total_subscribers} subscribers, this channel shares fresh perspectives, reviews, reactions, and interesting breakdowns across different topics. Stay connected for more updates, new uploads, and enjoyable content from ${data.meta.handle}.`.trim();
 
   return (
     <div className="flex flex-col md:flex-row md:items-center gap-4 px-6 mt-6">
 
-      <img
-        src={data.meta.avatar}
-        alt={data.meta.title}
-        className="h-16 w-16 md:h-28 md:w-28 rounded-full"
-      />
-
+      <div onMouseOver={() => setShowEdit(true)} onMouseOut={() => setShowEdit(false)} className="relative h-16 w-16 rounded-full md:h-28 md:w-28">
+        <img
+          src={data.meta.avatar}
+          alt={data.meta.title}
+          className="h-16 w-16 md:h-28 md:w-28 rounded-full"
+        />
+        {self && showEdit &&
+          <span onClick={() => setUpdateAvatar(true)} className='absolute cursor-pointer transition duration-500 hover:bg-gray-100 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-3'>
+            <BiEdit size={24} />
+          </span>
+        }
+      </div>
       <div className="flex flex-col w-full">
 
         <h2 className="text-xl md:text-2xl font-bold">{data.meta.name}</h2>
@@ -41,7 +45,7 @@ Stay connected for more updates, new uploads, and enjoyable content from ${data.
           self ?
             (
               <div className="mt-4 flex gap-10">
-                <button className="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 font-medium">Customise channel</button>
+                <Link to={'/feed/you/settings'} className="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 font-medium">Customise channel</Link>
                 <button onClick={() => setManageVideosVisible(true)} className="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 font-medium">Manage Videos</button>
               </div>
             ) :
