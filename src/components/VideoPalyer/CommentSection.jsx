@@ -123,11 +123,6 @@ function CommentSection({ id }) {
         }
       );
 
-      // const updated = await axios.get(
-      //   `http://localhost:3317/api/v1/comment/video/${id}`
-      // );
-
-      // setCommentData(updated.data);
       setcommentChanegd(!commentChanegd);
       setVisibleButton(false)
 
@@ -177,7 +172,7 @@ function CommentSection({ id }) {
 
         <div className="flex flex-col gap-6">
           {comments.map((comment) => (
-            <CommentItem key={comment.id} setVisibleButton={setVisibleButton} renderEditComment={renderEditComment} deleteComment={deleteComment} comment={comment} activeMenu={activeMenu} setActiveMenu={setActiveMenu} setEditing={setEditing} />
+            <CommentItem key={comment.id} setVisibleButton={setVisibleButton} renderEditComment={renderEditComment} deleteComment={deleteComment} comment={comment} activeMenu={activeMenu} setActiveMenu={setActiveMenu} setEditing={setEditing} commentChanegd={commentChanegd} />
           ))}
         </div>
       </div>
