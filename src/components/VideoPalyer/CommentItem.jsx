@@ -6,7 +6,7 @@ import { MdOutlineReport, MdEdit, MdDelete } from "react-icons/md";
 
 import { useSelector } from "react-redux";
 
-function CommentItem({ comment, activeMenu, setActiveMenu, deleteComment }) {
+function CommentItem({ comment, activeMenu, setActiveMenu, deleteComment, renderEditComment, setEditing }) {
   const [likes, setLikes] = useState(comment.likes || 0);
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
@@ -157,7 +157,10 @@ function CommentItem({ comment, activeMenu, setActiveMenu, deleteComment }) {
           activeMenu.author === user?.username ? (
             <div className="absolute left-3/5 sm:left-4/5 lg:left-17/20 top-8 w-40 
                 rounded-xl shadow-xl bg-white z-50 py-2">
-              <button className="flex w-full gap-2 px-3 py-2 hover:bg-gray-100 text-left cursor-pointer">
+              <button onClick={() => {
+                setEditing(true)
+                renderEditComment(comment)
+              }} className="flex w-full gap-2 px-3 py-2 hover:bg-gray-100 text-left cursor-pointer">
                 <MdEdit size={20} />
                 <span>Edit</span>
               </button>
