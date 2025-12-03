@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense } from 'react'
+import { useState, lazy, Suspense, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
@@ -25,16 +25,18 @@ function CreateAccount() {
   } = useForm()
 
   const [step, setStep] = useState(0);
-  const [laoding, setloading] = useState(false);
+  const [loading, setloading] = useState(false);
   const [error, setError] = useState(null);
 
   const navigate = useNavigate()
 
   const user = useSelector(state => state.user.user);
 
-  if (user) {
-    navigate('/');
-  }
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user])
 
   const onSubmit = async (data) => {
     try {
@@ -71,7 +73,7 @@ function CreateAccount() {
     }
   }
 
-  if (laoding) {
+  if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
         <SpinLoader></SpinLoader>

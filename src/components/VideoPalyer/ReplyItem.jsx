@@ -22,9 +22,9 @@ function ReplyItem({ reply, activeMenu, setActiveMenu, deleteComment, renderEdit
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
-        const reply = reaction.data.data.reaction;
-        if (reply === "like") setLiked(true);
-        else if (reply === "dislike") setDisliked(true);
+        const res = reaction.data.data.reaction;
+        if (res === "like") setLiked(true);
+        else if (res === "dislike") setDisliked(true);
       } catch (err) {
         console.log(err);
       }

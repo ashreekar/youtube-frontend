@@ -12,9 +12,11 @@ function HomeFeed() {
     const isSidebarOpen = useSelector(store => store.sidebar.open);
     const videos = useSelector(state => state.video.videosItem);
 
-    if (data && videos.length === 0) {
-        dispatch(setVideosItem(data.data));
-    }
+    useEffect(() => {
+        if (data && videos.length === 0) {
+            dispatch(setVideosItem(data.data));
+        }
+    }, [data, videos.length, dispatch]);
 
     if (!data || !videos) {
         return <p>Loading</p>;

@@ -61,8 +61,11 @@ function TopFilter() {
     scrollRef.current?.scrollBy({ left: -200, behavior: "smooth" });
   };
 
-  if (loadCategory || loading) return <TopFilterLoader/>;
-  if (error) return <p>Loading...</p>;
+  if (loadCategory) return <TopFilterLoader />;
+  if (loading) return null;
+  if (error) {
+    return null;
+  }
 
   return (
     <div

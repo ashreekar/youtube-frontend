@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense } from 'react'
+import { useState, lazy, Suspense, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux';
 import LineLoader from '../components/Loaders/LineLoader';
@@ -28,9 +28,11 @@ function Login() {
 
   const user = useSelector(state => state.user.user);
 
-  if (user) {
-    navigate('/');
-  }
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user])
 
   async function signIn(data) {
     setLoding(true);

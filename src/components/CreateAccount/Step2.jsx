@@ -33,7 +33,7 @@ function Step2({ step, register, errors, watch, setStep, trigger }) {
           {...register("password", {
             required: true,
             pattern: {
-              value: /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$/gm,
+              value: /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$/,
               message: "password must contain 1 number (0-9), 1 uppercase letters, 1 lowercase letters, 1 non-alpha numeric number, password is 8-16 characters with no space"
             }
           })}

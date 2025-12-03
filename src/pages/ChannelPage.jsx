@@ -53,7 +53,7 @@ function ChannelPage() {
         }
 
       } catch (err) {
-        console.log(err);
+        navigate('/')
         setError(err);
       } finally {
         setLoading(false);
@@ -61,7 +61,7 @@ function ChannelPage() {
     }
 
     fetchDetails();
-  }, [channelId, changeSubs, videoChanged,videoDeleted,changeChannelData]);
+  }, [channelId, changeSubs, videoChanged, videoDeleted, changeChannelData]);
 
   useEffect(() => {
     try {
@@ -87,8 +87,8 @@ function ChannelPage() {
   }, [channelId, changeSubs, videoDeleted])
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error loading channel</p>;
-  if (!data) return <p>No channel found</p>;
+  if (error) throw Error("User should be authorised in to acceas resource");
+  if (!data) return null;
 
   async function changeSubscription() {
     try {
@@ -128,7 +128,7 @@ function ChannelPage() {
             setManageVideosVisible={setManageVideosVisible}
             setUpdateBanner={setUpdateBanner}
             setUpdateAvatar={setUpdateAvatar}
-             />
+          />
         </div>
       </div>
 
@@ -146,18 +146,18 @@ function ChannelPage() {
         )
       }
 
-       {
+      {
         updateBanner && (
           <Popup popupkey="managePicture" closePopup={() => setUpdateBanner(false)} >
-           <UpdateBanner setchangeChannelData={setchangeChannelData} banner={data.meta.banner? data.meta.banner :data.meta.avatar} closePopup={() => setUpdateBanner(false)} />
+            <UpdateBanner setchangeChannelData={setchangeChannelData} banner={data.meta.banner ? data.meta.banner : data.meta.avatar} closePopup={() => setUpdateBanner(false)} />
           </Popup>
         )
       }
 
-       {
+      {
         updateAvatar && (
           <Popup popupkey="managePicture" closePopup={() => setUpdateAvatar(false)}>
-           <UpdateAvatar setchangeChannelData={setchangeChannelData} avatar={data.meta.avatar} closePopup={() => setUpdateAvatar(false)} />
+            <UpdateAvatar setchangeChannelData={setchangeChannelData} avatar={data.meta.avatar} closePopup={() => setUpdateAvatar(false)} />
           </Popup>
         )
       }
