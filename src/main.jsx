@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { appStore } from './states/appStore.js'
 
+// importing all components using lazy loading
 const LandingPage = lazy(() => import("./pages/LandingPage.jsx"));
 const Login = lazy(() => import("./pages/Login.jsx"));
 const CreateAccount = lazy(() => import("./pages/CreateAccount.jsx"));
@@ -14,15 +15,17 @@ const VideoPlayerPage = lazy(() => import("./pages/VideoPlayerPage.jsx"));
 const ChannelPage = lazy(() => import("./pages/ChannelPage.jsx"));
 const CustomizeChannel = lazy(() => import("./components/Channel/CustomizeChannel.jsx"));
 
-import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary.jsx'
+// Not found and homepage laoder component for all pages
+import NotFound from './components/NotFound/NotFound.jsx'
 import HomePageLoader from './components/Loaders/HomePage/HomePageLoader.jsx'
 
+// configured routes
 const router = createBrowserRouter(
   [
     {
       path: "/",
       element: <App />,
-      errorElement: <ErrorBoundary />,
+      errorElement: <NotFound />,
       children: [
         {
           path: "/",
@@ -62,6 +65,7 @@ const router = createBrowserRouter(
 )
 
 createRoot(document.getElementById('root')).render(
+  // providedd acceas to store and provided routes
   <Provider store={appStore}>
     <RouterProvider router={router} />
   </Provider>,

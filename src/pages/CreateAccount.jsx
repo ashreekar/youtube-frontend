@@ -9,6 +9,7 @@ import Errorlogin from '../components/Popups/Errorlogin';
 import Popup from '../components/SidebarAndPopUp/Popup';
 import SpinLoader from '../components/Loaders/SpinLoader';
 
+// lazy loading all the step components
 const Step1 = lazy(() => import('../components/CreateAccount/Step1'));
 const Step2 = lazy(() => import('../components/CreateAccount/Step2'));
 const Step3 = lazy(() => import('../components/CreateAccount/Step3'));
@@ -16,6 +17,7 @@ const Step3 = lazy(() => import('../components/CreateAccount/Step3'));
 function CreateAccount() {
   const dispatch = useDispatch();
 
+  // using react hook form to take input fields
   const {
     register,
     handleSubmit,
@@ -24,12 +26,15 @@ function CreateAccount() {
     formState: { errors },
   } = useForm()
 
+  // moniters the step in which form is in
   const [step, setStep] = useState(0);
   const [loading, setloading] = useState(false);
   const [error, setError] = useState(null);
 
   const navigate = useNavigate()
 
+  // if user already logged in and
+  // trying to login then will be redirecting to home
   const user = useSelector(state => state.user.user);
 
   useEffect(() => {
@@ -41,6 +46,7 @@ function CreateAccount() {
   const onSubmit = async (data) => {
     try {
       setloading(true);
+      // sending a form data type multipart/form-data
       const formData = new FormData();
 
       formData.append("avatar", data.avatar[0]);
@@ -56,11 +62,13 @@ function CreateAccount() {
 
       if (user) {
         localStorage.setItem("acceasToken", user.data.data.acceastoken);
+        // onsucess register account it also logs in
         dispatch(loginUser(user.data.data.loggeduser));
       }
       setStep(0);
       navigate('/')
     } catch (error) {
+      // if error comes then shows the pop up
       setError({
         title: "Sigup Failed",
         description: error.response?.data?.message || "Invalid credential",
@@ -85,6 +93,7 @@ function CreateAccount() {
     <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
       {
         error && (
+          // Rendering the error element
           <Popup popupkey="channel" closePopup={() => setError(null)}>
             <Errorlogin {...error} />
           </Popup>
@@ -107,8 +116,11 @@ function CreateAccount() {
           <p className="text-sm text-gray-600">Create your YouTube account</p>
         </div>
 
+        {/* Hook form takes a cb that will be executed on form submission which should be handle form
+            as handle form provides data */}
         <form className="space-y-5 w-full md:w-1/2" onSubmit={handleSubmit(onSubmit)}>
 
+          {/* 3 step register of create account with help of react hook form */}
           {step == 0 && <Suspense fallback={<LineLoader />}>
             <Step1
               step={step}

@@ -39,8 +39,6 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
         setIsSubscribed(subscription?.data?.data?.subscribed || false);
         setSelf(subscription?.data?.data?.owner || false);
       } catch (err) {
-        console.log(err);
-        setError(err);
         setIsSubscribed(false);
       } finally {
         setLoading(false);
@@ -71,8 +69,6 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
 
       setChangeSubs(!changeSubs);
     } catch (error) {
-      console.log(error);
-      alert("Login to subscribe");
       navigate("/login");
     }
   };
@@ -102,7 +98,8 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
           setIsDisliked(true);
         }
       } catch (error) {
-        console.log(error);
+        setIsLiked(false);
+        setIsDisliked(false);
       }
     }
 
@@ -145,7 +142,7 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
         }
       }
     } catch (error) {
-      console.log(error);
+      navigate('/login')
     }
   };
 

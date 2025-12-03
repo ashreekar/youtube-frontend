@@ -1,6 +1,7 @@
 import InputField from '../ButtonsAndInput/InputField'
 
-function Step3({ step, register, setStep,errors }) {
+// this component takes avatar and cover image of user
+function Step3({ step, register, setStep, errors }) {
   return (
     <div className={`w-full ${step === 2 ? "flex flex-col gap-4 items-center" : "hidden"}`}>
 
@@ -11,7 +12,8 @@ function Step3({ step, register, setStep,errors }) {
         className="w-full border border-gray-300 rounded-xl py-2 px-3 
           file:bg-black file:text-white file:px-4 mt-2
            file:py-2 file:rounded-xl"
-        {...register("avatar",{
+        {...register("avatar", {
+          // avatar file is reqgiured
           required: "Avatar is required",
         })}
       />
@@ -39,6 +41,7 @@ function Step3({ step, register, setStep,errors }) {
           Back
         </button>
 
+        {/* React hook form sumbits the data */}
         <button
           type="submit"
           className="px-6 py-2.5 bg-red-600 hover:bg-red-700 

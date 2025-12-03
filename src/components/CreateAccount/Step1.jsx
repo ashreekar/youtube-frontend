@@ -1,9 +1,12 @@
 import InputField from '../ButtonsAndInput/InputField'
 import { Link } from 'react-router-dom';
 
+// step 1 fills the username and fullName
 function Step1({ step, register, errors, setStep, trigger }) {
 
+  // handle next function will load next step
   async function handleNext() {
+    // trigger will check for errors in form
     const valid = await trigger(["fullName", "username"]);
     if (!valid) return;
     setStep(1);

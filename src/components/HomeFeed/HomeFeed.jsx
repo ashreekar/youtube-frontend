@@ -4,6 +4,8 @@ import VideoCard from '../cards/VideoCard.jsx';
 import { Link } from 'react-router-dom';
 import { useFetch } from '../../utils/useFetch.js';
 import { setVideosItem } from '../../states/videoSlice.js';
+import ErrorFallback from '../ErrorBoundary/ErrorFallback.jsx';
+import HomePageLoader from '../Loaders/HomePage/HomePageLoader.jsx';
 
 function HomeFeed() {
     const dispatch = useDispatch();
@@ -18,8 +20,16 @@ function HomeFeed() {
         }
     }, [data, videos.length, dispatch]);
 
+    if (error) {
+        return <ErrorFallback />
+    }
+
     if (!data || !videos) {
-        return <p>Loading</p>;
+        return <div className='w-full h-full flex items-center justify-center text-xl font-medium'>No videos found</div>;
+    }
+
+    if (loading) {
+        return <HomePageLoader />;
     }
 
     return (

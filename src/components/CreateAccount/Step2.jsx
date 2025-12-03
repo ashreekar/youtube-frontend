@@ -3,7 +3,9 @@ import { useState } from 'react'
 import { FaEye } from "react-icons/fa"
 import { FaRegEyeSlash } from 'react-icons/fa6';
 
+// step 2 will fill email and password
 function Step2({ step, register, errors, watch, setStep, trigger }) {
+  // state to maintain whether password visible or not
   const [showPassword, setShowPassword] = useState(false)
   const passwordValue = watch("password")
 
@@ -33,11 +35,13 @@ function Step2({ step, register, errors, watch, setStep, trigger }) {
           {...register("password", {
             required: true,
             pattern: {
+              // Regex that validates the password
               value: /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$/,
               message: "password must contain 1 number (0-9), 1 uppercase letters, 1 lowercase letters, 1 non-alpha numeric number, password is 8-16 characters with no space"
             }
           })}
         />
+        {/* button to toggle the view password */}
         <button
           type="button"
           onClick={() => setShowPassword(!showPassword)}
