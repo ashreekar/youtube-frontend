@@ -44,10 +44,6 @@ const router = createBrowserRouter(
           path: "/channel/:channelId",
           element: <ChannelPage />
         },
-        {
-          path: "/:id",
-          element: <App />
-        },
       ]
     },
     {

@@ -4,7 +4,7 @@ import InputField from "../ButtonsAndInput/InputField";
 import axios from "axios";
 import SpinLoader from "../Loaders/SpinLoader";
 import { useDispatch } from "react-redux";
-import { toggleOverlay } from "../../states/overlaySlice";
+import { toggleVideoOverlay } from "../../states/overlaySlice";
 
 function CreateVideo() {
   const categories = ["tech", "travel", "gaming", "cooking", "backend", "frontend", "webdev", "ai"];
@@ -44,7 +44,7 @@ function CreateVideo() {
       });
 
       if (response) {
-        dispatch(toggleOverlay());
+        dispatch(toggleVideoOverlay());
         alert("Video added");
       }
     } catch (error) {

@@ -10,14 +10,14 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser, toggelLogin } from "../../states/userSlice"
 import { toggleUserOverlay } from '../../states/sideOverlaySlice';
-import { toggleOverlay } from '../../states/overlaySlice';
+import { toggleVideoOverlay, togglePostOverlay } from '../../states/overlaySlice';
 
 function UserInfo() {
     const dispatch = useDispatch();
     const user = useSelector(state => state.user.user);
 
     const handleCreateVideo = () => {
-        dispatch(toggleOverlay())
+        dispatch(toggleVideoOverlay())
     }
 
     const handleSignOut = async () => {
@@ -49,7 +49,7 @@ function UserInfo() {
                             <p onClick={handleCreateVideo} className="text-blue-600 text-xs cursor-pointer hover:underline">
                                 Create channel
                             </p> :
-                            <Link to={'/feed/you'} onClick={()=>dispatch(toggleUserOverlay())}>
+                            <Link to={'/feed/you'} onClick={() => dispatch(toggleUserOverlay())}>
                                 <p className="text-blue-600 text-xs cursor-pointer hover:underline">
                                     View your channel
                                 </p>
@@ -62,7 +62,7 @@ function UserInfo() {
                 {
                     user?.channel.length === 0 ?
                         null :
-                        <Link to={'/feed/you'} onClick={()=>dispatch(toggleUserOverlay())}>
+                        <Link to={'/feed/you'} onClick={() => dispatch(toggleUserOverlay())}>
                             <button className="flex items-center gap-3 p-2 text-black cursor-pointer">
                                 <FaYoutube /> Your channel
                             </button>

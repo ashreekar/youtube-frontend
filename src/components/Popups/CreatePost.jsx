@@ -1,91 +1,121 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { FaFileImport } from "react-icons/fa";
 import InputField from "../ButtonsAndInput/InputField";
+import axios from "axios";
 
 function CreatePost() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+    const [previewImages, setPreviewImages] = useState([]);
 
-  const addPostFunction = (data) => {
-    alert(JSON.stringify(data, null, 2));
-  };
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+        watch
+    } = useForm();
 
-  const inputStyles =
-    "w-full border border-gray-300 rounded-xl py-2 px-3 focus:ring-red-600 focus:border-red-600 outline-none";
+    const images = watch("images");
 
-  return (
-    <div className="bg-white w-full h-full flex flex-col lg:flex-row items-center justify-center px-6 py-2 gap-10">
+    useEffect(() => {
+        if (images && images.length > 0) {
+            const previews = Array.from(images).map(file => URL.createObjectURL(file));
+            setPreviewImages(previews);
+        }
+    }, [images]);
 
-      <div className="flex flex-col items-center text-center w-full lg:w-1/2 px-5">
-        <img src="youtube.png" className="h-14 w-16 mb-4" alt="youtube-logo" />
+    const addPostFunction = async (data) => {
+        try {
+            const formData = new FormData();
 
-        <h2 className="text-4xl md:text-5xl font-semibold mb-4">
-          Add a post
-        </h2>
+            formData.append("content", data.content);
 
-        <p className="text-lg text-gray-600 font-medium">
-          What's on your mind
-        </p>
-      </div>
+            if (data.images && data.images.length > 0) {
+                for (let i = 0; i < data.images.length; i++) {
+                    formData.append("images", data.images[i]);
+                }
+            }
+            const token = localStorage.getItem("acceasToken");
+            const response = await axios.post("http://localhost:3317/api/v1/post", formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
 
-      <form
-        onSubmit={handleSubmit(addPostFunction)}
-        className="w-full lg:w-1/2 max-w-xl bg-gray-50 p-4 rounded-2xl shadow-md space-y-2"
-      >
-        <InputField
-          type="text"
-          placeholder="Enter the video title"
-          className={inputStyles}
-          {...register("title", { required: "Video title is required" })}
-        />
-        {errors.title && (
-          <p className="text-red-500 text-sm">{errors.title.message}</p>
-        )}
+            const result = await response.json();
+            alert("Post created successfully!");
 
-        <textarea
-          rows={5}
-          placeholder="Enter the video description"
-          className={inputStyles}
-          {...register("description", {
-            required: "Post description is required",
-          })}
-        />
-        {errors.description && (
-          <p className="text-red-500 text-sm">
-            {errors.description.message}
-          </p>
-        )}
+            reset();
+            setPreviewImages([]);
+        } catch (error) {
+            alert("Failed to create post.");
+            console.error(error);
+        }
+    };
 
-        <InputField
-          type="text"
-          placeholder="Enter the thumbnail URL"
-          className={inputStyles}
-          {...register("images", {
-            required: "Image URL is required",
-            pattern: {
-              value: /^(http|https):\/\/[^ "]+$/,
-              message: "Enter a valid URL",
-            },
-          })}
-        />
-        {errors.images && (
-          <p className="text-red-500 text-sm">
-            {errors.images.message}
-          </p>
-        )}
+    return (
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+            <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg p-6">
+                <h2 className="text-3xl font-bold text-center mb-6">Create Post</h2>
 
-        <button
-          type="submit"
-          className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-full text-lg transition"
-        >
-          Create
-        </button>
-      </form>
-    </div>
-  );
+                <form onSubmit={handleSubmit(addPostFunction)} className="space-y-6">
+
+                    <div>
+                        <textarea
+                            rows={4}
+                            placeholder="What's on your mind?"
+                            className="w-full border border-gray-300 rounded-xl py-3 px-4 focus:ring-red-600 focus:border-red-600 outline-none"
+                            {...register("content", {
+                                required: "Content is required",
+                            })}
+                        />
+                        {errors.content && (
+                            <p className="text-red-500 text-sm mt-1">{errors.content.message}</p>
+                        )}
+                    </div>
+
+                    <div>
+                        <label className="block text-lg font-semibold mb-2">
+                            Upload Images
+                        </label>
+                        <label className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl py-10 px-4 cursor-pointer hover:bg-gray-50 transition">
+                            <FaFileImport size={45} className="text-gray-500 mb-3" />
+                            <span className="text-gray-600 font-medium">
+                                Click to upload images
+                            </span>
+
+                            <InputField
+                                type="file"
+                                multiple
+                                className="hidden"
+                                {...register("images")}
+                            />
+                        </label>
+
+                        {previewImages.length > 0 && (
+                            <div className="grid grid-cols-3 gap-3 mt-4">
+                                {previewImages.map((src, i) => (
+                                    <img
+                                        key={i}
+                                        src={src}
+                                        className="w-full h-28 object-cover rounded-xl border"
+                                        alt="preview"
+                                    />
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    <button
+                        type="submit"
+                        className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl text-lg font-semibold shadow-md transition"
+                    >
+                        Create Post
+                    </button>
+                </form>
+            </div>
+        </div>
+    );
 }
 
 export default CreatePost;

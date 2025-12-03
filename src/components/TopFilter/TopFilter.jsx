@@ -4,6 +4,7 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { useFetch } from "../../utils/useFetch";
 import axios from "axios";
 import { setVideosItem } from "../../states/videoSlice";
+import TopFilterLoader from "../Loaders/TopFilter/TopFilterLoader";
 
 function TopFilter() {
   const dispatch = useDispatch();
@@ -60,7 +61,7 @@ function TopFilter() {
     scrollRef.current?.scrollBy({ left: -200, behavior: "smooth" });
   };
 
-  if (loadCategory) return <p>Loading...</p>;;
+  if (loadCategory || loading) return <TopFilterLoader/>;
   if (error) return <p>Loading...</p>;
 
   return (

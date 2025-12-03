@@ -4,16 +4,22 @@ const overlaySlice = createSlice(
     {
         name: "Overlay",
         initialState: {
-            open: false
+            video: false,
+            post: false
         },
         reducers: {
-            toggleOverlay: (state, action) => {
-                state.open = !state.open;
-            }
+            toggleVideoOverlay: (state, action) => {
+                state.video = !state.video;
+                state.post = false;
+            },
+            togglePostOverlay: (state, action) => {
+                state.post = !state.post;
+                state.video = false;
+            },
         }
     }
 )
 
-export const { toggleOverlay } = overlaySlice.actions;
+export const { togglePostOverlay,toggleVideoOverlay } = overlaySlice.actions;
 
 export default overlaySlice.reducer;

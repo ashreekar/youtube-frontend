@@ -1,17 +1,28 @@
 import React from 'react'
-import Sidebar from '../components/Sidebar/Sidebar'
-import HomeFeed from '../components/HomeFeed/HomeFeed'
-import TopFilter from '../components/TopFilter/TopFilter'
+import { lazy, Suspense } from 'react'
+import TopFilterLoader from '../components/Loaders/TopFilter/TopFilterLoader.jsx'
+import HomePageLoader from '../components/Loaders/HomePage/HomePageLoader.jsx'
+import SidebarLoader from '../components/Loaders/SidebarLoader/Sidebar.jsx'
+
+const TopFilter = lazy(() => import('../components/TopFilter/TopFilter.jsx'))
+const HomeFeed = lazy(() => import('../components/HomeFeed/HomeFeed.jsx'))
+const Sidebar = lazy(() => import('../components/Sidebar/Sidebar'))
 
 function LandingPage() {
 
   return (
     <div className="flex">
-      <Sidebar />
+      <Suspense fallback={<SidebarLoader />}>
+        <Sidebar />
+      </Suspense>
       <div className="flex-1 min-h-screen overflow-x-hidden">
-        <TopFilter />
+        <Suspense fallback={<TopFilterLoader />}>
+          <TopFilter />
+        </Suspense>
         <div className="px-4">
-          <HomeFeed />
+          <Suspense fallback={<HomePageLoader />}>
+            <HomeFeed />
+          </Suspense>
         </div>
       </div>
     </div>
