@@ -33,7 +33,7 @@ function LoginMode({ start, setMode, setStart }) {
 
           <Link to="/create-account">
             <p className="text-blue-900 hover:text-blue-950 hover:underline">
-              Don’t have an account? <span>Create one</span>
+              Don't have an account? <span>Create one</span>
             </p>
           </Link>
 

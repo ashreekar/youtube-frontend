@@ -10,14 +10,15 @@ import { RiShareForwardLine } from "react-icons/ri";
 import { TfiDownload } from "react-icons/tfi";
 import VideoDetails from "./VideoDetails";
 import axios from "axios";
+import VideoMetaLoader from "../Loaders/VideoMetaLoader";
+import ErrorFallback from "../ErrorBoundary/ErrorFallback";
 
-function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoId }) {
+function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoId, setAskLogin }) {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [self, setSelf] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [isDisliked, setIsDisliked] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const [likes, setLikes] = useState(video.likes);
 
@@ -28,6 +29,11 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
       try {
         setLoading(true);
         const token = localStorage.getItem("acceasToken");
+
+        if (!token || token.trim() === "") {
+          console.log("Not logged in")
+          return setIsSubscribed(false);
+        }
 
         const subscription = await axios.get(
           `http://localhost:3317/api/v1/channel/subscription/${video.owner._id}`,
@@ -54,6 +60,12 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
     try {
       const token = localStorage.getItem("acceasToken");
 
+      if (!token || token.trim() === "") {
+        console.log("Not logged in")
+        setAskLogin(true)
+        return setIsSubscribed(false);
+      }
+
       if (isSubscribed) {
         await axios.delete(
           `http://localhost:3317/api/v1/channel/${video.owner._id}`,
@@ -77,6 +89,11 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
     async function getReactionStatus() {
       try {
         const token = localStorage.getItem("acceasToken");
+
+        if (!token || token.trim() === "") {
+          console.log("Not logged in")
+          return setIsSubscribed(false);
+        }
 
         const reaction = await axios.get(
           `http://localhost:3317/api/v1/reaction/video/${video._id}`,
@@ -111,6 +128,11 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
   const updateReactionController = async (type) => {
     try {
       const token = localStorage.getItem("acceasToken");
+      if (!token || token.trim() === "") {
+        console.log("Not logged in")
+        setAskLogin(true)
+        return setIsSubscribed(false);
+      }
 
       if ((isLiked && type) || (isDisliked && !type)) {
         await axios.delete(
@@ -147,8 +169,7 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
   };
 
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error loading channel</p>;
+  if (loading) return <VideoMetaLoader />;
 
   return (
     <div className="w-full">

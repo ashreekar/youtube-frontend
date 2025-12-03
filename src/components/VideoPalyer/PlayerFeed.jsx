@@ -3,6 +3,9 @@ import PlayerCard from "./PlayerCard";
 import { useFetch } from "../../utils/useFetch";
 import { Link } from "react-router-dom";
 
+import FeedLoader from "../Loaders/FeedLoader"
+import ErrorFallback from "../ErrorBoundary/ErrorFallback";
+
 function PlayerFeed({ videoId }) {
   const { data, error, loading } = useFetch(
     "http://localhost:3317/api/v1/video", "get"
@@ -20,8 +23,8 @@ function PlayerFeed({ videoId }) {
     }
   )) || [];
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Failed to load videos</p>;
+  if (loading) return <FeedLoader />;
+  if (error) return <ErrorFallback/>;
 
   return (
     <div className="w-full p-2 sm:p-4">

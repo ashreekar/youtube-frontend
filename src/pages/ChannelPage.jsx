@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from "react";
-import Sidebar from "../components/Sidebar/Sidebar";
-import ChannelHome from "../components/Channel/ChannelHome";
-import Popup from "../components/SidebarAndPopUp/Popup";
-import ChannelInfo from "../components/Popups/ChannelInfo";
+import React, { lazy, useEffect, useState, Suspense } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import ManageVideos from "../components/Channel/Videos/ManageVideos";
-import UpdateBanner from "../components/Channel/Banner/UpdateBanner";
-import UpdateAvatar from "../components/Channel/Avatar/UpdateAvatar";
+
+import Sidebar from "../components/Sidebar/Sidebar";
+import ChannelHome from "../components/Channel/ChannelHome";
+import Popup from "../components/SidebarAndPopUp/Popup";
+import ErrorFallback from "../components/ErrorBoundary/ErrorFallback";
+import HomePageLoader from "../components/Loaders/HomePage/HomePageLoader";
+import ChannelInfo from "../components/Popups/ChannelInfo"
+import SpinLoader from "../components/Loaders/SpinLoader";
+
+const ManageVideos = lazy(() => import("../components/Channel/Videos/ManageVideos"))
+const UpdateBanner = lazy(() => import("../components/Channel/Banner/UpdateBanner"))
+const UpdateAvatar = lazy(() => import("../components/Channel/Avatar/UpdateAvatar"))
+const AskLogin = lazy(() => import("../components/Popups/AskLogin"))
 
 function ChannelPage() {
   const { channelId } = useParams();
@@ -19,7 +25,6 @@ function ChannelPage() {
 
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [isSubscribed, setIsSubscribed] = useState(false);
 
   const [changeSubs, setChangeSubs] = useState(false);
@@ -31,6 +36,7 @@ function ChannelPage() {
   const [videoDeleted, setvideoDeleted] = useState(false);
   const [updateBanner, setUpdateBanner] = useState(false);
   const [updateAvatar, setUpdateAvatar] = useState(false);
+  const [askLogin, setAskLogin] = useState(false);
 
   useEffect(() => {
     async function fetchDetails() {
@@ -54,7 +60,7 @@ function ChannelPage() {
 
       } catch (err) {
         navigate('/')
-        setError(err);
+        return <ErrorFallback />
       } finally {
         setLoading(false);
       }
@@ -68,6 +74,10 @@ function ChannelPage() {
       setLoading(true)
       async function getSubscription() {
         const token = localStorage.getItem("acceasToken")
+        if (!token || token.trim() === "") {
+          console.log("Not logged in")
+          return setIsSubscribed(false);
+        }
         const subscription = await axios.get(`http://localhost:3317/api/v1/channel/subscription/${channelId}`, {
           headers: {
             Authorization: `Bearer ${token}`
@@ -86,20 +96,29 @@ function ChannelPage() {
     }
   }, [channelId, changeSubs, videoDeleted])
 
-  if (loading) return <p>Loading...</p>;
-  if (error) throw Error("User should be authorised in to acceas resource");
-  if (!data) return null;
-
   async function changeSubscription() {
     try {
       if (isSubscribed) {
         const token = localStorage.getItem("acceasToken")
+
+        if (!token || token.trim() === "") {
+          console.log("Not logged in")
+          return setAskLogin(true);
+        }
+
         await axios.delete(
           `http://localhost:3317/api/v1/channel/${channelId}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
       } else {
         const token = localStorage.getItem("acceasToken")
+
+
+        if (!token || token.trim() === "") {
+          console.log("Not logged in")
+          return setAskLogin(true);
+        }
+
         await axios.post(
           `http://localhost:3317/api/v1/channel/${channelId}`,
           {},
@@ -110,11 +129,12 @@ function ChannelPage() {
       setChangeSubs(!changeSubs);
 
     } catch (error) {
-      console.log(error);
-      alert("Login to subscribe");
-      navigate("/login");
+      return <ErrorFallback />
     }
   }
+
+  if (loading) return <HomePageLoader />;
+  if (!data) return null;
 
   return (
     <>
@@ -141,7 +161,9 @@ function ChannelPage() {
       {
         manageVideosVisible && (
           <Popup popupkey="manageContent" closePopup={() => setManageVideosVisible(false)}>
-            <ManageVideos closePopup={() => setManageVideosVisible(false)} videos={data?.content?.videos || []} setvideoChanged={setvideoChanged} setvideoDeleted={setvideoDeleted} />
+            <Suspense fallback={<div className="w-full h-full flex items-center justify-center"><SpinLoader /></div>}>
+              <ManageVideos closePopup={() => setManageVideosVisible(false)} videos={data?.content?.videos || []} setvideoChanged={setvideoChanged} setvideoDeleted={setvideoDeleted} />
+            </Suspense>
           </Popup>
         )
       }
@@ -149,7 +171,9 @@ function ChannelPage() {
       {
         updateBanner && (
           <Popup popupkey="managePicture" closePopup={() => setUpdateBanner(false)} >
-            <UpdateBanner setchangeChannelData={setchangeChannelData} banner={data.meta.banner ? data.meta.banner : data.meta.avatar} closePopup={() => setUpdateBanner(false)} />
+            <Suspense fallback={<div className="w-full h-full flex items-center justify-center"><SpinLoader /></div>}>
+              <UpdateBanner setchangeChannelData={setchangeChannelData} banner={data.meta.banner ? data.meta.banner : data.meta.avatar} closePopup={() => setUpdateBanner(false)} />
+            </Suspense>
           </Popup>
         )
       }
@@ -157,7 +181,19 @@ function ChannelPage() {
       {
         updateAvatar && (
           <Popup popupkey="managePicture" closePopup={() => setUpdateAvatar(false)}>
-            <UpdateAvatar setchangeChannelData={setchangeChannelData} avatar={data.meta.avatar} closePopup={() => setUpdateAvatar(false)} />
+            <Suspense fallback={<div className="w-full h-full flex items-center justify-center"><SpinLoader /></div>}>
+              <UpdateAvatar setchangeChannelData={setchangeChannelData} avatar={data.meta.avatar} closePopup={() => setUpdateAvatar(false)} />
+            </Suspense>
+          </Popup>
+        )
+      }
+
+      {
+        askLogin && (
+          <Popup popupkey="channel" closePopup={() => setAskLogin(false)}>
+            <Suspense fallback={<div className="w-full h-full flex items-center justify-center"><SpinLoader /></div>}>
+              <AskLogin />
+            </Suspense>
           </Popup>
         )
       }

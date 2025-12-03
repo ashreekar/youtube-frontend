@@ -75,8 +75,8 @@ function UpdateVideo({ closePopup, videos = [], setvideoChanged }) {
     }
 
     if (loading) {
-    return <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4"><SpinLoader></SpinLoader></div>
-  }
+        return <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4"><SpinLoader></SpinLoader></div>
+    }
 
     const inputStyles = `w-full border border-gray-300 rounded-xl py-2 px-3 focus:ring-red-600 focus:border-red-600 outline-none`;
     return (
@@ -86,7 +86,7 @@ function UpdateVideo({ closePopup, videos = [], setvideoChanged }) {
                 <h2 className="text-4xl md:text-5xl font-semibold mb-4">Update video</h2>
                 <p className="text-lg text-gray-600 font-medium">Selct video to be updated</p>
 
-                <select className='mt-6 bg-red-600 px-3 py-3 rounded-full outline-none border-none text-white font-bold' id="videos" name="videos" onChange={(e) => {
+                <select className='mt-6 bg-red-600 px-3 py-3 w-3/4 rounded-full outline-none border-none text-white font-bold' id="videos" name="videos" onChange={(e) => {
                     const selected = videos.find(video => video._id === e.target.value);
                     setSelctedVideo(selected);
                 }}
@@ -128,15 +128,21 @@ function UpdateVideo({ closePopup, videos = [], setvideoChanged }) {
                     type="text"
                     placeholder={errors.title ? errors.title.message : "Enter the video title"}
                     className={`${inputStyles} ${errors.title && "placeholder:text-red-600 placeholder:font-semibold"}`}
-                    {...register("title")}
+                    {...register("title", {
+                        required: "title can't be empty"
+                    })}
                 />
+                { errors.title && <p className='text-red-500'>{errors.title.message}</p>}
 
                 <textarea
                     rows={5}
                     placeholder={errors.description ? errors.description.message : "Enter the video description"}
                     className={`${inputStyles} ${errors.description && "placeholder:text-red-600 placeholder:font-semibold"}`}
-                    {...register("description")}
+                    {...register("description", {
+                        required: "description can't be empty"
+                    })}
                 />
+                { errors.title && <p className='text-red-500'>{errors.title.message}</p>}
 
                 <button
                     type="submit"

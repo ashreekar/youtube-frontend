@@ -5,8 +5,9 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import InputField from "../ButtonsAndInput/InputField";
 import { useForm } from 'react-hook-form';
+import CommentLoader from "../Loaders/CommentLoader";
 
-function CommentSection({ id }) {
+function CommentSection({ id, setAskLogin }) {
   const { data, loading, error } = useFetch(`http://localhost:3317/api/v1/comment/video/${id}`, "get")
   const user = useSelector(state => state.user.user);
 
@@ -57,6 +58,13 @@ function CommentSection({ id }) {
   const addComment = async (data) => {
     try {
       const token = localStorage.getItem("acceasToken")
+
+      if (!token || token.trim() === "") {
+        console.log("Not logged in")
+        setAskLogin(true)
+        return setIsSubscribed(false);
+      }
+
       await axios.post(`http://localhost:3317/api/v1/comment/video/${id}`, {
         content: data.comment
       }, {
@@ -65,11 +73,6 @@ function CommentSection({ id }) {
         }
       })
 
-      // const updated = await axios.get(
-      //   `http://localhost:3317/api/v1/comment/video/${id}`
-      // );
-
-      // setCommentData(updated.data);
       setcommentChanegd(!commentChanegd);
       setVisibleButton(false)
 
@@ -94,6 +97,13 @@ function CommentSection({ id }) {
   const editComment = async (data) => {
     try {
       const token = localStorage.getItem("acceasToken")
+
+      if (!token || token.trim() === "") {
+        console.log("Not logged in")
+        setAskLogin(true)
+        return setIsSubscribed(false);
+      }
+
       await axios.put(`http://localhost:3317/api/v1/comment/${commentToEdited.id}`, {
         content: data.comment
       }, {
@@ -115,6 +125,13 @@ function CommentSection({ id }) {
   const deleteComment = async (comment) => {
     try {
       const token = localStorage.getItem("acceasToken");
+
+      if (!token || token.trim() === "") {
+        console.log("Not logged in")
+        setAskLogin(true)
+        return setIsSubscribed(false);
+      }
+
       const deleted = await axios.delete(`http://localhost:3317/api/v1/comment/${comment.id}`,
         {
           headers: {
@@ -133,7 +150,7 @@ function CommentSection({ id }) {
   }
 
   if (loading) {
-    return <p>Loading</p>
+    return <CommentLoader />
   }
 
   return (
@@ -172,7 +189,7 @@ function CommentSection({ id }) {
 
         <div className="flex flex-col gap-6">
           {comments.map((comment) => (
-            <CommentItem key={comment.id} setVisibleButton={setVisibleButton} renderEditComment={renderEditComment} deleteComment={deleteComment} comment={comment} activeMenu={activeMenu} setActiveMenu={setActiveMenu} setEditing={setEditing} commentChanegd={commentChanegd} />
+            <CommentItem key={comment.id} setAskLogin={setAskLogin} setVisibleButton={setVisibleButton} renderEditComment={renderEditComment} deleteComment={deleteComment} comment={comment} activeMenu={activeMenu} setActiveMenu={setActiveMenu} setEditing={setEditing} commentChanegd={commentChanegd} />
           ))}
         </div>
       </div>

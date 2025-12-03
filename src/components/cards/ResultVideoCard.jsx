@@ -1,6 +1,7 @@
 import { HiDotsVertical } from "react-icons/hi";
 import { dateFormatter } from "../../utils/dateFormatter"
 import { viewsFormatter } from "../../utils/viewsFormatter"
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 function ResultVideoCard({ video }) {
     const createdAt = dateFormatter(video.createdAt);
@@ -27,7 +28,7 @@ function ResultVideoCard({ video }) {
                 overflow-hidden 
                 bg-gray-200
             ">
-                <img
+                <LazyLoadImage
                     src={video.thumbnail}
                     className="w-full h-full object-cover"
                     alt={video.title}
@@ -57,7 +58,7 @@ function ResultVideoCard({ video }) {
                 </p>
 
                 <div className="flex items-center gap-3">
-                    <img
+                    <LazyLoadImage
                         src={video.thumbnail}
                         className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover"
                         alt={video.owner.name}

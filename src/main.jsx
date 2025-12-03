@@ -45,7 +45,7 @@ const router = createBrowserRouter(
         },
         {
           path: "/watch/:videoId",
-          element: <Suspense fallback={<HomePageLoader/>}><VideoPlayerPage /></Suspense>
+          element: <Suspense><VideoPlayerPage /></Suspense>
         },
         {
           path: "/channel/:channelId",

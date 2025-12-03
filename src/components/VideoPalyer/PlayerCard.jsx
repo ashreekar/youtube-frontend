@@ -1,6 +1,7 @@
 import React from "react";
 import { dateFormatter } from "../../utils/dateFormatter"
 import { viewsFormatter } from "../../utils/viewsFormatter"
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 function PlayerCard({ video }) {
   const createdAt = dateFormatter(video.publishedAt);
@@ -20,7 +21,7 @@ function PlayerCard({ video }) {
           shrink-0
         "
       >
-        <img
+        <LazyLoadImage
           src={video.thumbnail}
           alt={video.title}
           className="w-full h-full object-cover"

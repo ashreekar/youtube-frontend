@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import ChannelBanner from './ChannelBanner';
 import ChannelMeta from './ChannelMeta';
@@ -10,6 +10,8 @@ function ChannelHome({ setIsInfo, self, data, id, changeSubscription, isSubscrib
   const navigate = useNavigate();
   const isSidebarOpen = useSelector(state => state.sidebar.open);
   const user = useSelector(state => state.user.loggedIn);
+
+  const [tabs, setTabs] = useState("home");
 
   if (self && !user) {
     return navigate('/login');
@@ -30,12 +32,25 @@ function ChannelHome({ setIsInfo, self, data, id, changeSubscription, isSubscrib
         setUpdateAvatar={setUpdateAvatar}
       />
 
-      <SwitchTabs />
+      <SwitchTabs tabs={tabs} setTabs={setTabs} />
 
-      <ChannelVideo
+      {
+      tabs === "home" && <ChannelVideo
         channelId={id}
         video={data?.content?.videos || []}
       />
+      }
+
+      {
+        tabs === "video" && <ChannelVideo
+          channelId={id}
+          video={data?.content?.videos || []}
+        />
+      }
+
+      {
+        tabs === "post" && <div className='w-full h-full flex items-center justify-center pt-6'>No posts found</div>
+      }
 
     </div>
   );

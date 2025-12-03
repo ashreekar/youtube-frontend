@@ -36,7 +36,7 @@ function DeleteVideo({ closePopup, videos = [], setvideoDeleted }) {
                 <h2 className="text-4xl md:text-5xl font-semibold mb-4">Delete video</h2>
                 <p className="text-lg text-gray-600 font-medium">Selct video to be deleted</p>
 
-                <select className='mt-6 bg-red-600 px-3 py-3 rounded-full outline-none border-none text-white font-bold' id="videos" name="videos" onChange={(e) => {
+                <select className='mt-6 bg-red-600 w-3/4 px-3 py-3 rounded-full outline-none border-none text-white font-bold' id="videos" name="videos" onChange={(e) => {
                     const selected = videos.find(video => video._id === e.target.value);
                     setSelctedVideo(selected);
                 }}

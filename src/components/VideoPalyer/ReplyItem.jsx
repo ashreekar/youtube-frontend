@@ -5,7 +5,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdOutlineReport, MdEdit, MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
 
-function ReplyItem({ reply, activeMenu, setActiveMenu, deleteComment, renderEditComment, setEditing }) {
+function ReplyItem({ reply, activeMenu, setActiveMenu, deleteComment, renderEditComment, setEditing, setAskLogin}) {
   const [likes, setLikes] = useState(reply.likes || 0);
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
@@ -16,6 +16,10 @@ function ReplyItem({ reply, activeMenu, setActiveMenu, deleteComment, renderEdit
     async function getReply() {
       try {
         const token = localStorage.getItem("acceasToken");
+        if (!token || token.trim() === "") {
+          console.log("Not logged in")
+          return ;
+        }
 
         const reaction = await axios.get(
           `http://localhost:3317/api/v1/reaction/comment/${reply.id}`,
@@ -36,6 +40,11 @@ function ReplyItem({ reply, activeMenu, setActiveMenu, deleteComment, renderEdit
   const updateReactionController = async (type) => {
     try {
       const token = localStorage.getItem("acceasToken");
+
+      if (!token || token.trim() === "") {
+          console.log("Not logged in")
+          return setAskLogin(true);
+        }
 
       if ((liked && type) || (disliked && !type)) {
         await axios.delete(
@@ -92,7 +101,7 @@ function ReplyItem({ reply, activeMenu, setActiveMenu, deleteComment, renderEdit
           <div className="flex items-center gap-3 mt-2">
             <button
               onClick={() => updateReactionController(true)}
-              className={`flex items-center gap-1 text-sm ${
+              className={`flex items-center cursor-pointer gap-1 text-sm ${
                 liked ? "text-blue-600" : "text-gray-600"
               }`}
             >
@@ -101,7 +110,7 @@ function ReplyItem({ reply, activeMenu, setActiveMenu, deleteComment, renderEdit
 
             <button
               onClick={() => updateReactionController(false)}
-              className={`text-sm ${
+              className={`text-sm cursor-pointer ${
                 disliked ? "text-blue-600" : "text-gray-600"
               }`}
             >
@@ -123,20 +132,20 @@ function ReplyItem({ reply, activeMenu, setActiveMenu, deleteComment, renderEdit
                 setEditing(true);
                 renderEditComment(reply);
               }}
-              className="flex gap-2 px-3 py-2 hover:bg-gray-100 w-full"
+              className="flex gap-2 cursor-pointer px-3 py-2 hover:bg-gray-100 w-full"
             >
               <MdEdit /> Edit
             </button>
 
             <button
               onClick={() => deleteComment(reply)}
-              className="flex gap-2 px-3 py-2 hover:bg-gray-100 w-full"
+              className="flex gap-2 cursor-pointer px-3 py-2 hover:bg-gray-100 w-full"
             >
               <MdDelete /> Delete
             </button>
           </div>
         ) : (
-          <div className="absolute right-2 top-8 bg-white shadow-xl p-2 rounded-xl w-40">
+          <div className="absolute right-2 cursor-pointer top-8 bg-white shadow-xl p-2 rounded-xl w-40">
             <button className="flex gap-2 px-3 py-2 text-gray-500 cursor-not-allowed w-full">
               <MdOutlineReport /> Report
             </button>

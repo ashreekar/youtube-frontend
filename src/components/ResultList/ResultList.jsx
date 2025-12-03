@@ -12,6 +12,18 @@ function ResultList() {
         return () => dispatch(clearSearchResults());
     }, []);
 
+    if (!videosData || videosData.length === 0) {
+        return <div
+            className={`
+              flex items-center justify-center
+              ${isSidebarOpen ? "ml-64" : "ml-20"}
+              max-w-full
+            `}
+        >
+            <h3 className='text-lg font-medium'>No videos matches your search</h3>
+        </div>
+    }
+
     return (
         <div
             className={`

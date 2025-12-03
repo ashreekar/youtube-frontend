@@ -5,6 +5,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdOutlineReport, MdEdit, MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
 import ReplyItem from "./ReplyItem";
+import ErrorFallback from "../ErrorBoundary/ErrorFallback";
 
 function CommentItem({
   comment,
@@ -13,7 +14,8 @@ function CommentItem({
   deleteComment,
   renderEditComment,
   setEditing,
-  commentChanegd
+  commentChanegd,
+  setAskLogin
 }) {
   const [likes, setLikes] = useState(comment.likes || 0);
   const [liked, setLiked] = useState(false);
@@ -31,17 +33,6 @@ function CommentItem({
   useEffect(() => {
     async function init() {
       try {
-        const token = localStorage.getItem("acceasToken");
-
-        const reaction = await axios.get(
-          `http://localhost:3317/api/v1/reaction/comment/${comment.id}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-
-        const state = reaction.data.data.reaction;
-        if (state === "like") setLiked(true);
-        else if (state === "dislike") setDisliked(true);
-
         const repliesRes = await axios.get(
           `http://localhost:3317/api/v1/comment/comment/${comment.id}`
         );
@@ -57,8 +48,25 @@ function CommentItem({
           })) || [];
 
         setReplies(replyList);
+
+
+        const token = localStorage.getItem("acceasToken");
+
+        if (!token || token.trim() === "") {
+          console.log("Not logged in")
+          return;
+        }
+
+        const reaction = await axios.get(
+          `http://localhost:3317/api/v1/reaction/comment/${comment.id}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        const state = reaction.data.data.reaction;
+        if (state === "like") setLiked(true);
+        else if (state === "dislike") setDisliked(true);
       } catch (error) {
-        console.log(error);
+        return <ErrorFallback />
       }
     }
 
@@ -68,6 +76,11 @@ function CommentItem({
   const updateReactionController = async (type) => {
     try {
       const token = localStorage.getItem("acceasToken");
+
+      if (!token || token.trim() === "") {
+        console.log("Not logged in")
+        return setAskLogin(true);
+      }
 
       if ((liked && type) || (disliked && !type)) {
         // Remove reaction
@@ -118,6 +131,10 @@ function CommentItem({
 
     try {
       const token = localStorage.getItem("acceasToken");
+      if (!token || token.trim() === "") {
+        console.log("Not logged in")
+        return setAskLogin(true);
+      }
 
       await axios.post(
         `http://localhost:3317/api/v1/comment/comment/${comment.id}`,
@@ -170,7 +187,7 @@ function CommentItem({
           <div className="flex items-center gap-4 mt-2">
             <button
               onClick={() => updateReactionController(true)}
-              className={`flex items-center gap-1 text-sm ${liked ? "text-blue-600" : "text-gray-600"
+              className={`flex items-center cursor-pointer gap-1 text-sm ${liked ? "text-blue-600" : "text-gray-600"
                 }`}
             >
               <AiOutlineLike />
@@ -179,14 +196,14 @@ function CommentItem({
 
             <button
               onClick={() => updateReactionController(false)}
-              className={`text-sm ${disliked ? "text-blue-600" : "text-gray-600"
+              className={`text-sm cursor-pointer ${disliked ? "text-blue-600" : "text-gray-600"
                 }`}
             >
               <AiOutlineDislike />
             </button>
 
             <button
-              className="text-xs ml-4 text-gray-600"
+              className="text-xs ml-4 text-gray-600 cursor-pointer"
               onClick={() => setReplyVisible(true)}
             >
               Reply
@@ -194,7 +211,7 @@ function CommentItem({
 
             {replies.length > 0 && (
               <button
-                className="text-xs ml-2 text-blue-600"
+                className="text-xs ml-2 text-blue-600 cursor-pointer"
                 onClick={() => setShowReplies((prev) => !prev)}
               >
                 {replies.length} replies
@@ -225,7 +242,7 @@ function CommentItem({
                       setReplyText("");
                       setReplyVisible(false);
                     }}
-                    className="px-3 py-1 rounded-full text-sm hover:bg-gray-100"
+                    className="px-3 py-1 rounded-full text-sm hover:bg-gray-100 cursor-pointer"
                   >
                     Cancel
                   </button>
@@ -233,7 +250,7 @@ function CommentItem({
                   <button
                     type="submit"
                     disabled={replyText.trim() === "" || isSendingReply}
-                    className={`px-3 py-1 rounded-full text-sm ${replyText.trim()
+                    className={`px-3 py-1 rounded-full text-sm cursor-pointer ${replyText.trim()
                       ? "bg-blue-600 text-white"
                       : "bg-gray-200 text-gray-500"
                       }`}
@@ -255,6 +272,7 @@ function CommentItem({
                 deleteComment={deleteComment}
                 renderEditComment={renderEditComment}
                 setEditing={setEditing}
+                setAskLogin={setAskLogin}
               />
             ))
           }

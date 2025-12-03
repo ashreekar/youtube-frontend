@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import InputField from '../ButtonsAndInput/InputField';
 import SpinLoader from '../Loaders/SpinLoader';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import ErrorFallback from '../ErrorBoundary/ErrorFallback';
 
 function CustomizeChannel() {
     const user = useSelector((state) => state.user);
@@ -37,12 +38,15 @@ function CustomizeChannel() {
             try {
                 setLoading(true)
                 const token = localStorage.getItem("acceasToken")
+                if (!token || token.trim() === "") {
+                    console.log("Not logged in")
+                    return navigate('/');
+                }
                 const res = await axios.get("http://localhost:3317/api/v1/channel", {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                console.log(res)
                 setThumbnail(res.data.data.meta.avatar);
                 setName(res.data.data.meta.name);
                 setValue("channelName", res.data.data.meta.name);
@@ -50,7 +54,7 @@ function CustomizeChannel() {
                 setValue("description", res.data.data.meta?.description);
 
             } catch (error) {
-                console.log(error)
+                return <ErrorFallback />
             } finally {
                 setLoading(false)
             }
@@ -59,16 +63,20 @@ function CustomizeChannel() {
         fetchChannelDetails();
     }, [])
 
-    const createAChannel = async (data) => {
+    const updateAChannel = async (data) => {
         try {
             setLoading(true);
             const payload = {
-                "description": data.description,
+                "description": data?.description.trim() || "",
                 "name": data.channelName,
                 "handle": data.handle
             }
 
             const token = localStorage.getItem("acceasToken")
+            if (!token || token.trim() === "") {
+                console.log("Not logged in")
+                return navigate('/');
+            }
 
             const result = await axios.put("http://localhost:3317/api/v1/channel", payload,
                 {
@@ -79,7 +87,7 @@ function CustomizeChannel() {
                 navigate('/feed/you')
             }
         } catch (error) {
-            console.log(error);
+            return <ErrorFallback />
         } finally {
             setLoading(false);
         }
@@ -106,7 +114,7 @@ function CustomizeChannel() {
 
             <div className="w-full lg:w-1/2 max-w-xl bg-white rounded-2xlpx-6 py-4 md:px-10 md:py-10 rounded-2xl">
                 <form
-                    onSubmit={handleSubmit(createAChannel)}
+                    onSubmit={handleSubmit(updateAChannel)}
                     className="mt-8 flex flex-col gap-5"
                 >
                     <div className="flex flex-col gap-1">
@@ -147,26 +155,21 @@ function CustomizeChannel() {
                             type="text"
                             className="border border-gray-300 px-4 py-2 w-full rounded-lg focus:border-2 focus:border-blue-600"
                             placeholder="description"
-                            {...register("description", {
-                                required: "Handle name is required",
-                            })}
+                            {...register("description")}
                         />
-                        {errors.description && (
-                            <p className="text-red-500 text-sm">{errors.description.message}</p>
-                        )}
                     </div>
 
                     <div className="flex justify-end gap-4 mt-6">
-                        <button
+                        <Link to={'/feed/you'}
                             type="button"
-                            className="px-5 py-2 rounded-full hover:bg-gray-100 transition"
+                            className="px-5 py-2 rounded-full hover:bg-gray-100 transition cursor-pointer"
                         >
                             Cancel
-                        </button>
+                        </Link>
 
                         <button
                             type="submit"
-                            className="px-6 py-2 bg-blue-600 text-white font-medium rounded-full hover:bg-blue-700 transition"
+                            className="px-6 py-2 bg-blue-600 text-white font-medium cursor-pointer rounded-full hover:bg-blue-700 transition"
                         >
                             Update
                         </button>

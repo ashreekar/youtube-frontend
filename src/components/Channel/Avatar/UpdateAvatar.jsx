@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import SpinLoader from '../../Loaders/SpinLoader';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import ErrorFallback from '../../ErrorBoundary/ErrorFallback';
 
 function UpdateAvatar({ avatar, closePopup, setchangeChannelData }) {
     const [loading, setLoading] = useState(false);
@@ -35,9 +36,9 @@ function UpdateAvatar({ avatar, closePopup, setchangeChannelData }) {
                 })
             }
 
-            setchangeChannelData(prev=>!prev)
+            setchangeChannelData(prev => !prev)
         } catch (error) {
-            console.log(error)
+            return <ErrorFallback />
         } finally {
             setLoading(false)
             closePopup();
@@ -65,7 +66,7 @@ function UpdateAvatar({ avatar, closePopup, setchangeChannelData }) {
                     <img
                         src={preview || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFdV6jxuuHsH1qvI_PEJ0oife4h5w8bOWVPA&s"}
                         alt="thumbnail-preview"
-                        className="h-28 w-56 rounded-md shadow-sm object-cover"
+                        className="h-56 w-56 rounded-full shadow-sm object-cover"
                     />
 
                     <label className="flex flex-col items-center cursor-pointer w-40 px-2 py-2 hover:bg-blue-100 rounded-full">
@@ -73,10 +74,14 @@ function UpdateAvatar({ avatar, closePopup, setchangeChannelData }) {
                             type="file"
                             accept="image/png, image/jpg, image/jpeg, image/gif"
                             className="hidden"
-                            {...register("avatar")}
+                            {...register("avatar",{
+                                required:"Avatar image is required"
+                            })}
                         />
+                        
                         <span className="text-blue-700 text-lg font-semibold text-center">Select avatar</span>
                     </label>
+                    {errors.avatar && <p className='text-red-400 text-center'>{errors.avatar.message}</p>}
                 </div>
 
                 <button

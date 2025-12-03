@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense, lazy } from "react";
+import { useFetch } from "../../utils/useFetch";
+import axios from "axios";
+
 import Player from "./Player";
 import VideoMeata from "./VideoMeata";
 import CommentSection from "./CommentSection";
-import { useFetch } from "../../utils/useFetch";
-import axios from "axios";
+import AskLogin from "../Popups/AskLogin";
+import PlayerLoader from "../Loaders/PlayerLoader";
+import Popup from "../SidebarAndPopUp/Popup";
 
 function PlayerPageCard({ videoId }) {
   const { data, error, loading } = useFetch(
@@ -21,6 +25,8 @@ function PlayerPageCard({ videoId }) {
 
   const [changeSubs, setChangeSubs] = useState(false);
   const [reactionState, setreactionState] = useState(false);
+  const [errorState, setError] = useState(null);
+  const [askLogin, setAskLogin] = useState(false);
 
   useEffect(() => {
     try {
@@ -34,24 +40,51 @@ function PlayerPageCard({ videoId }) {
 
       getUpdatedVideoResult();
     } catch (error) {
-      console.log(error)
+      setError({
+        title: "Videoload failed Failed",
+        description: error.response?.data?.message || "Video load failed",
+        customUrl: window.location.hostname,
+      });
     }
   }, [changeSubs, reactionState, videoId])
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error loading video</p>;
+  if (loading) return <PlayerLoader/>;
+  if (error) {
+    setError({
+      title: "Videoload failed Failed",
+      description: error.response?.data?.message || "Video load failed",
+      customUrl: window.location.hostname,
+    });
+  };
   if (!video || data.data.length === 0) return <p>No video found</p>;
 
   return (
-    <div className="flex flex-col gap-6">
-      <Player source={`${video.url}`} />
+    <>
+      <div className="flex flex-col gap-6">
+        <Player source={`${video.url}`} />
 
-      <div className="space-y-6">
-        <VideoMeata video={video} videoId={videoId} changeSubs={changeSubs} setChangeSubs={setChangeSubs} setreactionState={setreactionState} />
+        <div className="space-y-6">
+          <VideoMeata
+            video={video}
+            videoId={videoId}
+            changeSubs={changeSubs}
+            setChangeSubs={setChangeSubs}
+            setreactionState={setreactionState}
+            askLogin={askLogin}
+            setAskLogin={setAskLogin} />
 
-        <CommentSection id={videoId} />
+          <CommentSection id={videoId} askLogin={askLogin} setAskLogin={setAskLogin} />
+        </div>
       </div>
-    </div>
+
+      {
+        askLogin && (
+          <Popup popupkey="channel" closePopup={() => setAskLogin(false)}>
+              <AskLogin />
+          </Popup>
+        )
+      }
+    </>
   );
 }
 

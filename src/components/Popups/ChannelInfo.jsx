@@ -1,6 +1,5 @@
 import React from 'react';
 import { FaGlobe, FaInfo, FaSubscript, FaTiktok, FaVideo } from 'react-icons/fa';
-import { FaX } from 'react-icons/fa6';
 
 function ChannelInfo({ data, channelId }) {
 
@@ -23,11 +22,10 @@ Stay connected for more updates, new uploads, and enjoyable content from ${data?
   const videos = data?.stats?.total_videos || "—";
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full w-full">
 
       <div className="flex justify-between items-center py-2">
         <h2 className="text-3xl font-bold">{title}</h2>
-        <FaX className="text-xl cursor-pointer" />
       </div>
 
       <div className="flex flex-col gap-6 mt-3 overflow-y-auto pb-6">

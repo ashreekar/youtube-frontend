@@ -45,8 +45,8 @@ function ChannelMeta({ setIsInfo, self, data, isSubscribed, changeSubscription, 
           self ?
             (
               <div className="mt-4 flex gap-10">
-                <Link to={'/feed/you/settings'} className="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 font-medium">Customise channel</Link>
-                <button onClick={() => setManageVideosVisible(true)} className="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 font-medium">Manage Videos</button>
+                <Link to={'/feed/you/settings'} className="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 font-medium cursor-pointer">Customise channel</Link>
+                <button onClick={() => setManageVideosVisible(true)} className="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 font-medium cursor-pointer">Manage Videos</button>
               </div>
             ) :
             (
@@ -54,14 +54,14 @@ function ChannelMeta({ setIsInfo, self, data, isSubscribed, changeSubscription, 
                 {isSubscribed ? (
                   <button
                     onClick={changeSubscription}
-                    className="px-5 py-2 rounded-full bg-black hover:bg-gray-700 text-white font-semibold"
+                    className="px-5 py-2 rounded-full cursor-pointer bg-black hover:bg-gray-700 text-white font-semibold"
                   >
                     Subscribed
                   </button>
                 ) : (
                   <button
                     onClick={changeSubscription}
-                    className="px-5 py-2 rounded-full bg-red-600 hover:bg-red-700 text-white font-semibold"
+                    className="px-5 py-2 rounded-full cursor-pointer bg-red-600 hover:bg-red-700 text-white font-semibold"
                   >
                     Subscribe
                   </button>

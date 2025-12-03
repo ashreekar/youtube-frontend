@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import SpinLoader from '../../Loaders/SpinLoader';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import ErrorFallback from '../../ErrorBoundary/ErrorFallback';
 
 function UpdateBanner({banner,closePopup,setchangeChannelData}) {
     const [loading, setLoading] = useState(false);
@@ -36,7 +37,7 @@ function UpdateBanner({banner,closePopup,setchangeChannelData}) {
                 setchangeChannelData(prev=>!prev)
             }
         } catch (error) {
-            console.log(error)
+            return <ErrorFallback/>
         } finally {
             setLoading(false)
             closePopup();
@@ -64,7 +65,7 @@ function UpdateBanner({banner,closePopup,setchangeChannelData}) {
                     <img
                         src={preview || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFdV6jxuuHsH1qvI_PEJ0oife4h5w8bOWVPA&s"}
                         alt="thumbnail-preview"
-                        className="h-28 w-56 rounded-md shadow-sm object-cover"
+                        className="h-28 w-78 rounded-md shadow-sm object-cover"
                     />
 
                     <label className="flex flex-col items-center cursor-pointer w-40 px-2 py-2 hover:bg-blue-100 rounded-full">
@@ -72,10 +73,14 @@ function UpdateBanner({banner,closePopup,setchangeChannelData}) {
                             type="file"
                             accept="image/png, image/jpg, image/jpeg, image/gif"
                             className="hidden"
-                            {...register("banner")}
+                            {...register("banner",{
+                                required:"Banner image is required"
+                            })}
                         />
-                        <span className="text-blue-700 text-lg font-semibold text-center">Select Thumbnail</span>
+                        
+                        <span className="text-blue-700 text-lg font-semibold text-center">Select Banner</span>
                     </label>
+                    {errors.banner && <p className='text-red-400 text-center'>{errors.banner.message}</p>}
                 </div>
 
                 <button
