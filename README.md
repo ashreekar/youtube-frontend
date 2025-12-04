@@ -1,16 +1,198 @@
-# React + Vite
+# 🎬 YouTube Clone — Frontend (React + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+📝 **GitHub Repository:**
+[https://github.com/ashreekar/youtube-frontend](https://github.com/ashreekar/youtube-frontend)
 
-Currently, two official plugins are available:
+## 📌 Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This is the **frontend of a YouTube Clone application** built using **React (Vite)**.
+The project replicates core YouTube features such as:
 
-## React Compiler
+* Browse videos on the Home page
+* Search videos by title
+* Filter videos using categories
+* View and play videos
+* Like / Dislike videos
+* Add, edit, and delete comments
+* User authentication (Login / Register)
+* Create and manage channels
+* Upload, edit, and delete videos from your own channel
+* Fully responsive UI
+* Smooth navigation using React Router
+* Clean state management using Redux Toolkit
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+This project is part of the MERN YouTube Clone capstone and implements all required frontend features.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## ⚙️ Features
+
+### 🏠 **Home Page**
+
+✔ YouTube-like header
+✔ Collapsible sidebar
+✔ Video grid layout
+✔ Filter buttons (6+ categories)
+✔ Search videos by title
+✔ Responsive layout
+
+### 🔐 **User Authentication**
+
+✔ Register and Login pages
+✔ JWT-based authentication
+✔ Validation for username, email, and password
+✔ After login, username appears in the header
+
+### 🎥 **Video Player Page**
+
+✔ Play selected video
+✔ Shows title, description, channel name
+✔ Like / Dislike functionality
+✔ Full Comments CRUD:
+
+* Add comment
+* Edit comment
+* Delete comment
+
+### 📺 **Channel Page**
+
+✔ Create a channel (after signing in)
+✔ View all videos uploaded by that channel
+✔ Upload new videos
+✔ Edit video details
+✔ Delete videos
+
+### 🔍 **Search & Filters**
+
+✔ Header search bar
+✔ Search videos by title
+✔ Category-based filtering
+✔ Videos dynamically update based on filter
+
+### 📱 Responsive UI
+
+✔ Mobile
+✔ Tablet
+✔ Desktop
+
+---
+
+## 🏗️ Project Structure
+
+```
+youtube-frontend/
+├── public/
+├── src/
+│   ├── components/
+│   │   ├── Auth/
+│   │   ├── Header/
+│   │   ├── Sidebar/
+│   │   ├── VideoCard/
+│   │   ├── VideoGrid/
+│   │   ├── CommentSection/
+│   │   ├── Channel/
+│   │   ├── Filters/
+│   ├── pages/
+│   │   ├── Home/
+│   │   ├── Login/
+│   │   ├── Register/
+│   │   ├── VideoPlayer/
+│   │   ├── ChannelPage/
+│   ├── utils/
+│   │   ├── dateFormatter.js
+│   │   ├── viewsFormatter.js
+│   │   ├── axiosInstance.js
+│   ├── store/
+│   │   ├── userSlice.js
+│   │   ├── videoSlice.js
+│   │   ├── channelSlice.js
+│   │   ├── store.js
+│   ├── App.jsx
+│   ├── main.jsx
+│   ├── index.css
+├── package.json
+├── vite.config.js
+├── README.md
+```
+
+---
+
+## 🚀 Getting Started
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/ashreekar/youtube-frontend.git
+cd youtube-frontend
+```
+
+### 2️⃣ Install Dependencies
+
+```bash
+npm install
+```
+
+### 3️⃣ Run the Application
+
+```bash
+npm run dev
+```
+
+Now open **[http://localhost:5173](http://localhost:5173)** in the browser.
+
+---
+
+## 🧰 Tech Stack
+
+**Frontend:**
+
+* React (Vite)
+* Redux Toolkit
+* React Router
+* Axios
+* TailwindCSS
+* Framer Motion
+* React Icons
+* React Hook Form
+
+---
+
+## 🎨 UI & Styling
+
+✔ Clean and YouTube-inspired UI
+✔ TailwindCSS for styling
+✔ Responsive for all screen sizes
+✔ Smooth animations using Framer Motion
+
+---
+
+## 📜 Assignment Requirements Covered
+
+✔ React app created with Vite
+✔ Home page with header, sidebar, filters, and video grid
+✔ Login and Register with validation + JWT handling
+✔ Video Player with Like/Dislike
+✔ Comments CRUD
+✔ Channel page with full video CRUD
+✔ Search by video title
+✔ Filter by category
+✔ Routing for all pages + dynamic video routes
+✔ Redux for global state
+✔ Responsive UI
+✔ Clean folder structure
+✔ README with setup instructions
+
+---
+
+## 🎯 Future Enhancements
+
+* Dark mode toggle
+* Recommended videos section
+
+---
+
+## 🤝 Contributions
+
+Pull requests are welcome!
+
+---
