@@ -81,38 +81,144 @@ This project is part of the MERN YouTube Clone capstone and implements all requi
 
 ```
 youtube-frontend/
-├── public/
-├── src/
-│   ├── components/
-│   │   ├── Auth/
-│   │   ├── Header/
-│   │   ├── Sidebar/
-│   │   ├── VideoCard/
-│   │   ├── VideoGrid/
-│   │   ├── CommentSection/
-│   │   ├── Channel/
-│   │   ├── Filters/
-│   ├── pages/
-│   │   ├── Home/
-│   │   ├── Login/
-│   │   ├── Register/
-│   │   ├── VideoPlayer/
-│   │   ├── ChannelPage/
-│   ├── utils/
-│   │   ├── dateFormatter.js
-│   │   ├── viewsFormatter.js
-│   │   ├── axiosInstance.js
-│   ├── store/
-│   │   ├── userSlice.js
-│   │   ├── videoSlice.js
-│   │   ├── channelSlice.js
-│   │   ├── store.js
-│   ├── App.jsx
-│   ├── main.jsx
-│   ├── index.css
-├── package.json
-├── vite.config.js
-├── README.md
+   └── 📁public
+        └── 📁header
+            ├── burger-menu-svgrepo-com.svg
+        ├── youtube.png
+    └── 📁src
+        └── 📁components
+            └── 📁ButtonsAndInput
+                ├── Button.jsx
+                ├── InputField.jsx
+            └── 📁cards
+                ├── ResultVideoCard.jsx
+                ├── VideoCard.jsx
+            └── 📁Channel
+                └── 📁Avatar
+                    ├── UpdateAvatar.jsx
+                └── 📁Banner
+                    ├── UpdateBanner.jsx
+                └── 📁Videos
+                    ├── DeleteVideo.jsx
+                    ├── ManageVideos.jsx
+                    ├── MangeVideoState.jsx
+                    ├── UpdateVideo.jsx
+                ├── ChannelBanner.jsx
+                ├── ChannelHome.jsx
+                ├── ChannelMeta.jsx
+                ├── ChannelVideo.jsx
+                ├── CustomizeChannel.jsx
+                ├── SwitchTabs.jsx
+                ├── VideoCards.jsx
+            └── 📁CreateAccount
+                ├── Step1.jsx
+                ├── Step2.jsx
+                ├── Step3.jsx
+            └── 📁ErrorBoundary
+                ├── ErrorFallback.jsx
+            └── 📁Header
+                └── 📁components
+                    └── 📁SearchBar
+                        ├── Search.jsx
+                        ├── SearchBar.jsx
+                        ├── SearchButton.jsx
+                    ├── Hamburger.jsx
+                    ├── Logo.jsx
+                └── 📁LoginStates
+                    ├── LoginState.jsx
+                    ├── WhenLogin.jsx
+                    ├── WhenLogout.jsx
+                ├── Header.jsx
+            └── 📁HomeFeed
+                ├── HomeFeed.jsx
+            └── 📁Loaders
+                └── 📁Header
+                    ├── HeaderLoader.jsx
+                └── 📁HomePage
+                    ├── HomePageLoader.jsx
+                └── 📁SidebarLoader
+                    ├── Sidebar.jsx
+                └── 📁TopFilter
+                    ├── TopFilterLoader.jsx
+                ├── CommentLoader.jsx
+                ├── FeedLoader.jsx
+                ├── LineLoader.jsx
+                ├── PlayerLoader.jsx
+                ├── Skeleton.jsx
+                ├── SpinLoader.jsx
+                ├── VideoMetaLoader.jsx
+            └── 📁Login
+                ├── LoginMode.jsx
+                ├── LoginStep1.jsx
+                ├── LoginStep2.jsx
+            └── 📁NotFound
+                ├── NotFound.jsx
+            └── 📁Popup
+                ├── CreateInfo.jsx
+                ├── UserInfo.jsx
+            └── 📁Popups
+                ├── AskLogin.jsx
+                ├── ChannelCreation.jsx
+                ├── ChannelInfo.jsx
+                ├── CreatePost.jsx
+                ├── CreateVideo.jsx
+                ├── Errorlogin.jsx
+            └── 📁ResultList
+                ├── ResultList.jsx
+            └── 📁Sidebar
+                ├── ExploreSidebar.jsx
+                ├── SettingsSidebar.jsx
+                ├── SidbarFooter.jsx
+                ├── Sidebar.jsx
+                ├── SubscriptionSidebar.jsx
+                ├── UserSidebar.jsx
+                ├── YoutubeSidebar.jsx
+            └── 📁SidebarAndPopUp
+                ├── GlobalOverlay.jsx
+                ├── Popup.jsx
+                ├── Sidebar.jsx
+            └── 📁TopFilter
+                ├── TopFilter.jsx
+            └── 📁VideoPalyer
+                ├── CommentItem.jsx
+                ├── CommentSection.jsx
+                ├── Player.jsx
+                ├── PlayerCard.jsx
+                ├── PlayerFeed.jsx
+                ├── PlayerPageCard.jsx
+                ├── PlayerSection.jsx
+                ├── ReplyItem.jsx
+                ├── VideoDetails.jsx
+                ├── VideoMeata.jsx
+        └── 📁pages
+            ├── ChannelPage.jsx
+            ├── CreateAccount.jsx
+            ├── LandingPage.jsx
+            ├── Login.jsx
+            ├── ResultsPage.jsx
+            ├── VideoPlayerPage.jsx
+        └── 📁states
+            ├── appStore.js
+            ├── overlaySlice.js
+            ├── searchSlic.js
+            ├── sidebarSlice.js
+            ├── sideOverlaySlice.js
+            ├── userSlice.js
+            ├── videoSlice.js
+        └── 📁utils
+            ├── dateFormatter.js
+            ├── useFetch.js
+            ├── viewsFormatter.js
+        ├── App.jsx
+        ├── index.css
+        ├── main.jsx
+    ├── .gitignore
+    ├── eslint.config.js
+    ├── index.html
+    ├── package-lock.json
+    ├── package.json
+    ├── README.md
+    └── vite.config.js
 ```
 
 ---
