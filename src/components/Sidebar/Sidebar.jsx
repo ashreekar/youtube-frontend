@@ -14,6 +14,7 @@ import {
 } from "react-icons/md";
 
 import { PiYoutubeLogoLight } from "react-icons/pi";
+import { Link } from 'react-router-dom'
 
 function Sidebar({ player }) {
     const isSidebarOpen = useSelector(store => store.sidebar.open);
@@ -21,7 +22,8 @@ function Sidebar({ player }) {
     const componentsOnClose = [
         {
             name: "Home",
-            element: <MdOutlineHome className="w-6 h-6" />
+            element: <MdOutlineHome className="w-6 h-6" />,
+            link: '/'
         },
         {
             name: "Shorts",
@@ -64,13 +66,23 @@ function Sidebar({ player }) {
         ) : (
             <div className={player ? "hidden" : "fixed hidden top-14 left-0 z-40 w-20 h-[calc(100vh-64px)] overflow-y-auto no-scrollbar bg-white sm:flex flex-col items-center py-4"}>
                 {componentsOnClose.map(component => (
-                    <div
-                        key={component.name}
-                        className="flex flex-col items-center justify-center hover:bg-gray-100 rounded-lg p-3 w-full h-20 cursor-pointer"
-                    >
-                        {component.element}
-                        <span className="text-[11px] text-center">{component.name}</span>
-                    </div>
+                    component?.link
+                        ?
+                        <Link
+                            to={'/'}
+                            key={component.name}
+                            className="flex flex-col items-center justify-center hover:bg-gray-100 rounded-lg p-3 w-full h-20 cursor-pointer"
+                        >
+                            {component.element}
+                            <span className="text-[11px] text-center">{component.name}</span>
+                        </Link> :
+                        <div
+                            key={component.name}
+                            className="flex flex-col items-center justify-center hover:bg-gray-100 rounded-lg p-3 w-full h-20 cursor-pointer"
+                        >
+                            {component.element}
+                            <span className="text-[11px] text-center">{component.name}</span>
+                        </div>
                 ))}
             </div>
         )

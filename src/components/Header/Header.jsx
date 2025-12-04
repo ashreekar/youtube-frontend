@@ -9,23 +9,13 @@ function Header() {
     const [needSearchbar, setneedSearchbar] = useState(false);
     return (
         <header
-            className="
-                sticky top-0 z-20
-                w-[99vw] h-14
-                flex justify-between items-center
-                px-4
-                backdrop-blur-xl  
-                bg-white/90   
-                dark:bg-[#0f0f0f]/90 
-                dark:border-white/10
-            "
-        >
+            className="sticky top-0 z-20 w-[98.5vw] h-14 flex justify-between items-center px-4 backdrop-blur-xl bg-white/90">
             <div className={needSearchbar ? "hidden" : "flex items-center gap-4 shrink-0"}>
                 <Hamburger />
                 <Logo />
             </div>
 
-            <div className={needSearchbar?"flex":"hidden"} onClick={()=>setneedSearchbar(false)}>
+            <div className={needSearchbar ? "flex" : "hidden"} onClick={() => setneedSearchbar(false)}>
                 <MdKeyboardArrowLeft size={24} />
             </div>
 

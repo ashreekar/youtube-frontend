@@ -3,12 +3,7 @@ import { FaGlobe, FaInfo, FaSubscript, FaTiktok, FaVideo } from 'react-icons/fa'
 
 function ChannelInfo({ data, channelId }) {
 
-  const description = `
-${data?.meta?.name} is a channel that delivers engaging and easy-to-watch content for all audiences. 
-With over ${data?.stats?.total_videos} videos uploaded so far and a growing community of ${data?.stats?.total_subscribers} subscribers, 
-this channel shares fresh perspectives, reviews, reactions, and interesting breakdowns across different topics. 
-Stay connected for more updates, new uploads, and enjoyable content from ${data?.meta?.handle}.
-`.trim();
+  const description = `${data?.meta?.name} is a channel that delivers engaging and easy-to-watch content for all audiences. With over ${data?.stats?.total_videos} videos uploaded so far and a growing community of ${data?.stats?.total_subscribers} subscribers, this channel shares fresh perspectives, reviews, reactions, and interesting breakdowns across different topics. Stay connected for more updates, new uploads, and enjoyable content from ${data?.meta?.handle}.`.trim();
 
   const title = data?.meta?.name || "Unknown Channel";
   const customUrl = `https://www.youtube.com/${channelId}` || "https://www.youtube.com/"

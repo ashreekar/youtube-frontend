@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import WhenLogout from '../Header/LoginStates/WhenLogout';
 import axios from "axios";
 import { Link } from 'react-router-dom';
+import SpinLoader from '../Loaders/SpinLoader';
 
 function SubscriptionSidebar() {
   const loggedIn = useSelector(store => store.user.loggedIn);
@@ -45,7 +46,7 @@ function SubscriptionSidebar() {
   }
 
   if (loading) {
-    return <p className="px-3 py-2 text-sm text-gray-600">Loading channels...</p>;
+    return <p className="px-3 py-2 text-sm text-gray-600"><SpinLoader/></p>;
   }
 
   const visibleSubs = showAll ? subscribers : subscribers.slice(0, 6);

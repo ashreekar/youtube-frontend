@@ -16,14 +16,13 @@ function SettingsSidebar() {
        <div className="mt-3">
       <div className="mt-1">
         {renderList.map(item => (
-          <a
+          <div
             key={item.name}
-            href={item.link}
             className="flex items-center gap-4 h-12 px-3 rounded-lg hover:bg-gray-100 cursor-pointer"
           >
             {item.icon}
             <span className="text-sm">{item.name}</span>
-          </a>
+          </div>
         ))}
       </div>
     </div>

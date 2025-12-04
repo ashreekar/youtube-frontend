@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import Search from './Search'
 import SearchButton from './SearchButton'
-import { useSelector, useDispatch } from 'react-redux'
-import { setSearchResults, setRecent } from '../../../../states/searchSlic'
+import { useDispatch } from 'react-redux'
+import { setRecent } from '../../../../states/searchSlic'
 import { useNavigate } from 'react-router-dom'
 
 function SearchBar({ needSearchbar, setneedSearchbar }) {
@@ -23,7 +23,7 @@ function SearchBar({ needSearchbar, setneedSearchbar }) {
     }
 
     return (
-        <div className='flex w-full'>
+        <div className='flex w-full justify-center'>
             <Search needSearchbar={needSearchbar} setQuery={setQuery} query={query} handleSearch={handleSearch} />
             <SearchButton needSearchbar={needSearchbar} setneedSearchbar={setneedSearchbar} handleSearch={handleSearch} />
         </div>

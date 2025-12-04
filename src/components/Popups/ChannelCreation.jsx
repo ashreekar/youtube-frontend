@@ -5,6 +5,7 @@ import axios from "axios";
 import { loginUser } from "../../states/userSlice";
 import SpinLoader from "../Loaders/SpinLoader";
 import { useState } from "react";
+import ErrorFallback from "../ErrorBoundary/ErrorFallback";
 
 const ChannelCreation = () => {
   const user = useSelector((state) => state.user);
@@ -43,19 +44,21 @@ const ChannelCreation = () => {
           headers: { "Content-Type": "multipart/form-data", "Authorization": `Bearer ${token}` }
         }
       )
-      console.log(result)
       if (result) {
         dispatch(loginUser(result.data.user));
       }
     } catch (error) {
-      console.log(error);
+      return <ErrorFallback />
     } finally {
       setLoading(false);
     }
   };
 
   if (loading) {
-    return <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4"><SpinLoader></SpinLoader></div>
+    return <div
+      className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+      <SpinLoader></SpinLoader>
+    </div>
   }
 
   return (

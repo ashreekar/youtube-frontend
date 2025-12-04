@@ -3,9 +3,11 @@ import { useForm } from "react-hook-form";
 import { FaFileImport } from "react-icons/fa";
 import InputField from "../ButtonsAndInput/InputField";
 import axios from "axios";
+import ErrorFallback from "../ErrorBoundary/ErrorFallback";
 
 function CreatePost() {
     const [previewImages, setPreviewImages] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const {
         register,
@@ -26,6 +28,7 @@ function CreatePost() {
 
     const addPostFunction = async (data) => {
         try {
+            setLoading(true);
             const formData = new FormData();
 
             formData.append("content", data.content);
@@ -43,15 +46,22 @@ function CreatePost() {
             });
 
             const result = await response.json();
-            alert("Post created successfully!");
 
             reset();
             setPreviewImages([]);
         } catch (error) {
-            alert("Failed to create post.");
-            console.error(error);
+            return <ErrorFallback />
+        } finally {
+            setLoading(false);
         }
     };
+
+    if (loading) {
+        return <div
+            className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+            <SpinLoader></SpinLoader>
+        </div>
+    }
 
     return (
         <div className="min-h-screen flex items-center justify-center w-full h-full bg-gray-100 p-6">

@@ -5,6 +5,7 @@ import axios from "axios";
 import SpinLoader from "../Loaders/SpinLoader";
 import { useDispatch } from "react-redux";
 import { toggleVideoOverlay } from "../../states/overlaySlice";
+import ErrorFallback from "../ErrorBoundary/ErrorFallback";
 
 function CreateVideo() {
   const categories = ["tech", "travel", "gaming", "cooking", "backend", "frontend", "webdev", "ai"];
@@ -45,10 +46,9 @@ function CreateVideo() {
 
       if (response) {
         dispatch(toggleVideoOverlay());
-        alert("Video added");
       }
     } catch (error) {
-      console.log(error);
+      return <ErrorFallback />
     } finally {
       setLoading(false);
     }

@@ -24,25 +24,23 @@ function SidbarFooter() {
 
       <div className="flex flex-wrap gap-x-3 gap-y-1 mb-3">
         {primaryLinks.map((item) => (
-          <a
+          <div
             key={item}
-            href="/features/onit"
             className="hover:underline cursor-pointer"
           >
             {item}
-          </a>
+          </div>
         ))}
       </div>
 
       <div className="flex flex-wrap gap-x-3 gap-y-1 mb-3">
         {secondaryLinks.map((item) => (
-          <a
+          <div
             key={item}
-            href="/features/onit"
             className="hover:underline cursor-pointer"
           >
             {item}
-          </a>
+          </div>
         ))}
       </div>
 
