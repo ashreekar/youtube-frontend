@@ -12,14 +12,19 @@ import { logoutUser, toggelLogin } from "../../states/userSlice"
 import { toggleUserOverlay } from '../../states/sideOverlaySlice';
 import { toggleVideoOverlay, togglePostOverlay } from '../../states/overlaySlice';
 
+// This sidebar renders user options like create channel if not
+// channel page option if exists
 function UserInfo() {
     const dispatch = useDispatch();
     const user = useSelector(state => state.user.user);
 
-    const handleCreateVideo = () => {
+    const handleCreateChannel = () => {
+        // overlay triggers the flag that is listnenig in GlobalOverlays
+        // refer: src/components/sidebarandoverlays/GlobalOverlays
         dispatch(toggleVideoOverlay())
     }
 
+    // can do signout in this compoent 
     const handleSignOut = async () => {
         const token = localStorage.getItem("acceasToken")
         axios.post("http://localhost:3317/api/v1/user/logout", null,
@@ -29,6 +34,7 @@ function UserInfo() {
                 }
             }
         )
+        // clearing localstorage optionthat is set by this app
         localStorage.clear();
         dispatch(logoutUser());
         dispatch(toggleUserOverlay());
@@ -46,7 +52,8 @@ function UserInfo() {
 
                     {
                         user?.channel.length === 0 ?
-                            <p onClick={handleCreateVideo} className="text-blue-600 text-xs cursor-pointer hover:underline">
+                        // on click opens opup of channel
+                            <p onClick={handleCreateChannel} className="text-blue-600 text-xs cursor-pointer hover:underline">
                                 Create channel
                             </p> :
                             <Link to={'/feed/you'} onClick={() => dispatch(toggleUserOverlay())}>

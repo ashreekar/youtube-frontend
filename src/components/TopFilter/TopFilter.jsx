@@ -5,6 +5,7 @@ import { useFetch } from "../../utils/useFetch";
 import axios from "axios";
 import { setVideosItem } from "../../states/videoSlice";
 import TopFilterLoader from "../Loaders/TopFilter/TopFilterLoader";
+import ErrorFallback from "../ErrorBoundary/ErrorFallback";
 
 function TopFilter() {
   const dispatch = useDispatch();
@@ -64,7 +65,7 @@ function TopFilter() {
   if (loadCategory) return <TopFilterLoader />;
   if (loading) return null;
   if (error) {
-    return null;
+    return <ErrorFallback key={"you are offline"} />;
   }
 
   return (

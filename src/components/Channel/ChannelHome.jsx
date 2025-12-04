@@ -13,6 +13,7 @@ function ChannelHome({ setIsInfo, self, data, id, changeSubscription, isSubscrib
 
   const [tabs, setTabs] = useState("home");
 
+  // if user not exists and hit feed/you then redirecting to home
   if (self && !user) {
     return navigate('/login');
   }
@@ -20,8 +21,10 @@ function ChannelHome({ setIsInfo, self, data, id, changeSubscription, isSubscrib
   return (
     <div className={`${isSidebarOpen ? "ml-4 md:ml-64" : "ml-4 md:ml-24"} flex flex-col`}>
 
+      {/* channel banner shows banner images */}
       <ChannelBanner url={data.meta.banner || data.meta.avatar} self={self} setUpdateBanner={setUpdateBanner} />
 
+      {/* channel meta shows the data of channel */}
       <ChannelMeta
         setIsInfo={setIsInfo}
         self={self}
@@ -32,17 +35,13 @@ function ChannelHome({ setIsInfo, self, data, id, changeSubscription, isSubscrib
         setUpdateAvatar={setUpdateAvatar}
       />
 
+      {/* Switch tabs swischs tabs to show videos and post(not exists till date) */}
       <SwitchTabs tabs={tabs} setTabs={setTabs} />
 
-      {
-      tabs === "home" && <ChannelVideo
-        channelId={id}
-        video={data?.content?.videos || []}
-      />
-      }
+      {/* conditionally rendering the channel video or post info */}
 
       {
-        tabs === "video" && <ChannelVideo
+        (tabs === "home" || tabs === "video") && <ChannelVideo
           channelId={id}
           video={data?.content?.videos || []}
         />

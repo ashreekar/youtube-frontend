@@ -3,8 +3,9 @@ import MangeVideoState from "./MangeVideoState"
 import UpdateVideo from "./UpdateVideo"
 import DeleteVideo from "./DeleteVideo"
 
-function ManageVideos({ closePopup, videos = [], setvideoChanged,setvideoDeleted }) {
+function ManageVideos({ closePopup, videos = [], setvideoChanged, setvideoDeleted }) {
   const [videostage, setStage] = useState(0);
+  // This is the middle stage component taht handles the dlete, and update videos
 
   if (videostage === 1) {
     return <UpdateVideo videos={videos} closePopup={closePopup} setvideoChanged={setvideoChanged} />

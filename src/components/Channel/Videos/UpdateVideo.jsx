@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 import InputField from '../../ButtonsAndInput/InputField';
 import axios from 'axios';
 import SpinLoader from '../../Loaders/SpinLoader';
 
 function UpdateVideo({ closePopup, videos = [], setvideoChanged }) {
     const [loading, setLoading] = useState(false);
-    const dispatch = useDispatch();
 
+    //  this gives the video to be deleted updated suing select
     const [selectedVideo, setSelctedVideo] = useState(null);
 
     const {
@@ -20,10 +19,12 @@ function UpdateVideo({ closePopup, videos = [], setvideoChanged }) {
     } = useForm();
 
     const thumbnailFile = watch("thumbnail");
+    // gives a thumbanil image link to have thumbaniaof video
     const preview = thumbnailFile && thumbnailFile.length > 0
         ? URL.createObjectURL(thumbnailFile[0])
         : selectedVideo?.thumbnail || null;
 
+    // Setting values using setValue so empty value not hits backend
     useEffect(() => {
         if (selectedVideo) {
             setValue("title", selectedVideo.title);
@@ -31,9 +32,11 @@ function UpdateVideo({ closePopup, videos = [], setvideoChanged }) {
         }
     }, [selectedVideo])
 
+    // funciton that updates the video
     const updateVideoFunction = async (data) => {
         try {
             setLoading(true)
+            //  updating thumbanil first if changed if not then leaving as it is
             if (data?.thumbnail.length > 0) {
                 const formdata = new FormData();
                 formdata.append("thumbnail", data.thumbnail[0]);
@@ -52,6 +55,7 @@ function UpdateVideo({ closePopup, videos = [], setvideoChanged }) {
             }
             const token = localStorage.getItem("acceasToken")
 
+            //  uudating selected fields
             const res = await axios.put(`http://localhost:3317/api/v1/video/${selectedVideo._id}`,
                 {
                     "title": data.title,
@@ -86,6 +90,7 @@ function UpdateVideo({ closePopup, videos = [], setvideoChanged }) {
                 <h2 className="text-4xl md:text-5xl font-semibold mb-4">Update video</h2>
                 <p className="text-lg text-gray-600 font-medium">Selct video to be updated</p>
 
+                {/* Selct gives options to update which video */}
                 <select className='mt-6 bg-red-600 px-3 py-3 w-3/4 rounded-full outline-none border-none text-white font-bold' id="videos" name="videos" onChange={(e) => {
                     const selected = videos.find(video => video._id === e.target.value);
                     setSelctedVideo(selected);
@@ -112,7 +117,7 @@ function UpdateVideo({ closePopup, videos = [], setvideoChanged }) {
                         alt="thumbnail-preview"
                         className="h-28 w-56 rounded-md shadow-sm object-cover"
                     />
-
+                    {/* file is not part upadte video api it hits separate backend */}
                     <label className="flex flex-col items-center cursor-pointer w-40 px-2 py-2 hover:bg-blue-100 rounded-full">
                         <input
                             type="file"
@@ -132,7 +137,7 @@ function UpdateVideo({ closePopup, videos = [], setvideoChanged }) {
                         required: "title can't be empty"
                     })}
                 />
-                { errors.title && <p className='text-red-500'>{errors.title.message}</p>}
+                {errors.title && <p className='text-red-500'>{errors.title.message}</p>}
 
                 <textarea
                     rows={5}
@@ -142,8 +147,9 @@ function UpdateVideo({ closePopup, videos = [], setvideoChanged }) {
                         required: "description can't be empty"
                     })}
                 />
-                { errors.title && <p className='text-red-500'>{errors.title.message}</p>}
+                {errors.title && <p className='text-red-500'>{errors.title.message}</p>}
 
+                {/* button is disabled untill the the video is selected */}
                 <button
                     type="submit"
                     disabled={!selectedVideo}

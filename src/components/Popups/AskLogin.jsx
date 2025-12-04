@@ -2,6 +2,7 @@ import React from 'react'
 import { FaRegCircleUser } from 'react-icons/fa6'
 import { Link } from 'react-router-dom'
 
+// this popup appers on every unauthorised activity that needs login
 function AskLogin() {
   return (
     <div className='w-full h-full flex items-center justify-center'>

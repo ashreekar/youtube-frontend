@@ -15,7 +15,9 @@ function PlayerPageCard({ videoId }) {
     `http://localhost:3317/api/v1/video/${videoId}`,
     "get"
   );
+  // fetching a particular video details
 
+  //states that maintain all state like reaction,login etc
   const [video, setVideo] = useState(null);
   const [changeSubs, setChangeSubs] = useState(false);
   const [reactionState, setreactionState] = useState(false);
@@ -53,6 +55,7 @@ function PlayerPageCard({ videoId }) {
   return (
     <>
       <div className="flex flex-col gap-6">
+        {/* rendering player, video details, comment section resoectivly */}
         <Player source={video.url} />
 
         <div className="space-y-6">
@@ -74,6 +77,7 @@ function PlayerPageCard({ videoId }) {
         </div>
       </div>
 
+      {/* Popup appers on action that requires login but not logged in */}
       {askLogin && (
         <Popup popupkey="channel" closePopup={() => setAskLogin(false)}>
           <AskLogin />

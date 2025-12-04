@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 
 function LoginMode({ start, setMode, setStart }) {
+  // login option stage for email or username
   function emailLogin() {
     setMode("email");
     setStart(true);

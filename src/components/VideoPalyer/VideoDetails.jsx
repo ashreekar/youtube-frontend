@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Linkify from "linkify-react";
 
+// video details showed based on the video info ie data prop
 function VideoDetails({ data }) {
   const [showMore, setShowMore] = useState(false);
   return (
@@ -12,8 +13,9 @@ function VideoDetails({ data }) {
 
       {showMore ?
         <div className="mt-2 whitespace-pre-line flex flex-col">
+          {/* used Linkify to render descriptionas it is */}
           <Linkify>{data.description}</Linkify>
-          <button onClick={()=>{setShowMore(false)}} className="text-gray-500 cursor-pointer text-base bg-none border-none mt-6 text-start">show less</button>
+          <button onClick={() => { setShowMore(false) }} className="text-gray-500 cursor-pointer text-base bg-none border-none mt-6 text-start">show less</button>
         </div>
         :
         <>

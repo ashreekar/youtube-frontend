@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 
+// YT logo compoent
 function Logo() {
     return (
         <Link to={'/'}>

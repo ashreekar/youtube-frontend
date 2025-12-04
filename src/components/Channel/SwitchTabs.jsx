@@ -2,6 +2,7 @@ import React from 'react'
 import { FiSearch } from 'react-icons/fi'
 
 function SwitchTabs({ tabs,setTabs }) {
+    // switch tabs renders the tabs to show posts and videos list
     return (
         <div>
             <div className='mb-0 flex mt-8 gap-10 text-xl font-medium text-gray-600'>

@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 function NotFound({ target = "resource", fullscreen = true }) {
+    // This component renders a ui for resouce not found on server or invalid input request
     return (
         <div className={
             fullscreen

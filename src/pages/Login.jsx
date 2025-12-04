@@ -9,15 +9,23 @@ import Popup from '../components/SidebarAndPopUp/Popup';
 import Errorlogin from '../components/Popups/Errorlogin'
 import SpinLoader from '../components/Loaders/SpinLoader';
 
+// this is a 3 step login form
+
+// step 1: ask login mode
+// step 2: ask unique identifies either email or username
+// step 3: ask validator(password)
 const LoginMode = lazy(() => import('../components/Login/LoginMode'));
 const LoginStep1 = lazy(() => import('../components/Login/LoginStep1'));
 const LoginStep2 = lazy(() => import('../components/Login/LoginStep2'));
 
 function Login() {
+  // using react hook form to manage form operations
   const { register, handleSubmit, setValue, trigger, formState: { errors } } = useForm();
+  // main variables are register,and handlesubmit functions
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Initial state of form
   const [start, setStart] = useState(false);
   const [mode, setMode] = useState(null);
   const [step, setStep] = useState(0);
@@ -28,16 +36,20 @@ function Login() {
 
   const user = useSelector(state => state.user.user);
 
+  // if user exists in redux state then getting back to home screens 
+  // stopping forced logins
   useEffect(() => {
     if (user) {
       navigate('/');
     }
   }, [user])
 
+  // function that is passwed to handlesubmit which runs on form suumission
   async function signIn(data) {
     setLoding(true);
 
     try {
+      // checking users enters valid password
       const valid = await trigger([mode, "password"]);
       if (!valid) return;
 
@@ -46,6 +58,8 @@ function Login() {
         data
       );
 
+      // on sucessfull login
+      // clearing form states and adding user and auth token to states
       if (user) {
         localStorage.setItem("acceasToken", user.data.data.acceastoken);
         dispatch(loginUser(user.data.data.user));
@@ -58,6 +72,7 @@ function Login() {
         setValue("username", "");
       }
     } catch (error) {
+      // on error clearing form states
       setStart(false);
       setMode(null);
       setStep(0);
@@ -65,10 +80,10 @@ function Login() {
       setValue("password", "");
       setValue("username", "");
 
+      // triggers popup of error
       setLoginError({
         title: "Login Failed",
         description: error.response?.data?.message || "Invalid username or password",
-        customUrl: window.location.hostname,
       });
 
     } finally {
@@ -83,6 +98,7 @@ function Login() {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+      {/* On login error popup appears */}
       {loginError && (
         <Popup popupkey="channel" closePopup={() => setLoginError(null)}>
           <Errorlogin {...loginError} />
@@ -106,11 +122,14 @@ function Login() {
             <p className="text-sm text-gray-600">to continue to YouTube</p>
           </div>
 
+        {/* laoding login mode first */}
           <Suspense fallback={<LineLoader />}>
+          {/* Start flag check whether to render login mode */}
             <LoginMode start={start} setMode={setMode} setStart={setStart} />
           </Suspense>
 
           {start && (
+            //handlesubmit is a function that passes data to sign in which is a call back
             <form onSubmit={handleSubmit(signIn)} className="space-y-5">
               <Suspense fallback={<LineLoader />}>
                 <LoginStep1

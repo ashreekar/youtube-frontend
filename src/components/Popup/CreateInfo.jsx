@@ -7,11 +7,13 @@ import { RiMessage2Line } from "react-icons/ri";
 import { toggleVideoOverlay, togglePostOverlay } from '../../states/overlaySlice'
 import { toggleCreateOverlay } from '../../states/sideOverlaySlice';
 
-
+// Create info popup is a sidebar that asks to create video or post option on header
 function CreateInfo() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
 
+  // states are handles in store so it can be triggered in global overlays 
+  // refer: src/components/sidebarandpopups/GlobalOverlays
   const handleCreateVideo = () => {
     dispatch(toggleCreateOverlay())
     dispatch(toggleVideoOverlay())
@@ -22,7 +24,10 @@ function CreateInfo() {
     dispatch(togglePostOverlay())
   }
 
+  //Note: if post exist then other is flase and visa versa
+
   return (
+    // have 3 option to create video,post and live(disbaled)
       <div className="w-56 bg-white py-3 px-0 text-sm rounded-lg">
 
         <div onClick={handleCreateVideo} className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer">

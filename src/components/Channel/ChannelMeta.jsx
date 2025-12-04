@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { BiEdit } from 'react-icons/bi'
 
-function ChannelMeta({ setIsInfo, self, data, isSubscribed, changeSubscription, setManageVideosVisible,setUpdateAvatar }) {
+function ChannelMeta({ setIsInfo, self, data, isSubscribed, changeSubscription, setManageVideosVisible, setUpdateAvatar }) {
   const [showEdit, setShowEdit] = useState(false);
 
+  //  this compoent renders all the info recieved as prop
   const description = `${data.meta.name} is a channel that delivers engaging and easy-to-watch content for all audiences. With over ${data.stats.total_videos} videos uploaded so far and a growing community of ${data.stats.total_subscribers} subscribers, this channel shares fresh perspectives, reviews, reactions, and interesting breakdowns across different topics. Stay connected for more updates, new uploads, and enjoyable content from ${data.meta.handle}.`.trim();
 
   return (
     <div className="flex flex-col md:flex-row md:items-center gap-4 px-6 mt-6">
 
+      {/* Helps in updating avatar */}
       <div onMouseOver={() => setShowEdit(true)} onMouseOut={() => setShowEdit(false)} className="relative h-16 w-16 rounded-full md:h-28 md:w-28">
         <img
           src={data.meta.avatar}
@@ -41,6 +43,9 @@ function ChannelMeta({ setIsInfo, self, data, isSubscribed, changeSubscription, 
           {description.slice(0, 120)}...more
         </p>
 
+        {/* Conditionally rendering subscribe,subscribed if not self channel */}
+        {/* If self channel then rendering customise channel and video */}
+        {/* SO all the flags passsed based on change in flag here it triggers the home to change state */}
         {
           self ?
             (

@@ -1,4 +1,5 @@
 function Errorlogin({ title, description }) {
+  //  a popup to display login or create account errors
   return (
     <div className="flex flex-col h-full items-center w-full">
       <div className="flex justify-center items-center py-2">

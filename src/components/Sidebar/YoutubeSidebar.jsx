@@ -4,6 +4,7 @@ import { MdOutlineSubscriptions } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 function YoutubeSidebar() {
+  // youtube sidebaar component rendering
   const componentsOnClose = [
     {
       name: "Home",

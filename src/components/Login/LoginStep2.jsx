@@ -4,7 +4,9 @@ import { FaEye } from 'react-icons/fa';
 import { FaRegEyeSlash } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 
+// final stage of login form
 function LoginStep2({ step, register, errors }) {
+  // hode password flag
   const [hidden, setHidden] = useState(true);
 
   return (
@@ -20,6 +22,7 @@ function LoginStep2({ step, register, errors }) {
               {...register("password", { required: "Password is required" })}
             />
 
+            {/* button to hide and show password */}
             <button
               type="button"
               onClick={() => setHidden(!hidden)}

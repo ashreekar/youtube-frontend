@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux'
 import { toggleSidebar } from '../../../states/sidebarSlice.js'
 
 import { AiOutlineMenu } from "react-icons/ai";
-
+// Main hamburger that dispatch action to open sidebar or not
 function Hamburger() {
     const dispatch = useDispatch();
 

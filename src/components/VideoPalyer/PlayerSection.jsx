@@ -5,6 +5,8 @@ import PlayerLoader from "../Loaders/PlayerLoader";
 const PlayerFeed = lazy(() => import("./PlayerFeed"));
 const PlayerPageCard = lazy(() => import("./PlayerPageCard"));
 
+//  this is the main section divided into 2 parts playerpagecard(all about video,detail,comments)
+// and playerfeed (all about recomended videos)
 function PlayerSection({ videoId }) {
   return (
     <main className="flex-1 min-h-screen px-3 sm:px-6 py-6">

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 function LoginStep1({ step, mode, register, errors, trigger, setStep }) {
   const handleNextClick = async () => {
+    //  chekcking the fields are filled so can rednder next stage
     const valid = await trigger([mode]);
     if (!valid) return;
     setStep(1);
@@ -12,6 +13,7 @@ function LoginStep1({ step, mode, register, errors, trigger, setStep }) {
     <>
       {step === 0 && (
         <div className="w-full">
+          {/* Email or usernmae is based on mode prop */}
           <InputField
             placeholder={`Enter your ${mode}`}
             type={mode === "email" ? "email" : "text"}

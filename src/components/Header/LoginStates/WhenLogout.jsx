@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function WhenLogout() {
 
   return (
-
+    // Render login option
     <Link to={'/login'}>
       <div className="flex items-center gap-2 cursor-pointer
     border-2 border-gray-300 

@@ -18,7 +18,7 @@ import { FiChevronRight } from "react-icons/fi";
 
 export default function UserSidebar() {
   const loggedIn = useSelector(store => store.user.loggedIn);
-
+//  rendering user sidebar componetn if user logged in
   const renderList = [
     { name: "History", icon: <AiOutlineHistory className="w-6 h-6" />, link: "/feed/history" },
     { name: "Playlists", icon: <MdOutlinePlaylistPlay className="w-6 h-6" />, link: "/feed/playlists" },
@@ -30,6 +30,7 @@ export default function UserSidebar() {
     { name: "Your clips", icon: <MdOutlineContentCut className="w-6 h-6" />, link: "/feed/clips" },
   ];
 
+  // if not logged in rendering different elemts
   if (!loggedIn) {
     return (
       <div className="w-full flex flex-col mt-3">

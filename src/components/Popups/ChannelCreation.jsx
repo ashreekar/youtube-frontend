@@ -7,8 +7,9 @@ import SpinLoader from "../Loaders/SpinLoader";
 import { useState } from "react";
 import ErrorFallback from "../ErrorBoundary/ErrorFallback";
 
-const ChannelCreation = () => {
-  const user = useSelector((state) => state.user);
+const ChannelCreation = ({ closePopup }) => {
+  // state.user.user is subscribed to get and fill user info as channel info
+  const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
@@ -24,6 +25,7 @@ const ChannelCreation = () => {
       handle: user?.username || "",
     },
   });
+  // gives preview of avatar file
   const avatarFile = watch("avatar");
   const preview =
     avatarFile && avatarFile.length > 0
@@ -33,6 +35,7 @@ const ChannelCreation = () => {
   const createAChannel = async (data) => {
     try {
       setLoading(true);
+      // sending as a form data as backend expects both images and info
       const formData = new FormData();
       formData.append("avatar", data.avatar[0]);
       formData.append("name", data.channelName);
@@ -68,6 +71,8 @@ const ChannelCreation = () => {
         <h2 className="text-2xl md:text-3xl text-center font-bold mb-6">
           How you'll appear
         </h2>
+        {/* handle submit runs on submisiion and calls cb by passing data */}
+        {/* This is given by react hook form */}
         <form
           onSubmit={handleSubmit(createAChannel)}
           className="mt-8 flex flex-col gap-5"
@@ -139,14 +144,15 @@ const ChannelCreation = () => {
           <div className="flex justify-end gap-4 mt-6">
             <button
               type="button"
-              className="px-5 py-2 rounded-full hover:bg-gray-100 transition"
+              onClick={closePopup}
+              className="px-5 py-2 rounded-full hover:bg-gray-100 transition cursor-pointer"
             >
               Cancel
             </button>
 
             <button
               type="submit"
-              className="px-6 py-2 bg-blue-600 text-white font-medium rounded-full hover:bg-blue-700 transition"
+              className="px-6 cursor-pointer py-2 bg-blue-600 text-white font-medium rounded-full hover:bg-blue-700 transition"
             >
               Create
             </button>

@@ -2,6 +2,7 @@ import React from 'react'
 
 function MangeVideoState({ setStage, closePopup }) {
     return (
+        // This renders the option to manage and delete video
         <div className="bg-white w-full h-full flex flex-col lg:flex-row items-center justify-center px-6 py-2 gap-10">
             <div className="flex flex-col items-center text-center w-full lg:w-1/2 px-5">
                 <img src="/youtube.png" className="h-14 w-16 mb-4" alt="youtube-logo" />

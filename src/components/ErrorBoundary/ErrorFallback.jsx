@@ -1,12 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-function ErrorFallback() {
+// Custom error fallback compoent renders the error value and status code
+function ErrorFallback({ key = "page not found", status = "404" }) {
   return (
     <div className='flex  w-screen h-screen items-center justify-center flex-col'>
       <img src="https://www.gstatic.com/youtube/src/web/htdocs/img/monkey.png" className='h-40 w-40' alt="error-image" />
-      <p className='text-2xl font-medium'>404</p>
-      <p className='text-lg'>Oops page not found</p>
+      <p className='text-2xl font-medium'>{status}</p>
+      <p className='text-lg'>Oops {key}</p>
 
       <Link className='mt-10 bg-blue-100 rounded-full px-3 py-3 font-bold'>
         Go to home

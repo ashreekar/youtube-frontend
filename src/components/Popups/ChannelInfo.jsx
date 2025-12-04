@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaGlobe, FaInfo, FaSubscript, FaTiktok, FaVideo } from 'react-icons/fa';
 
+// popup that displays channel info based on data
 function ChannelInfo({ data, channelId }) {
 
   const description = `${data?.meta?.name} is a channel that delivers engaging and easy-to-watch content for all audiences. With over ${data?.stats?.total_videos} videos uploaded so far and a growing community of ${data?.stats?.total_subscribers} subscribers, this channel shares fresh perspectives, reviews, reactions, and interesting breakdowns across different topics. Stay connected for more updates, new uploads, and enjoyable content from ${data?.meta?.handle}.`.trim();
@@ -17,7 +18,7 @@ function ChannelInfo({ data, channelId }) {
   const videos = data?.stats?.total_videos || "—";
 
   return (
-    <div className="flex flex-col h-full w-full">
+    <div className="flex flex-col h-full w-full justify-center">
 
       <div className="flex justify-between items-center py-2">
         <h2 className="text-3xl font-bold">{title}</h2>

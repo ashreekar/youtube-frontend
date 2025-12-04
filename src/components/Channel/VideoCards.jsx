@@ -3,6 +3,11 @@ import { dateFormatter } from "../../utils/dateFormatter"
 import { viewsFormatter } from "../../utils/viewsFormatter"
 
 function VideoCards({ video }) {
+  // dateformattr and views formatter gives date and views inyoutube format
+  // eg: 1 L views , 1.1 M views , 1k views
+  // eg: 10 h ago, 1d ago, 1 month ago etc
+
+  // refer doe at : /src/utils/
   const createdAt = dateFormatter(video.uploadedAt);
   const views = viewsFormatter(video.views);
   return (

@@ -6,9 +6,11 @@ import axios from "axios";
 import ErrorFallback from "../ErrorBoundary/ErrorFallback";
 
 function CreatePost() {
+    // preview images is an array because it is multiple images
     const [previewImages, setPreviewImages] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    // using reqct-hook-form to maintain the form 
     const {
         register,
         handleSubmit,
@@ -19,6 +21,7 @@ function CreatePost() {
 
     const images = watch("images");
 
+    // rendering images on change of images array as preview images
     useEffect(() => {
         if (images && images.length > 0) {
             const previews = Array.from(images).map(file => URL.createObjectURL(file));
@@ -33,6 +36,8 @@ function CreatePost() {
 
             formData.append("content", data.content);
 
+            //  sending as form data but also images so multipart form data and hits backend with 
+            // content, images
             if (data.images && data.images.length > 0) {
                 for (let i = 0; i < data.images.length; i++) {
                     formData.append("images", data.images[i]);
@@ -67,7 +72,7 @@ function CreatePost() {
         <div className="flex items-center justify-center w-full h-full bg-gray-100 p-6">
             <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg p-6">
                 <h2 className="text-3xl font-bold text-center mb-6">Create Post</h2>
-
+            {/* Submits the form */}
                 <form onSubmit={handleSubmit(addPostFunction)} className="space-y-6">
 
                     <div>

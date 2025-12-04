@@ -13,7 +13,7 @@ import { PiShoppingBagLight, PiDressLight } from "react-icons/pi";
 import { GiLips } from "react-icons/gi";
 
 function ExploreSidebar() {
-
+// explore sidebar elements
   const renderList = [
   { name: "Shopping", icon: <PiShoppingBagLight className="w-6 h-6" />, link: "/features/onit" },
   { name: "Music", icon: <MdOutlineMusicNote className="w-6 h-6" />, link: "/features/onit" },

@@ -4,13 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleCreateOverlay, toggleUserOverlay } from "../../../states/sideOverlaySlice";
 
 function WhenLogin() {
+  // uses info from store to show user details
   const dispatch = useDispatch();
   const user=useSelector(state=>state.user.user);
 
+  // on click of this create sidebar appears
   const handleClickProfile = () => {
     dispatch(toggleUserOverlay());
   };
 
+  // onclick of this sidebar for user appears
   const handleClickCreate = () => {
     dispatch(toggleCreateOverlay());
   };

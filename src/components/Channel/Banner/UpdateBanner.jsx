@@ -4,17 +4,17 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import ErrorFallback from '../../ErrorBoundary/ErrorFallback';
 
-function UpdateBanner({banner,closePopup,setchangeChannelData}) {
+function UpdateBanner({ banner, closePopup, setchangeChannelData }) {
     const [loading, setLoading] = useState(false);
-
+    // react hook form is used to take banner
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors },
-        setValue
     } = useForm();
 
+    // banner preview gives a url to preview image on select
     const bannerFile = watch("banner");
     const preview = bannerFile && bannerFile.length > 0
         ? URL.createObjectURL(bannerFile[0])
@@ -30,14 +30,16 @@ function UpdateBanner({banner,closePopup,setchangeChannelData}) {
 
                 const resurl = await axios.put(`http://localhost:3317/api/v1/channel/banner`, formdata, {
                     headers: {
+                        // hanled by multer in backend
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "multipart/form-data"
                     }
                 })
-                setchangeChannelData(prev=>!prev)
+                // this changes the flag so channel gets updated
+                setchangeChannelData(prev => !prev)
             }
         } catch (error) {
-            return <ErrorFallback/>
+            return <ErrorFallback />
         } finally {
             setLoading(false)
             closePopup();
@@ -73,11 +75,11 @@ function UpdateBanner({banner,closePopup,setchangeChannelData}) {
                             type="file"
                             accept="image/png, image/jpg, image/jpeg, image/gif"
                             className="hidden"
-                            {...register("banner",{
-                                required:"Banner image is required"
+                            {...register("banner", {
+                                required: "Banner image is required"
                             })}
                         />
-                        
+
                         <span className="text-blue-700 text-lg font-semibold text-center">Select Banner</span>
                     </label>
                     {errors.banner && <p className='text-red-400 text-center'>{errors.banner.message}</p>}

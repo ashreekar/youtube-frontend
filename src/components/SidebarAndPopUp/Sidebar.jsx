@@ -6,6 +6,8 @@ function Sidebar({ children, sidebarKey, closePopup }) {
     create: "top-12 right-16",
   };
 
+  // same as popup but a sidebar with only 2 configurations
+  // here have style for psotioning of elemets
   const sideRef = useRef(null);
 
   const handleOutsideClick = (e) => {

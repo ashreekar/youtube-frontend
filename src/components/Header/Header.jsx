@@ -5,11 +5,14 @@ import LoginState from './LoginStates/LoginState'
 import { useState } from 'react'
 import { MdKeyboardArrowLeft } from "react-icons/md";
 
+// header component
 function Header() {
+    // this flag is for mobile view where searchbar is reduced
     const [needSearchbar, setneedSearchbar] = useState(false);
     return (
         <header
             className="sticky top-0 z-20 w-[98.5vw] h-14 flex justify-between items-center px-4 backdrop-blur-xl bg-white/90">
+            {/* Conditionally rendering comps on needsearchbar flag */}
             <div className={needSearchbar ? "hidden" : "flex items-center gap-4 shrink-0"}>
                 <Hamburger />
                 <Logo />

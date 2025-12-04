@@ -8,11 +8,14 @@ import SpinLoader from '../Loaders/SpinLoader';
 
 function SubscriptionSidebar() {
   const loggedIn = useSelector(store => store.user.loggedIn);
+  // if user logged in
+  // showing all subscribed accounts but only with logged in user
 
   const [showAll, setShowAll] = useState(false);
   const [subscribers, setSubscribers] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // getting channel info on componet render
   useEffect(() => {
     async function getChannels() {
       try {
@@ -32,7 +35,7 @@ function SubscriptionSidebar() {
     if (loggedIn) {
       getChannels();
     }
-  }, [loggedIn]);
+  }, [loggedIn]); // fetching only if logged in
 
   if (!loggedIn) {
     return (
@@ -46,7 +49,7 @@ function SubscriptionSidebar() {
   }
 
   if (loading) {
-    return <div className="px-3 py-2 text-sm text-gray-600"><SpinLoader/></div>;
+    return <div className="px-3 py-2 text-sm text-gray-600"><SpinLoader /></div>;
   }
 
   const visibleSubs = showAll ? subscribers : subscribers.slice(0, 6);
@@ -71,6 +74,7 @@ function SubscriptionSidebar() {
         ))}
       </div>
 
+      {/* conditionally rendering more or less compoents */}
       {subscribers.length > 6 && (
         <div
           onClick={() => setShowAll(prev => !prev)}

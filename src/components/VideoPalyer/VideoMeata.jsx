@@ -13,7 +13,12 @@ import axios from "axios";
 import VideoMetaLoader from "../Loaders/VideoMetaLoader";
 import ErrorFallback from "../ErrorBoundary/ErrorFallback";
 
+// video meta componet handles everything from
+// showing video details by fetching it
+// showing user reaction state by fetchiig it
+// updating or deleting them
 function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoId, setAskLogin }) {
+  //  states for subscrbe status,likes/dislikes, and reaction status
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [self, setSelf] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
@@ -24,9 +29,12 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
 
   const navigate = useNavigate();
 
+  // runs when video changes
   useEffect(() => {
+    // fucntion that fetches subscriptionstatus
     async function getSubscription() {
       try {
+        // not fetching it when user not logged in
         setLoading(true);
         const token = localStorage.getItem("acceasToken");
 
@@ -42,6 +50,8 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
           }
         );
 
+        // updating subscription status
+        // if self flag true: video player renders with subscription button
         setIsSubscribed(subscription?.data?.data?.subscribed || false);
         setSelf(subscription?.data?.data?.owner || false);
       } catch (err) {
@@ -56,6 +66,7 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
     }
   }, [changeSubs, videoId, video?.owner?._id]);
 
+  // change subscription togeeles subscribe unscuncribe status
   const changeSubscription = async () => {
     try {
       const token = localStorage.getItem("acceasToken");
@@ -66,6 +77,9 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
         return setIsSubscribed(false);
       }
 
+      // if is subscribed 
+      // unsuscribing
+      // else subscribig
       if (isSubscribed) {
         await axios.delete(
           `http://localhost:3317/api/v1/channel/${video.owner._id}`,
@@ -86,6 +100,7 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
   };
 
   useEffect(() => {
+    // fetches reaction status on video(only status)
     async function getReactionStatus() {
       try {
         const token = localStorage.getItem("acceasToken");
@@ -125,6 +140,7 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
     }
   }, [video?._id, videoId]);
 
+  // function that is to update reaction on video
   const updateReactionController = async (type) => {
     try {
       const token = localStorage.getItem("acceasToken");
@@ -134,6 +150,13 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
         return setIsSubscribed(false);
       }
 
+      // upating reply based on 3 condtion / possibility
+      // when we change like/dislike
+      // this function runs
+      // Note: psooibilities
+      // liked: removeLike, dislike
+      // disliked: addlike, remove dislike
+      // no reaction: addlike, dilike
       if ((isLiked && type) || (isDisliked && !type)) {
         await axios.delete(
           `http://localhost:3317/api/v1/reaction/video/${video._id}`,
@@ -155,6 +178,8 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
         );
         setIsDisliked(!type);
         setIsLiked(type);
+        // incremanting likes and dislikes or decremnting
+        // except on : 0 condition on dislike on need to decrement like
         if (type) {
           setLikes(prev => prev + 1);
         } else {
@@ -200,6 +225,8 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
             </div>
           </div>
 
+          {/* rendering subscribed/subscribe conditionally */}
+          {/* not rendering at all when video owner is user only */}
           {!self &&
             (isSubscribed ? (
               <button
@@ -218,6 +245,7 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
             ))}
         </div>
 
+        {/* like and dislike section */}
         <div className="flex gap-3 items-center overflow-x-auto no-scrollbar md:overflow-visible md:justify-evenly pb-2 md:pb-0">
           <div className="flex items-center bg-gray-100 rounded-full overflow-hidden h-10">
             <div

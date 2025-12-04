@@ -5,20 +5,24 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useState } from "react";
 
 function ResultVideoCard({ video }) {
+    // Date and vies formatter converts our date and vies into normal youtube format
     const createdAt = dateFormatter(video.createdAt);
     const views = viewsFormatter(video.views);
 
+    // play will be true on hover
     const [play, setPlay] = useState(false);
 
     const handlePlayVideo = (flag) => {
         flag ? setPlay(true) : setPlay(false);
     }
 
+    // If we put normal yt link this converts to iframe/embed link
     const convertToEmbed = (url) => {
         if (url.includes("watch?v=")) {
             const id = url.split("watch?v=")[1];
             return `https://www.youtube.com/embed/${id}`;
         }
+        // return normal url if not have "watch?/v=" part
         return url;
     };
     return (
@@ -33,6 +37,7 @@ function ResultVideoCard({ video }) {
                 duration-300
                 w-full
             "
+            // sets flag to play or not play video
             onMouseOver={() => handlePlayVideo(true)}
             onMouseLeave={() => handlePlayVideo(false)}s
         >
@@ -45,6 +50,7 @@ function ResultVideoCard({ video }) {
                 overflow-hidden 
                 bg-gray-200
             ">
+                {/* Conditionally rendering iframe on hover else laoding thumbnail */}
                 {play ? (
                     <iframe
                         src={`${convertToEmbed(video.url)}?autoplay=1&mute=1`}

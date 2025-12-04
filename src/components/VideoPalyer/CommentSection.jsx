@@ -7,6 +7,8 @@ import InputField from "../ButtonsAndInput/InputField";
 import { useForm } from 'react-hook-form';
 import CommentLoader from "../Loaders/CommentLoader";
 
+// renders separate comment section for a video
+// have comment sectionmeta like number of comment and comments
 function CommentSection({ id, setAskLogin }) {
   const { data, loading, error } = useFetch(`http://localhost:3317/api/v1/comment/video/${id}`, "get")
   const user = useSelector(state => state.user.user);
@@ -17,18 +19,22 @@ function CommentSection({ id, setAskLogin }) {
   const [editing, setEditing] = useState(false);
   const [commentToEdited, setcommentToEdited] = useState(false);
 
+  // active menu is a state that actviates the only one active menu for a commentItem / replyItem
   const [activeMenu, setActiveMenu] = useState({
     author: null,
     id: null,
     state: false
   });
 
+  // if data exists then it sets comment data
   useEffect(() => {
     if (data) {
       setCommentData(data);
     }
   }, [data])
 
+  // on every comment update this renders 
+  // uses a flag commentchanged passed as prop to items
   useEffect(() => {
     const getUpdatedComment = async () => {
       const updated = await axios.get(
@@ -44,6 +50,7 @@ function CommentSection({ id, setAskLogin }) {
   const { register, handleSubmit, reset, watch, setValue } = useForm();
   const commentVal = watch("comment", "")
 
+  // commentsdata is restructured to render consitently
   const comments = commentData?.data?.comments?.map((comment) => {
     return {
       id: comment._id,
@@ -55,10 +62,12 @@ function CommentSection({ id, setAskLogin }) {
     };
   }) || [];
 
+  // function to add new comment
   const addComment = async (data) => {
     try {
       const token = localStorage.getItem("acceasToken")
 
+      // not logged in triggers popup
       if (!token || token.trim() === "") {
         console.log("Not logged in")
         setAskLogin(true)
@@ -73,6 +82,7 @@ function CommentSection({ id, setAskLogin }) {
         }
       })
 
+      // changing flag to refresh items
       setcommentChanegd(!commentChanegd);
       setVisibleButton(false)
 
@@ -82,9 +92,11 @@ function CommentSection({ id, setAskLogin }) {
     }
   }
 
+  // this is to render the comment in input field to edit it
   const renderEditComment = (comment) => {
     setValue("comment", comment.text);
     setVisibleButton(true);
+    // also clong active ment of comment
     setActiveMenu(
       {
         ...activeMenu,
@@ -94,6 +106,7 @@ function CommentSection({ id, setAskLogin }) {
     setcommentToEdited(comment)
   }
 
+  // function to hit on edit of comment
   const editComment = async (data) => {
     try {
       const token = localStorage.getItem("acceasToken")
@@ -111,8 +124,11 @@ function CommentSection({ id, setAskLogin }) {
           Authorization: `Bearer ${token}`
         }
       })
+
+      // changing the edited comment status
       setcommentToEdited(null);
       setEditing(false);
+      // changing flag to render edited comment
       setcommentChanegd(!commentChanegd);
       setVisibleButton(false)
 
@@ -122,6 +138,7 @@ function CommentSection({ id, setAskLogin }) {
     }
   }
 
+  // function to delete coment
   const deleteComment = async (comment) => {
     try {
       const token = localStorage.getItem("acceasToken");
@@ -140,6 +157,7 @@ function CommentSection({ id, setAskLogin }) {
         }
       );
 
+      // flag changed to trigger refeching of comments
       setcommentChanegd(!commentChanegd);
       setVisibleButton(false)
 
@@ -166,6 +184,7 @@ function CommentSection({ id, setAskLogin }) {
             src={user?.avatar || "https://randomuser.me/api/portraits/men/10.jpg"}
             alt="user"
           />
+          {/* changing the form state and cb based on flag editing */}
           <form className="flex-1" onSubmit={handleSubmit(!editing ? addComment : editComment)}>
             <InputField
               onClick={() => setVisibleButton(true)}
@@ -187,6 +206,7 @@ function CommentSection({ id, setAskLogin }) {
           </form>
         </div>
 
+        {/* rendering all coments */}
         <div className="flex flex-col gap-6">
           {comments.map((comment) => (
             <CommentItem key={comment.id} setAskLogin={setAskLogin} setVisibleButton={setVisibleButton} renderEditComment={renderEditComment} deleteComment={deleteComment} comment={comment} activeMenu={activeMenu} setActiveMenu={setActiveMenu} setEditing={setEditing} commentChanegd={commentChanegd} />

@@ -7,11 +7,13 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import ErrorFallback from '../ErrorBoundary/ErrorFallback';
 
+// This compoenent updates the channel info like handle and description and name
 function CustomizeChannel() {
     const user = useSelector((state) => state.user);
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
     const [thumnail, setThumbnail] = useState(null);
     const [name, setName] = useState(null);
 
@@ -27,12 +29,14 @@ function CustomizeChannel() {
         },
     });
 
+    // if user not have channel then can't acceas this route
     useEffect(() => {
         if (!(user?.user?.channel?.length > 0)) {
             navigate('/');
         }
     }, [])
 
+    // fetching channel deatils if user have one
     useEffect(() => {
         async function fetchChannelDetails() {
             try {
@@ -47,6 +51,7 @@ function CustomizeChannel() {
                         Authorization: `Bearer ${token}`
                     }
                 });
+                //  setvalue to pre setting values so the backend not hits with empty values
                 setThumbnail(res.data.data.meta.avatar);
                 setName(res.data.data.meta.name);
                 setValue("channelName", res.data.data.meta.name);
@@ -66,6 +71,7 @@ function CustomizeChannel() {
     const updateAChannel = async (data) => {
         try {
             setLoading(true);
+            // payload to update the channel
             const payload = {
                 "description": data?.description.trim() || "",
                 "name": data.channelName,
@@ -87,7 +93,7 @@ function CustomizeChannel() {
                 navigate('/feed/you')
             }
         } catch (error) {
-            return <ErrorFallback />
+            setError(error.message)
         } finally {
             setLoading(false);
         }
@@ -112,7 +118,12 @@ function CustomizeChannel() {
 
             </div>
 
+            {
+                error && <p className='text-red-400 text-lg'>{error}</p>
+            }
+
             <div className="w-full lg:w-1/2 max-w-xl bg-white rounded-2xlpx-6 py-4 md:px-10 md:py-10 rounded-2xl">
+                {/* form to handle the update channel */}
                 <form
                     onSubmit={handleSubmit(updateAChannel)}
                     className="mt-8 flex flex-col gap-5"

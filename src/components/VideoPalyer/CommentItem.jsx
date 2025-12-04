@@ -7,6 +7,8 @@ import { useSelector } from "react-redux";
 import ReplyItem from "./ReplyItem";
 import ErrorFallback from "../ErrorBoundary/ErrorFallback";
 
+// Note: comment item is sort of a children that renders on map
+//       as well as a parent that calls map to render reply items of its own
 function CommentItem({
   comment,
   activeMenu,
@@ -17,26 +19,32 @@ function CommentItem({
   commentChanegd,
   setAskLogin
 }) {
+  // flags that track the comment details
   const [likes, setLikes] = useState(comment.likes || 0);
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
 
+  // this tracks the replay items of this particular comment items
   const [replyVisible, setReplyVisible] = useState(false);
   const [replyText, setReplyText] = useState("");
   const [isSendingReply, setIsSendingReply] = useState(false);
 
+  // used to render replies
   const [replies, setReplies] = useState([]);
   const [showReplies, setShowReplies] = useState(false);
 
   const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
+    // this function renders on mount, change in replies and comment
     async function init() {
       try {
         const repliesRes = await axios.get(
           `http://localhost:3317/api/v1/comment/comment/${comment.id}`
         );
 
+        // fetches all replies from backend and adds to a reply item
+        // Note: backend support separate comment route for comments
         const replyList =
           repliesRes?.data?.data?.comments?.map((reply) => ({
             id: reply._id,
@@ -51,12 +59,14 @@ function CommentItem({
 
 
         const token = localStorage.getItem("acceasToken");
-
+        // getting rection only if user logged in
         if (!token || token.trim() === "") {
           console.log("Not logged in")
           return;
         }
 
+        // getting reaction and status on comment
+        // gives the staus of comment like/dislike
         const reaction = await axios.get(
           `http://localhost:3317/api/v1/reaction/comment/${comment.id}`,
           { headers: { Authorization: `Bearer ${token}` } }
@@ -73,6 +83,12 @@ function CommentItem({
     if (comment?.id) init();
   }, [comment?.id, commentChanegd]);
 
+  // when we change like/dislike
+  // this function runs
+  // Note: psooibilities
+  // liked: removeLike, dislike
+  // disliked: addlike, remove dislike
+  // no reaction: addlike, dilike
   const updateReactionController = async (type) => {
     try {
       const token = localStorage.getItem("acceasToken");
@@ -82,6 +98,7 @@ function CommentItem({
         return setAskLogin(true);
       }
 
+      // if this condition is true the dlete reactionof user with content
       if ((liked && type) || (disliked && !type)) {
         // Remove reaction
         await axios.delete(
@@ -94,6 +111,7 @@ function CommentItem({
         setLiked(false);
         setDisliked(false);
       } else {
+        // if not then user creating a new reaction / updated reaction
         const newType = type ? "like" : "dislike";
 
         await axios.post(
@@ -105,6 +123,8 @@ function CommentItem({
         setLiked(type);
         setDisliked(!type);
 
+        // incremanting likes and dislikes or decremnting
+        // except on : 0 condition on dislike on need to decrement like
         if (type) setLikes((prev) => prev + 1);
         else setLikes((prev) => (prev === 0 ? 0 : prev - 1));
       }
@@ -113,6 +133,8 @@ function CommentItem({
     }
   };
 
+  // handle comment actions gives a object state that helps to only open one action
+  // that side bar that have edit/delete or report action
   const handleCommentActions = () => {
     setActiveMenu((prev) => {
       if (prev.id === comment.id) {
@@ -122,6 +144,7 @@ function CommentItem({
     });
   };
 
+  // function to add a reply on a comment
   const submitReply = async (e) => {
     e.preventDefault();
 
@@ -130,6 +153,7 @@ function CommentItem({
     setIsSendingReply(true);
 
     try {
+      // if not logged in then not allowed
       const token = localStorage.getItem("acceasToken");
       if (!token || token.trim() === "") {
         console.log("Not logged in")
@@ -142,6 +166,7 @@ function CommentItem({
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
+      // not refreshing or making an api call again
       setReplies((prev) => [
         ...prev,
         {
@@ -153,6 +178,7 @@ function CommentItem({
         },
       ]);
 
+      // removing the text from input and setting to default
       setReplyText("");
       setReplyVisible(false);
       setShowReplies(true);
@@ -184,6 +210,7 @@ function CommentItem({
 
           <p className="text-sm mt-1 text-gray-800">{comment.text}</p>
 
+          {/* Button to like */}
           <div className="flex items-center gap-4 mt-2">
             <button
               onClick={() => updateReactionController(true)}
@@ -193,7 +220,7 @@ function CommentItem({
               <AiOutlineLike />
               <span>{likes}</span>
             </button>
-
+            {/* button to dislike */}
             <button
               onClick={() => updateReactionController(false)}
               className={`text-sm cursor-pointer ${disliked ? "text-blue-600" : "text-gray-600"
@@ -202,6 +229,7 @@ function CommentItem({
               <AiOutlineDislike />
             </button>
 
+            {/* button to add reply to commentItem */}
             <button
               className="text-xs ml-4 text-gray-600 cursor-pointer"
               onClick={() => setReplyVisible(true)}
@@ -209,6 +237,7 @@ function CommentItem({
               Reply
             </button>
 
+            {/* all reply count will be shown if exists */}
             {replies.length > 0 && (
               <button
                 className="text-xs ml-2 text-blue-600 cursor-pointer"
@@ -219,6 +248,7 @@ function CommentItem({
             )}
           </div>
 
+          {/* renders a input to reply to comment */}
           {replyVisible && (
             <div className="flex gap-3 mt-4">
               <img
@@ -262,6 +292,7 @@ function CommentItem({
             </div>
           )}
 
+          {/* on true of showreply renders all replies of a commentItems */}
           {showReplies &&
             replies.map((reply) => (
               <ReplyItem
@@ -284,9 +315,14 @@ function CommentItem({
         <BsThreeDotsVertical size={20} />
       </div>
 
+      {/* Active menu part */}
+      {/* Note: active menu is a sidebar for every comment */}
+      {/* Self comment based */}
+      {/* Dynamically renders different active menu */}
       {activeMenu.id === comment.id && activeMenu.state && (
         activeMenu.author === user?.username ? (
           <div className="absolute right-1 top-8 w-40 rounded-xl shadow-xl bg-white z-50 py-2">
+            {/* gives option to edit and delete comment */}
             <button
               onClick={() => {
                 setEditing(true);
@@ -305,6 +341,7 @@ function CommentItem({
             </button>
           </div>
         ) : (
+          // dummy active menu
           <div className="absolute right-1 top-8 w-40 rounded-xl shadow-xl bg-white z-50 py-2">
             <button
               disabled

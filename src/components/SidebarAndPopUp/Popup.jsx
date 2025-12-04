@@ -3,6 +3,7 @@ import React, { useRef } from "react";
 function Popup({ children, popupkey = "channel", closePopup }) {
     const popupRef = useRef(null);
 
+    // popup have some predefined outer and inner styles that helps on popup design
     const outerStyles = {
         video: "fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm bg-black/30",
         channel: "fixed inset-0 flex items-center justify-center z-50 bg-black/30",
@@ -23,6 +24,11 @@ function Popup({ children, popupkey = "channel", closePopup }) {
         managePicture: "bg-white rounded-lg shadow-lg p-3 w-[90vw] h-[85vh] sm:w-[70vw] sm:h-[97vh]",
     };
 
+    // PURPOSE
+    // innerstyle/element->main str or body defines width height/layout
+    // outerstyle/element->outer invisibel str handles close popup
+
+    // main function that handles every outside click on outer element
     const handleOutsideClick = (e) => {
         if (popupRef.current && !popupRef.current.contains(e.target)) {
             closePopup();
@@ -30,10 +36,13 @@ function Popup({ children, popupkey = "channel", closePopup }) {
     };
 
     return (
+        // applies style to outer div based on prop
         <div
             className={outerStyles[popupkey] || outerStyles.default}
             onClick={handleOutsideClick}
         >
+            {/* applies style to inner div based on prop */}
+            {/* ref is handled to handle children clicks and closing */}
             <div
                 ref={popupRef}
                 className={innerStyles[popupkey] || innerStyles.default}

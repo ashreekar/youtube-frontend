@@ -10,6 +10,7 @@ function Step2({ step, register, errors, watch, setStep, trigger }) {
   const passwordValue = watch("password")
 
   async function handleNext() {
+    // before going to next step checking all fields filled
     const valid = await trigger(["email", "password"]);
     const match = await trigger(["confirmPassword"]);
     if (!valid || !match) return;

@@ -1,7 +1,7 @@
 import React from 'react'
 
 function SidbarFooter() {
-    const primaryLinks = [
+  const primaryLinks = [
     "About",
     "Press",
     "Copyright",
@@ -19,9 +19,10 @@ function SidbarFooter() {
     "Test new features",
   ];
 
+  // sidebar footer
   return (
     <div className="text-xs text-gray-600 px-4 py-4 select-none">
-
+      {/* divided into 2 parts */}
       <div className="flex flex-wrap gap-x-3 gap-y-1 mb-3">
         {primaryLinks.map((item) => (
           <div

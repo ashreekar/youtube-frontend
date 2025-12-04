@@ -12,10 +12,15 @@ import ChannelCreation from '../Popups/ChannelCreation';
 import { toggleVideoOverlay, togglePostOverlay } from '../../states/overlaySlice';
 
 function GlobalOverlay() {
+    // Note: global overlays is a componet that is outside the flow 
+    // reason: can easily open and close popups
     const dispatch = useDispatch();
+
+    // overlay slice gives video,post popup
     const videopopup = useSelector(state => state.overlay.video);
     const postpopup = useSelector(state => state.overlay.post);
 
+    // sideoverlay gives user, create sidebar
     const isOpenUser = useSelector((state) => state.sideOverlay.user);
     const isOpenCreate = useSelector((state) => state.sideOverlay.create);
 
@@ -23,17 +28,18 @@ function GlobalOverlay() {
 
     return (
         <>
+            {/* Conditionally rendering to create channel of not have a channel */}
             {
                 videopopup && <Popup popupkey={user?.channel?.length === 0 ? "channel" : "video"} closePopup={() => dispatch(toggleVideoOverlay())}>
                     {
-                        user?.channel.length === 0 ? <ChannelCreation /> : <CreateVideo />
+                        user?.channel.length === 0 ? <ChannelCreation closePopup={() => dispatch(toggleVideoOverlay())} /> : <CreateVideo />
                     }
                 </Popup>
             }
 
             {
                 postpopup && <Popup popupkey={user?.channel?.length === 0 ? "channel" : "video"} closePopup={() => dispatch(togglePostOverlay())}>
-                    {user?.channel.length === 0 ? <ChannelCreation /> : <CreatePost />}
+                    {user?.channel.length === 0 ? <ChannelCreation closePopup={() => dispatch(toggleVideoOverlay())} /> : <CreatePost />}
                 </Popup>
             }
 

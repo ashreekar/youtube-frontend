@@ -5,40 +5,50 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchResults } from '../states/searchSlic';
 
-const TopFilter = lazy(() => import('../components/TopFilter/TopFilter'));
-const ResultList = lazy(() => import('../components/ResultList/ResultList'));
-import ErrorFallback from "../components/ErrorBoundary/ErrorFallback"
-import HomePageLoader from '../components/Loaders/HomePage/HomePageLoader';
 import FeedLoader from '../components/Loaders/FeedLoader';
+import TopFilter from '../components/TopFilter/TopFilter';
+import ResultList from '../components/ResultList/ResultList';
 
 function ResultsPage() {
+  // uselocation is used to fetch the query
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const isSidebarOpen = useSelector(state => state.sidebar.open);
+
+  // location.search gives the query object encoded one
   const searchEncoded = location?.search;
+
+  // creats a query string to hit backend by decoding the encoded one
   const query = new URLSearchParams(searchEncoded).get("search_query");
 
   const [loading, setLoading] = useState(true);
   const [found, setFound] = useState(false);
 
   useEffect(() => {
+    // if no query found then can navigate to home
     if (!query) {
       navigate('/');
     }
 
+    //  fetching only if query exists
     async function fetchResults() {
       try {
         const res = await axios.get(
           `http://localhost:3317/api/v1/search?search_query=${query}`
         );
-        if (!res?.data?.data) {
-          return dispatch(setSearchResults([]));
-        }
+        // setting search results in store to accesisable by childrens
         dispatch(setSearchResults(res?.data?.data || []))
-        setFound(true);
+        setFound(true)
+
+        if (res.data.data.length === 0) {
+          // this flag ensures [ ] results will be rendered properly
+          setFound(false)
+        }
       } catch {
-        return <ErrorFallback />
+        // on error rendering the error element
+        setFound(false)
       }
       finally {
         setLoading(false);
@@ -48,21 +58,26 @@ function ResultsPage() {
     fetchResults();
   }, [query]);
 
+  // loading feed loader on load
   if (loading) return <FeedLoader />;
-  if(!found){
-     return <div
-            className={`
+
+  // if not found then rendering the empty element
+  if (!found) {
+    return <div
+      className={`
               flex items-center justify-center
               ${isSidebarOpen ? "ml-64" : "ml-20"}
               max-w-full
             `}
-        >
-            <h3 className='text-lg font-medium'>No videos matches your search</h3>
-        </div>
+    >
+      <h3 className='text-lg font-medium mt-9'>No videos matches your search</h3>
+    </div>
   }
 
 
   return (
+    // Rendering sidebar and top filter is ocnstant
+    // sidebar not recieving any flags this means side bar on minimized persists
     <div className="flex w-full">
       <Sidebar />
 
@@ -70,7 +85,7 @@ function ResultsPage() {
         <TopFilter />
 
         <div className="px-2 sm:px-4">
-          <ResultList notfound={!found} />
+          <ResultList />
         </div>
       </div>
     </div>

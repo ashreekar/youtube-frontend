@@ -8,6 +8,7 @@ import { toggleVideoOverlay } from "../../states/overlaySlice";
 import ErrorFallback from "../ErrorBoundary/ErrorFallback";
 
 function CreateVideo() {
+  // rendering some categories as option but also can add other categories also
   const categories = ["tech", "travel", "gaming", "cooking", "backend", "frontend", "webdev", "ai"];
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -19,11 +20,13 @@ function CreateVideo() {
     formState: { errors },
   } = useForm();
 
+  // giving preview of thumbnail image
   const thumbnailFile = watch("thumbnail");
   const preview = thumbnailFile && thumbnailFile.length > 0
     ? URL.createObjectURL(thumbnailFile[0])
     : null;
 
+  // form data as request body contains images also
   const addVideoFunction = async (data) => {
     try {
       setLoading(true);
@@ -127,6 +130,7 @@ function CreateVideo() {
           })}
         />
 
+        {/* Rendering warnigs on error exists */}
         <InputField
           type="text"
           list="categoriesList"

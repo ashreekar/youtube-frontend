@@ -18,7 +18,9 @@ import { Link } from 'react-router-dom'
 
 function Sidebar({ player }) {
     const isSidebarOpen = useSelector(store => store.sidebar.open);
+    // isSidebaroepn flag fetches from state of sidebar
 
+    // if component is closed renders these components
     const componentsOnClose = [
         {
             name: "Home",
@@ -44,6 +46,7 @@ function Sidebar({ player }) {
     ];
 
     return (
+        // conditionally rendering sidebar based on flag
         isSidebarOpen ? (
             <div className="fixed z-40 top-14 pt-4 left-0 w-64 h-[calc(100vh-64px)] overflow-y-auto bg-white">
                 <YoutubeSidebar />

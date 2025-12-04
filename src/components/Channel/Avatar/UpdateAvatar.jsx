@@ -7,6 +7,7 @@ import ErrorFallback from '../../ErrorBoundary/ErrorFallback';
 function UpdateAvatar({ avatar, closePopup, setchangeChannelData }) {
     const [loading, setLoading] = useState(false);
 
+    // used react hook form to update avatar and track it
     const {
         register,
         handleSubmit,
@@ -15,11 +16,16 @@ function UpdateAvatar({ avatar, closePopup, setchangeChannelData }) {
         setValue
     } = useForm();
 
+    // watch fucntion gives avatar file (it used to moniter)
     const avatarFile = watch("avatar");
+    // converting it to a previewe link
+    // avtarfile is an array as it supports multiple file also (for files)
     const preview = avatarFile && avatarFile.length > 0
+        // create object url creates and url that can be used as src link
         ? URL.createObjectURL(avatarFile[0])
         : avatar || null;
 
+    // function that goes as callback to handlefrom function by r-h-f
     const updateAvatarFunction = async (data) => {
         try {
             setLoading(true)
@@ -36,6 +42,7 @@ function UpdateAvatar({ avatar, closePopup, setchangeChannelData }) {
                 })
             }
 
+            // toggleing channel data so that channel gets updated
             setchangeChannelData(prev => !prev)
         } catch (error) {
             return <ErrorFallback />
@@ -74,11 +81,11 @@ function UpdateAvatar({ avatar, closePopup, setchangeChannelData }) {
                             type="file"
                             accept="image/png, image/jpg, image/jpeg, image/gif"
                             className="hidden"
-                            {...register("avatar",{
-                                required:"Avatar image is required"
+                            {...register("avatar", {
+                                required: "Avatar image is required"
                             })}
                         />
-                        
+                        {/* Making sure avatar is required to update avatar */}
                         <span className="text-blue-700 text-lg font-semibold text-center">Select avatar</span>
                     </label>
                     {errors.avatar && <p className='text-red-400 text-center'>{errors.avatar.message}</p>}

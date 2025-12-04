@@ -6,11 +6,14 @@ import { Link } from "react-router-dom";
 import FeedLoader from "../Loaders/FeedLoader"
 import ErrorFallback from "../ErrorBoundary/ErrorFallback";
 
+// player feed part
 function PlayerFeed({ videoId }) {
+  // rendering all videos except video with videoId
   const { data, error, loading } = useFetch(
     "http://localhost:3317/api/v1/video", "get"
   );
 
+  // structuring videos based on this format of data exists
   const videosData = data?.data?.map((video) => (
     {
       id: video?._id,
@@ -31,6 +34,7 @@ function PlayerFeed({ videoId }) {
       <h3 className="text-lg font-semibold mb-3">More to watch</h3>
 
       <div className="flex flex-col gap-4">
+        {/* removing the videoId matched vudeo and only rendering 19 videos */}
         {videosData.map((video, index) => (
           index <= 19 && video.id !== videoId &&
           <Link key={video.id} to={`/watch/${video.id}`}>

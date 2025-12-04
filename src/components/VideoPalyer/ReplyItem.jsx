@@ -5,20 +5,24 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdOutlineReport, MdEdit, MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
 
-function ReplyItem({ reply, activeMenu, setActiveMenu, deleteComment, renderEditComment, setEditing, setAskLogin}) {
+// This is a child of commentitem and end of chain
+function ReplyItem({ reply, activeMenu, setActiveMenu, deleteComment, renderEditComment, setEditing, setAskLogin }) {
+  // these states have track of likes,liked state, disliked state
   const [likes, setLikes] = useState(reply.likes || 0);
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
 
   const user = useSelector((state) => state.user.user);
 
+  // this gets the status of like/dislike on comment which is on comment
+  // so it is a comment
   useEffect(() => {
     async function getReply() {
       try {
         const token = localStorage.getItem("acceasToken");
         if (!token || token.trim() === "") {
           console.log("Not logged in")
-          return ;
+          return;
         }
 
         const reaction = await axios.get(
@@ -37,14 +41,21 @@ function ReplyItem({ reply, activeMenu, setActiveMenu, deleteComment, renderEdit
     if (reply.id) getReply();
   }, [reply.id]);
 
+  // upating reply based on 3 condtion / possibility
+  // when we change like/dislike
+  // this function runs
+  // Note: psooibilities
+  // liked: removeLike, dislike
+  // disliked: addlike, remove dislike
+  // no reaction: addlike, dilike
   const updateReactionController = async (type) => {
     try {
       const token = localStorage.getItem("acceasToken");
 
       if (!token || token.trim() === "") {
-          console.log("Not logged in")
-          return setAskLogin(true);
-        }
+        console.log("Not logged in")
+        return setAskLogin(true);
+      }
 
       if ((liked && type) || (disliked && !type)) {
         await axios.delete(
@@ -67,6 +78,8 @@ function ReplyItem({ reply, activeMenu, setActiveMenu, deleteComment, renderEdit
         setLiked(type);
         setDisliked(!type);
 
+        // incremanting likes and dislikes or decremnting
+        // except on : 0 condition on dislike on need to decrement like
         if (type) setLikes((prev) => prev + 1);
         else setLikes((prev) => (prev === 0 ? 0 : prev - 1));
       }
@@ -75,6 +88,8 @@ function ReplyItem({ reply, activeMenu, setActiveMenu, deleteComment, renderEdit
     }
   };
 
+  // handles active menu status 
+  // single state for all replies and comments
   const handleMenu = () => {
     setActiveMenu((prev) =>
       prev.id === reply.id
@@ -97,22 +112,20 @@ function ReplyItem({ reply, activeMenu, setActiveMenu, deleteComment, renderEdit
           </div>
 
           <p className="text-sm text-gray-800">{reply.text}</p>
-
+          {/* Button to add like */}
           <div className="flex items-center gap-3 mt-2">
             <button
               onClick={() => updateReactionController(true)}
-              className={`flex items-center cursor-pointer gap-1 text-sm ${
-                liked ? "text-blue-600" : "text-gray-600"
-              }`}
+              className={`flex items-center cursor-pointer gap-1 text-sm ${liked ? "text-blue-600" : "text-gray-600"
+                }`}
             >
               <AiOutlineLike /> {likes}
             </button>
-
+            {/* button to dislike */}
             <button
               onClick={() => updateReactionController(false)}
-              className={`text-sm cursor-pointer ${
-                disliked ? "text-blue-600" : "text-gray-600"
-              }`}
+              className={`text-sm cursor-pointer ${disliked ? "text-blue-600" : "text-gray-600"
+                }`}
             >
               <AiOutlineDislike />
             </button>
@@ -120,10 +133,12 @@ function ReplyItem({ reply, activeMenu, setActiveMenu, deleteComment, renderEdit
         </div>
       </div>
 
+      {/* opens activemenu */}
       <div className="cursor-pointer" onClick={handleMenu}>
         <BsThreeDotsVertical size={18} />
       </div>
 
+      {/* editor/delete section section */}
       {activeMenu.id === reply.id && activeMenu.state && (
         reply.author === user?.username ? (
           <div className="absolute right-2 top-8 z-50 bg-white shadow-xl p-2 rounded-xl w-40">

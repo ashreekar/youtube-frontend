@@ -4,6 +4,7 @@ import { viewsFormatter } from "../../utils/viewsFormatter"
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 function PlayerCard({ video }) {
+  //player card to render for feed of videos
   const createdAt = dateFormatter(video.publishedAt);
   const views = viewsFormatter(video.views);
 
@@ -21,6 +22,7 @@ function PlayerCard({ video }) {
           shrink-0
         "
       >
+        {/* using lazy laod images */}
         <LazyLoadImage
           src={video.thumbnail}
           alt={video.title}

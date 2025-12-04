@@ -6,6 +6,7 @@ import {
 } from "react-icons/md";
 
 function SettingsSidebar() {
+  // setting sidebar elements
    const renderList = [
   { name: "Settings", icon: <MdOutlineSettings className="w-6 h-6" />, link: "/features/onit" },
   { name: "Report history", icon: <MdOutlineFlag className="w-6 h-6" />, link: "/features/onit" },

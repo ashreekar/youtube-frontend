@@ -6,6 +6,7 @@ function DeleteVideo({ closePopup, videos = [], setvideoDeleted }) {
     const [loading, setLoading] = useState(false);
     const [selectedVideo, setSelctedVideo] = useState(null);
 
+    // delete video functiontaht dletes video on id
     const deleteVideoFunction = async (data) => {
         try {
             setLoading(true)
@@ -18,6 +19,7 @@ function DeleteVideo({ closePopup, videos = [], setvideoDeleted }) {
                     }
                 })
 
+            // if flags gets updated then channel page refreshes
             if (res) {
                 setvideoDeleted(prev => !prev)
             }
@@ -35,7 +37,7 @@ function DeleteVideo({ closePopup, videos = [], setvideoDeleted }) {
                 <img src="/youtube.png" className="h-14 w-16 mb-4" alt="youtube-logo" />
                 <h2 className="text-4xl md:text-5xl font-semibold mb-4">Delete video</h2>
                 <p className="text-lg text-gray-600 font-medium">Selct video to be deleted</p>
-
+                {/* Gives option to select video to delete */}
                 <select className='mt-6 bg-red-600 w-3/4 px-3 py-3 rounded-full outline-none border-none text-white font-bold' id="videos" name="videos" onChange={(e) => {
                     const selected = videos.find(video => video._id === e.target.value);
                     setSelctedVideo(selected);
@@ -57,6 +59,7 @@ function DeleteVideo({ closePopup, videos = [], setvideoDeleted }) {
                 <div
                     className={`cursor-pointer transition-transform duration-300`}
                 >
+                    {/* rendering the thumbnail of selected video */}
                     <div className="w-full aspect-video rounded-xl overflow-hidden">
                         <img src={selectedVideo?.thumbnail || "https://i.sstatic.net/PtbGQ.png"} className="w-full h-full object-cover" />
                     </div>

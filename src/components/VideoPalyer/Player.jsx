@@ -1,6 +1,7 @@
 import React from "react";
 
 function Player({ source }) {
+  // player item based on source and iframe
   return (
     <div className="w-full">
       <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
