@@ -46,7 +46,7 @@ function SubscriptionSidebar() {
   }
 
   if (loading) {
-    return <p className="px-3 py-2 text-sm text-gray-600"><SpinLoader/></p>;
+    return <div className="px-3 py-2 text-sm text-gray-600"><SpinLoader/></div>;
   }
 
   const visibleSubs = showAll ? subscribers : subscribers.slice(0, 6);

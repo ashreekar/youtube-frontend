@@ -3,16 +3,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import ResultVideoCard from '../cards/ResultVideoCard';
 import { clearSearchResults } from '../../states/searchSlic';
 
-function ResultList() {
+function ResultList({notfound}) {
     const dispatch = useDispatch();
-    const isSidebarOpen = useSelector(s => s.sidebar.open);
-    const videosData = useSelector(s => s.search.results);
+    const isSidebarOpen = useSelector(state => state.sidebar.open);
+    const videosData = useSelector(state => state.search.results);
 
     useEffect(() => {
         return () => dispatch(clearSearchResults());
     }, []);
 
-    if (!videosData || videosData.length === 0) {
+    if (notfound || !videosData || videosData.length === 0) {
         return <div
             className={`
               flex items-center justify-center

@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// user slice stores the logged user info and their login status
 const userSlice = createSlice(
     {
         name: "User",
@@ -8,11 +9,12 @@ const userSlice = createSlice(
             loggedIn: false
         },
         reducers: {
+            // on login status will be true 
             loginUser: (state, action) => {
-                console.log(action.payload)
                 state.user = action.payload;
                 state.loggedIn= true;
             },
+            // on logout status will be false
             logoutUser: (state, action) => { 
                 state.loggedIn=false;
                 state.user=null;

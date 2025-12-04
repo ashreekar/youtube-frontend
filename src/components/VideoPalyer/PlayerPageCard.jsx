@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Suspense, lazy } from "react";
+import React, { useEffect, useState } from "react";
 import { useFetch } from "../../utils/useFetch";
 import axios from "axios";
 
@@ -8,6 +8,7 @@ import CommentSection from "./CommentSection";
 import AskLogin from "../Popups/AskLogin";
 import PlayerLoader from "../Loaders/PlayerLoader";
 import Popup from "../SidebarAndPopUp/Popup";
+import NotFound from "../NotFound/NotFound";
 
 function PlayerPageCard({ videoId }) {
   const { data, error, loading } = useFetch(
@@ -16,52 +17,43 @@ function PlayerPageCard({ videoId }) {
   );
 
   const [video, setVideo] = useState(null);
-
-  useEffect(() => {
-    if (data) {
-      setVideo(data?.data[0]);
-    }
-  }, [data])
-
   const [changeSubs, setChangeSubs] = useState(false);
   const [reactionState, setreactionState] = useState(false);
-  const [errorState, setError] = useState(null);
   const [askLogin, setAskLogin] = useState(false);
 
+  // When data arrives from useFetch
   useEffect(() => {
-    try {
-      async function getUpdatedVideoResult() {
-        const res = await axios.get(`http://localhost:3317/api/v1/video/${videoId}`);
+    if (data?.data?.length) {
+      setVideo(data.data[0]);
+    }
+  }, [data]);
 
-        if (res?.data?.data) {
-          setVideo(res.data.data[0]);
+  // Refresh video when subs or reaction changes
+  useEffect(() => {
+    async function refreshVideo() {
+      try {
+        const res = await axios.get(
+          `http://localhost:3317/api/v1/video/${videoId}`
+        );
+        setVideo(res.data.data[0]);
+      } catch (err) {
+        if (!error) {
+          return <NotFound target={"video"} fullscreen={false} />;
         }
       }
-
-      getUpdatedVideoResult();
-    } catch (error) {
-      setError({
-        title: "Videoload failed Failed",
-        description: error.response?.data?.message || "Video load failed",
-        customUrl: window.location.hostname,
-      });
     }
-  }, [changeSubs, reactionState, videoId])
 
-  if (loading) return <PlayerLoader/>;
-  if (error) {
-    setError({
-      title: "Videoload failed Failed",
-      description: error.response?.data?.message || "Video load failed",
-      customUrl: window.location.hostname,
-    });
-  };
-  if (!video || data.data.length === 0) return <p>No video found</p>;
+    if (videoId) refreshVideo();
+  }, [changeSubs, reactionState, videoId]);
+
+  if (loading) return <PlayerLoader />;
+  if (error) return <NotFound target={"video"} fullscreen={false} />;
+  if (!video) return <PlayerLoader />;
 
   return (
     <>
       <div className="flex flex-col gap-6">
-        <Player source={`${video.url}`} />
+        <Player source={video.url} />
 
         <div className="space-y-6">
           <VideoMeata
@@ -71,19 +63,22 @@ function PlayerPageCard({ videoId }) {
             setChangeSubs={setChangeSubs}
             setreactionState={setreactionState}
             askLogin={askLogin}
-            setAskLogin={setAskLogin} />
+            setAskLogin={setAskLogin}
+          />
 
-          <CommentSection id={videoId} askLogin={askLogin} setAskLogin={setAskLogin} />
+          <CommentSection
+            id={videoId}
+            askLogin={askLogin}
+            setAskLogin={setAskLogin}
+          />
         </div>
       </div>
 
-      {
-        askLogin && (
-          <Popup popupkey="channel" closePopup={() => setAskLogin(false)}>
-              <AskLogin />
-          </Popup>
-        )
-      }
+      {askLogin && (
+        <Popup popupkey="channel" closePopup={() => setAskLogin(false)}>
+          <AskLogin />
+        </Popup>
+      )}
     </>
   );
 }

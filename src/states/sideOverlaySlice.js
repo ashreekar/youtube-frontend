@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// side overlay slice is to create a sidemenu to get options
 const sideOverlaySlice = createSlice({
   name: "sideOverlay",
+  // maintains state of user and create states flag
   initialState: {
     user: false,
     create: false,

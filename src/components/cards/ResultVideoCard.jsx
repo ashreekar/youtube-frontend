@@ -2,10 +2,25 @@ import { HiDotsVertical } from "react-icons/hi";
 import { dateFormatter } from "../../utils/dateFormatter"
 import { viewsFormatter } from "../../utils/viewsFormatter"
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useState } from "react";
 
 function ResultVideoCard({ video }) {
     const createdAt = dateFormatter(video.createdAt);
     const views = viewsFormatter(video.views);
+
+    const [play, setPlay] = useState(false);
+
+    const handlePlayVideo = (flag) => {
+        flag ? setPlay(true) : setPlay(false);
+    }
+
+    const convertToEmbed = (url) => {
+        if (url.includes("watch?v=")) {
+            const id = url.split("watch?v=")[1];
+            return `https://www.youtube.com/embed/${id}`;
+        }
+        return url;
+    };
     return (
         <div
             className="
@@ -18,6 +33,8 @@ function ResultVideoCard({ video }) {
                 duration-300
                 w-full
             "
+            onMouseOver={() => handlePlayVideo(true)}
+            onMouseLeave={() => handlePlayVideo(false)}s
         >
 
             <div className="
@@ -28,11 +45,15 @@ function ResultVideoCard({ video }) {
                 overflow-hidden 
                 bg-gray-200
             ">
-                <LazyLoadImage
-                    src={video.thumbnail}
-                    className="w-full h-full object-cover"
-                    alt={video.title}
-                />
+                {play ? (
+                    <iframe
+                        src={`${convertToEmbed(video.url)}?autoplay=1&mute=1`}
+                        allow="autoplay; encrypted-media"
+                        className="w-full h-full rounded-lg transition duration-300"
+                    />
+                ) : (
+                    <LazyLoadImage src={video.thumbnail} className="w-full h-full transition duration-300" />
+                )}
             </div>
 
             <div className="flex flex-col gap-3 w-full sm:w-[45%]">
@@ -69,7 +90,7 @@ function ResultVideoCard({ video }) {
                 </div>
 
                 <p className="hidden sm:block text-gray-700 text-sm">
-                    {video.description.slice(0,150)}....
+                    {video.description.slice(0, 150)}....
                 </p>
             </div>
         </div>

@@ -58,13 +58,13 @@ function CreatePost() {
 
     if (loading) {
         return <div
-            className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+            className="flex justify-center items-center bg-gray-100 px-4">
             <SpinLoader></SpinLoader>
         </div>
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center w-full h-full bg-gray-100 p-6">
+        <div className="flex items-center justify-center w-full h-full bg-gray-100 p-6">
             <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg p-6">
                 <h2 className="text-3xl font-bold text-center mb-6">Create Post</h2>
 

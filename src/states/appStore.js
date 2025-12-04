@@ -13,6 +13,8 @@ const loadState = () => {
     const loadedState = JSON.parse(storedState);
     return {
         ...loadedState,
+        // emptying videos item as we have a check to refresh videos after 
+        // every refresh so filtered category videos don't persist
         video: {
             videosItem: []
         }
@@ -41,6 +43,7 @@ const appStore = configureStore(
     }
 )
 
+// subscribe hook runs after changes in store in terms of data
 appStore.subscribe(() => {
     saveState(appStore.getState());
 })

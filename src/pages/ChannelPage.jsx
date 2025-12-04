@@ -10,6 +10,7 @@ import ErrorFallback from "../components/ErrorBoundary/ErrorFallback";
 import HomePageLoader from "../components/Loaders/HomePage/HomePageLoader";
 import ChannelInfo from "../components/Popups/ChannelInfo"
 import SpinLoader from "../components/Loaders/SpinLoader";
+import NotFound from "../components/NotFound/NotFound";
 
 const ManageVideos = lazy(() => import("../components/Channel/Videos/ManageVideos"))
 const UpdateBanner = lazy(() => import("../components/Channel/Banner/UpdateBanner"))
@@ -59,8 +60,7 @@ function ChannelPage() {
         }
 
       } catch (err) {
-        navigate('/')
-        return <ErrorFallback />
+        return <NotFound target={'channel'} />
       } finally {
         setLoading(false);
       }
@@ -134,7 +134,7 @@ function ChannelPage() {
   }
 
   if (loading) return <HomePageLoader />;
-  if (!data) return null;
+  if (!data) return <HomePageLoader />;
 
   return (
     <>

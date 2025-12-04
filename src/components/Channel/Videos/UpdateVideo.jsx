@@ -75,7 +75,7 @@ function UpdateVideo({ closePopup, videos = [], setvideoChanged }) {
     }
 
     if (loading) {
-        return <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4"><SpinLoader></SpinLoader></div>
+        return <div className="flex justify-center items-center h-full bg-gray-100 px-4"><SpinLoader></SpinLoader></div>
     }
 
     const inputStyles = `w-full border border-gray-300 rounded-xl py-2 px-3 focus:ring-red-600 focus:border-red-600 outline-none`;

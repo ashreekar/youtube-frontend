@@ -15,6 +15,14 @@ function VideoCard({ video, isSidebarOpen }) {
         flag ? setPlay(true) : setPlay(false);
     }
 
+    const convertToEmbed = (url) => {
+        if (url.includes("watch?v=")) {
+            const id = url.split("watch?v=")[1];
+            return `https://www.youtube.com/embed/${id}`;
+        }
+        return url;
+    };
+
     return (
         <div
             onMouseOver={() => handlePlayVideo(true)}
@@ -23,21 +31,16 @@ function VideoCard({ video, isSidebarOpen }) {
             className={`cursor-pointer transition-transform duration-300 ${isSidebarOpen ? "scale-100" : "scale-x-102"}`}
         >
             <Link to={`/watch/${video._id}`}>
-                <div title='watch' className="w-full aspect-video rounded-xl overflow-hidden">
-                    {
-                        play ? <div className="w-full">
-                            <div className="w-full" style={{ paddingTop: "56.25%" }}>
-                                <iframe
-                                    src={video.url + "?autoplay=1&rel=0"}
-                                    title="YouTube video player"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    allowFullScreen
-                                    className="w-full h-full rounded-lg"
-                                />
-                            </div>
-                        </div> :
-                            <LazyLoadImage src={video?.thumbnail} className="w-full h-full object-cover" />
-                    }
+                <div className="w-full aspect-video rounded-xl overflow-hidden">
+                    {play ? (
+                        <iframe
+                            src={`${convertToEmbed(video.url)}?autoplay=1&mute=1`}
+                            allow="autoplay; encrypted-media"
+                            className="w-full h-full rounded-lg transition duration-300"
+                        />
+                    ) : (
+                        <LazyLoadImage src={video.thumbnail} className="w-full h-full transition duration-300" />
+                    )}
                 </div>
             </Link>
             <div className="flex gap-3 mt-3">
