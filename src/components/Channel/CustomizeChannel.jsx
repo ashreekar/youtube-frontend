@@ -93,7 +93,7 @@ function CustomizeChannel() {
                 navigate('/feed/you')
             }
         } catch (error) {
-            setError(error.message)
+            setError(error.response.data.message)
         } finally {
             setLoading(false);
         }

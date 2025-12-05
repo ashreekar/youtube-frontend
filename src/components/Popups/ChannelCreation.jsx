@@ -13,6 +13,7 @@ const ChannelCreation = ({ closePopup }) => {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null)
 
   const {
     register,
@@ -51,7 +52,7 @@ const ChannelCreation = ({ closePopup }) => {
         dispatch(loginUser(result.data.data.user));
       }
     } catch (error) {
-      return <ErrorFallback />
+      setError(error.response.data.message)
     } finally {
       setLoading(false);
     }
@@ -71,6 +72,10 @@ const ChannelCreation = ({ closePopup }) => {
         <h2 className="text-2xl md:text-3xl text-center font-bold mb-6">
           How you'll appear
         </h2>
+
+        {
+          error && <p className="text-red-600 font-medium text-lg text-center">{error}</p>
+        }
         {/* handle submit runs on submisiion and calls cb by passing data */}
         {/* This is given by react hook form */}
         <form
