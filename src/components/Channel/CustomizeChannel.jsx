@@ -105,7 +105,7 @@ function CustomizeChannel() {
     }
 
     return (
-        <div className="flex items-center justify-center w-full py-4 px-4 rounded-2xl">
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full py-4 px-4 rounded-2xl">
             <div className="flex flex-col items-center text-center w-full lg:w-1/2 px-5">
                 <h2 className="text-4xl md:text-5xl font-semibold mb-4">Update your channel</h2>
                 <img

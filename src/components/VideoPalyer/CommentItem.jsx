@@ -120,13 +120,17 @@ function CommentItem({
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
-        setLiked(type);
-        setDisliked(!type);
-
         // incremanting likes and dislikes or decremnting
         // except on : 0 condition on dislike on need to decrement like
-        if (type) setLikes((prev) => prev + 1);
-        else setLikes((prev) => (prev === 0 ? 0 : prev - 1));
+        if (type){
+           setLikes((prev) => prev + 1);
+        }
+        else if (liked) {
+          setLikes(prev => prev - 1)
+        }
+
+        setLiked(type);
+        setDisliked(!type);
       }
     } catch (error) {
       console.log(error);
@@ -160,7 +164,7 @@ function CommentItem({
         return setAskLogin(true);
       }
 
-      await axios.post(
+      const reply = await axios.post(
         `http://localhost:3317/api/v1/comment/comment/${comment.id}`,
         { content: replyText },
         { headers: { Authorization: `Bearer ${token}` } }
@@ -170,7 +174,7 @@ function CommentItem({
       setReplies((prev) => [
         ...prev,
         {
-          id: Date.now(),
+          id: reply?.data?.data?._id,
           author: user.username,
           avatar: user.avatar,
           text: replyText,

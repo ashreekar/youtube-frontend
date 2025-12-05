@@ -11,7 +11,7 @@ function Player({ source }) {
     };
   return (
     <div className="w-full">
-      <div className="relative w-full sm:pt-[45%] pt-[56%]">
+      <div className="relative w-full lg:pt-[45%] pt-[56%]">
         <iframe
           src={convertToEmbed(source) + "?autoplay=1&rel=0"}
           title="YouTube video player"

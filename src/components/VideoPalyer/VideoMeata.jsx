@@ -64,7 +64,7 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
     if (video?.owner?._id) {
       getSubscription();
     }
-  }, [changeSubs, videoId, video?.owner?._id]);
+  }, [changeSubs, videoId, video._id, video?.owner?._id]);
 
   // change subscription togeeles subscribe unscuncribe status
   const changeSubscription = async () => {
@@ -129,6 +129,7 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
           setIsLiked(false);
           setIsDisliked(true);
         }
+        setreactionState(prev => !prev)
       } catch (error) {
         setIsLiked(false);
         setIsDisliked(false);
@@ -163,11 +164,11 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
-        setIsDisliked(false);
-        setIsLiked(false);
         if (isLiked) {
           setLikes(prev => prev - 1);
         }
+        setIsDisliked(false);
+        setIsLiked(false);
       } else {
         const input = type ? "like" : "dislike";
 
@@ -176,17 +177,15 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
           { type: input },
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        setIsDisliked(!type);
-        setIsLiked(type);
         // incremanting likes and dislikes or decremnting
         // except on : 0 condition on dislike on need to decrement like
         if (type) {
           setLikes(prev => prev + 1);
-        } else {
-          setLikes(prev => {
-            return prev === 0 ? 0 : prev - 1;
-          });
+        } else if (isLiked) {
+          setLikes(prev => prev - 1)
         }
+        setIsDisliked(!type);
+        setIsLiked(type);
       }
     } catch (error) {
       navigate('/login')

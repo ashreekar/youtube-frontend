@@ -9,9 +9,8 @@ const PlayerPageCard = lazy(() => import("./PlayerPageCard"));
 // and playerfeed (all about recomended videos)
 function PlayerSection({ videoId }) {
   return (
-    <main className="flex-1 min-h-screen px-3 sm:px-6 py-6">
-      <div className="mx-auto max-w-[1400px] w-full">
-        <div className="flex flex-col lg:flex-row gap-8">
+      <div className="mx-auto w-full px-6">
+        <div className="flex flex-col lg:flex-row w-full gap-8">
           <div className="w-full lg:w-2/3">
            <Suspense fallback={<PlayerLoader />}>
             <PlayerPageCard videoId={videoId} />
@@ -24,7 +23,6 @@ function PlayerSection({ videoId }) {
           </aside>
         </div>
       </div>
-    </main>
   );
 }
 

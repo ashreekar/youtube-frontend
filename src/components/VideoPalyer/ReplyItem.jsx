@@ -75,13 +75,15 @@ function ReplyItem({ reply, activeMenu, setActiveMenu, deleteComment, renderEdit
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
-        setLiked(type);
-        setDisliked(!type);
-
         // incremanting likes and dislikes or decremnting
         // except on : 0 condition on dislike on need to decrement like
-        if (type) setLikes((prev) => prev + 1);
-        else setLikes((prev) => (prev === 0 ? 0 : prev - 1));
+        if (type) {
+          setLikes((prev) => prev + 1);
+        } else if (liked) {
+          setLikes(prev => prev - 1)
+        }
+        setLiked(type);
+        setDisliked(!type);
       }
     } catch (error) {
       console.log(error);

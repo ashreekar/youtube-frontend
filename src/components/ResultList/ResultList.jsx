@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import ResultVideoCard from '../cards/ResultVideoCard';
 import { clearSearchResults } from '../../states/searchSlic';
+import { Link } from 'react-router-dom';
 
 function ResultList() {
     const dispatch = useDispatch();
@@ -39,11 +40,12 @@ function ResultList() {
                 mt-12
             ">
                 {videosData.map(video => (
-                    <ResultVideoCard
-                        key={video._id}
-                        video={video}
-                        isSidebarOpen={isSidebarOpen}
-                    />
+                    <Link to={`/watch/${video._id}`}>
+                        <ResultVideoCard
+                            key={video._id}
+                            video={video}
+                        />
+                    </Link>
                 ))}
             </div>
         </div>
