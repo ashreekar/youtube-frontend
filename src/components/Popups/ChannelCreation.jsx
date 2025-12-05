@@ -48,7 +48,7 @@ const ChannelCreation = ({ closePopup }) => {
         }
       )
       if (result) {
-        dispatch(loginUser(result.data.user));
+        dispatch(loginUser(result.data.data.user));
       }
     } catch (error) {
       return <ErrorFallback />

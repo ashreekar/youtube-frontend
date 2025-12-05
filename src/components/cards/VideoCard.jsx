@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 function VideoCard({ video, isSidebarOpen }) {
-      // Date and vies formatter converts our date and vies into normal youtube format
+    // Date and vies formatter converts our date and vies into normal youtube format
     const createdAt = dateFormatter(video.createdAt);
     const views = viewsFormatter(video.views);
 
@@ -28,7 +28,7 @@ function VideoCard({ video, isSidebarOpen }) {
 
     return (
         <div
-        // sets flag to play or not play video
+            // sets flag to play or not play video
             onMouseOver={() => handlePlayVideo(true)}
             onMouseLeave={() => handlePlayVideo(false)}
             key={video?._id}
@@ -36,7 +36,7 @@ function VideoCard({ video, isSidebarOpen }) {
         >
             <Link to={`/watch/${video._id}`}>
                 <div className="w-full aspect-video rounded-xl overflow-hidden">
-                      {/* Conditionally rendering iframe on hover else laoding thumbnail */}
+                    {/* Conditionally rendering iframe on hover else laoding thumbnail */}
                     {play ? (
                         <iframe
                             src={`${convertToEmbed(video.url)}?autoplay=1&mute=1`}

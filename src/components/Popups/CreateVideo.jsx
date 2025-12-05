@@ -78,7 +78,7 @@ function CreateVideo() {
 
       <form
         onSubmit={handleSubmit(addVideoFunction)}
-        className="w-full lg:w-1/2 max-w-xl bg-gray-50 p-4 rounded-2xl shadow-md space-y-4 overflow-y-auto"
+        className="w-full lg:w-1/2 max-w-xl bg-gray-50 p-4 rounded-2xl shadow-md space-y-2 overflow-y-auto"
       >
         <div className="flex flex-col items-center gap-4">
           <img

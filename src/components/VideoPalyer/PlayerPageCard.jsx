@@ -54,11 +54,11 @@ function PlayerPageCard({ videoId }) {
 
   return (
     <>
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-4">
         {/* rendering player, video details, comment section resoectivly */}
         <Player source={video.url} />
 
-        <div className="space-y-6">
+        <div className="space-y-2">
           <VideoMeata
             video={video}
             videoId={videoId}

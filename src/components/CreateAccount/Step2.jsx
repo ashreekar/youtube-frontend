@@ -24,7 +24,13 @@ function Step2({ step, register, errors, watch, setStep, trigger }) {
         type="email"
         placeholder="Email"
         className="w-full border border-gray-300 rounded-xl py-2 px-3"
-        {...register("email", { required: true })}
+        {...register("email", { 
+          required: "email is required",
+          pattern:{
+            value:/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+            message:"Email format is wrong"
+          } 
+        })}
       />
       {errors.email && <p className="text-red-500 text-sm">Email is required</p>}
 
@@ -34,7 +40,7 @@ function Step2({ step, register, errors, watch, setStep, trigger }) {
           type={showPassword ? "text" : "password"}
           className="w-full border border-gray-300 rounded-xl py-2 px-3 pr-10"
           {...register("password", {
-            required: true,
+            required: "Confirm your password",
             pattern: {
               // Regex that validates the password
               value: /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$/,

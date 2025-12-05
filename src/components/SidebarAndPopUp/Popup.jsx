@@ -15,7 +15,7 @@ function Popup({ children, popupkey = "channel", closePopup }) {
     };
 
     const innerStyles = {
-        video: "bg-white rounded-lg shadow-lg p-3 w-[90vw] h-[85vh] sm:w-[70vw] sm:h-[97vh]",
+        video: "bg-white rounded-lg shadow-lg p-3 w-[90vw] h-[85vh] sm:w-[70vw] sm:h-screen",
         channel: "bg-white rounded-xl shadow-lg p-4 w-[95vw] sm:w-[500px] max-h-[85vh] overflow-y-auto",
         share: "bg-white rounded-t-xl sm:rounded-xl shadow-lg p-4 w-full sm:w-[400px] h-auto sm:h-auto",
         download: "bg-white rounded-xl shadow-lg p-4 w-[80vw] sm:w-[350px] h-auto",

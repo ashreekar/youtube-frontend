@@ -103,7 +103,7 @@ function TopFilter() {
         >
           all
         </button>
-        {(data?.data || []).map(topic => (
+        {(data?.data || []).map((topic,idx) =>idx<15 && (
           <button
             key={topic._id}
             onClick={() => {

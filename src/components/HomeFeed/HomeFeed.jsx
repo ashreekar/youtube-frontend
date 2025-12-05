@@ -19,22 +19,26 @@ function HomeFeed() {
 
     // adding to render videos items so that filtered also renders
     useEffect(() => {
-        if (data && videos.length === 0) {
+        // if videos are 0 then only adding results
+        if (data?.data && videos.length === 0) {
             dispatch(setVideosItem(data.data));
         }
     }, [data, videos.length, dispatch]);
-
 
     if (error) {
         return <ErrorFallback key={"failed to load resouces"} />
     }
 
-    if (!data || !videos || videos.length === 0) {
-        return <div className='w-full h-full flex items-center justify-center text-xl font-medium'>No videos found</div>;
-    }
-
     if (loading) {
         return <HomePageLoader />;
+    }
+
+    if (!data?.data || data.data.length === 0) {
+        return (
+            <div className={`w-full h-full flex justify-center text-xl font-medium ${isSidebarOpen ? "ml-4 md:ml-64" : "ml-4 sm:ml-20"}`}>
+                No videos found
+            </div>
+        );
     }
 
     // rendering all videos
