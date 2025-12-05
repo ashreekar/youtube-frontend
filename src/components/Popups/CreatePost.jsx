@@ -4,8 +4,9 @@ import { FaFileImport } from "react-icons/fa";
 import InputField from "../ButtonsAndInput/InputField";
 import axios from "axios";
 import ErrorFallback from "../ErrorBoundary/ErrorFallback";
+import SpinLoader from "../Loaders/SpinLoader";
 
-function CreatePost() {
+function CreatePost({ closePopup }) {
     // preview images is an array because it is multiple images
     const [previewImages, setPreviewImages] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -50,7 +51,9 @@ function CreatePost() {
                 }
             });
 
-            const result = await response.json();
+            if (response) {
+                closePopup();
+            }
 
             reset();
             setPreviewImages([]);
@@ -63,8 +66,8 @@ function CreatePost() {
 
     if (loading) {
         return <div
-            className="flex justify-center items-center bg-gray-100 px-4">
-            <SpinLoader></SpinLoader>
+            className="flex justify-center w-full h-full items-center bg-gray-100 px-4">
+            <SpinLoader />
         </div>
     }
 
@@ -72,7 +75,7 @@ function CreatePost() {
         <div className="flex items-center justify-center w-full h-full bg-gray-100 p-6">
             <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg p-6">
                 <h2 className="text-3xl font-bold text-center mb-6">Create Post</h2>
-            {/* Submits the form */}
+                {/* Submits the form */}
                 <form onSubmit={handleSubmit(addPostFunction)} className="space-y-6">
 
                     <div>

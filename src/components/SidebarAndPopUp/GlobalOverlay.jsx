@@ -39,7 +39,7 @@ function GlobalOverlay() {
 
             {
                 postpopup && <Popup popupkey={user?.channel?.length === 0 ? "channel" : "video"} closePopup={() => dispatch(togglePostOverlay())}>
-                    {user?.channel.length === 0 ? <ChannelCreation closePopup={() => dispatch(toggleVideoOverlay())} /> : <CreatePost />}
+                    {user?.channel.length === 0 ? <ChannelCreation closePopup={() => dispatch(toggleVideoOverlay())} /> : <CreatePost closePopup={() => dispatch(toggleVideoOverlay())} />}
                 </Popup>
             }
 
