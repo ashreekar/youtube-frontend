@@ -42,7 +42,7 @@ function UpdateVideo({ closePopup, videos = [], setvideoChanged }) {
                 formdata.append("thumbnail", data.thumbnail[0]);
                 const token = localStorage.getItem("acceasToken")
 
-                const resurl = await axios.put(`http://localhost:3317/api/v1/video/thumbnail/${selectedVideo._id}`, formdata, {
+                const resurl = await axios.put(`https://youtube-backend-pvvc.onrender.com/api/v1/video/thumbnail/${selectedVideo._id}`, formdata, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "multipart/form-data"
@@ -56,7 +56,7 @@ function UpdateVideo({ closePopup, videos = [], setvideoChanged }) {
             const token = localStorage.getItem("acceasToken")
 
             //  uudating selected fields
-            const res = await axios.put(`http://localhost:3317/api/v1/video/${selectedVideo._id}`,
+            const res = await axios.put(`https://youtube-backend-pvvc.onrender.com/api/v1/video/${selectedVideo._id}`,
                 {
                     "title": data.title,
                     "description": data.description

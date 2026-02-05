@@ -34,7 +34,7 @@ function UpdateAvatar({ avatar, closePopup, setchangeChannelData }) {
                 formdata.append("avatar", data.avatar[0]);
                 const token = localStorage.getItem("acceasToken")
 
-                const resurl = await axios.put(`http://localhost:3317/api/v1/channel/avatar/`, formdata, {
+                const resurl = await axios.put(`https://youtube-backend-pvvc.onrender.com/api/v1/channel/avatar/`, formdata, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "multipart/form-data"

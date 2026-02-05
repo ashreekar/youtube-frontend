@@ -36,7 +36,7 @@ function ResultsPage() {
     async function fetchResults() {
       try {
         const res = await axios.get(
-          `http://localhost:3317/api/v1/search?search_query=${query}`
+          `https://youtube-backend-pvvc.onrender.com/api/v1/search?search_query=${query}`
         );
         // setting search results in store to accesisable by childrens
         dispatch(setSearchResults(res?.data?.data || []))

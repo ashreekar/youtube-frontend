@@ -45,7 +45,7 @@ function CreatePost({ closePopup }) {
                 }
             }
             const token = localStorage.getItem("acceasToken");
-            const response = await axios.post("http://localhost:3317/api/v1/post", formData, {
+            const response = await axios.post("https://youtube-backend-pvvc.onrender.com/api/v1/post", formData, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

@@ -27,7 +27,7 @@ function UserInfo() {
     // can do signout in this compoent 
     const handleSignOut = async () => {
         const token = localStorage.getItem("acceasToken")
-        axios.post("http://localhost:3317/api/v1/user/logout", null,
+        axios.post("https://youtube-backend-pvvc.onrender.com/api/v1/user/logout", null,
             {
                 headers: {
                     "Authorization": `Bearer ${token}`

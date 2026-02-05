@@ -14,7 +14,7 @@ function TopFilter() {
   const [selected, setSelected] = useState("all");
   const [loading, setLoading] = useState(false);
 
-  const { data, loading: loadCategory, error } = useFetch("http://localhost:3317/api/v1/video/category", "get");
+  const { data, loading: loadCategory, error } = useFetch("https://youtube-backend-pvvc.onrender.com/api/v1/video/category", "get");
 
   const scrollRef = useRef(null);
 
@@ -27,7 +27,7 @@ function TopFilter() {
   async function fetchAllVideos() {
     try {
       setLoading(true);
-      const video = await axios.get("http://localhost:3317/api/v1/video");
+      const video = await axios.get("https://youtube-backend-pvvc.onrender.com/api/v1/video");
       if (video) {
         dispatch(setVideosItem(video.data?.data));
       }
@@ -42,7 +42,7 @@ function TopFilter() {
   async function fetchVideos(id) {
     try {
       setLoading(true);
-      const video = await axios.get(`http://localhost:3317/api/v1/video/category/${id}`);
+      const video = await axios.get(`https://youtube-backend-pvvc.onrender.com/api/v1/video/category/${id}`);
       if (video) {
         dispatch(setVideosItem(video.data?.data[0]?.videos || []));
       }

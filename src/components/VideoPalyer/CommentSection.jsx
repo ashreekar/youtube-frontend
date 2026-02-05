@@ -10,7 +10,7 @@ import CommentLoader from "../Loaders/CommentLoader";
 // renders separate comment section for a video
 // have comment sectionmeta like number of comment and comments
 function CommentSection({ id, setAskLogin }) {
-  const { data, loading, error } = useFetch(`http://localhost:3317/api/v1/comment/video/${id}`, "get")
+  const { data, loading, error } = useFetch(`https://youtube-backend-pvvc.onrender.com/api/v1/comment/video/${id}`, "get")
   const user = useSelector(state => state.user.user);
 
   const [commentData, setCommentData] = useState(null);
@@ -38,7 +38,7 @@ function CommentSection({ id, setAskLogin }) {
   useEffect(() => {
     const getUpdatedComment = async () => {
       const updated = await axios.get(
-        `http://localhost:3317/api/v1/comment/video/${id}`
+        `https://youtube-backend-pvvc.onrender.com/api/v1/comment/video/${id}`
       );
 
       setCommentData(updated.data);
@@ -74,7 +74,7 @@ function CommentSection({ id, setAskLogin }) {
         return setIsSubscribed(false);
       }
 
-      await axios.post(`http://localhost:3317/api/v1/comment/video/${id}`, {
+      await axios.post(`https://youtube-backend-pvvc.onrender.com/api/v1/comment/video/${id}`, {
         content: data.comment
       }, {
         headers: {
@@ -117,7 +117,7 @@ function CommentSection({ id, setAskLogin }) {
         return setIsSubscribed(false);
       }
 
-      await axios.put(`http://localhost:3317/api/v1/comment/${commentToEdited.id}`, {
+      await axios.put(`https://youtube-backend-pvvc.onrender.com/api/v1/comment/${commentToEdited.id}`, {
         content: data.comment
       }, {
         headers: {
@@ -149,7 +149,7 @@ function CommentSection({ id, setAskLogin }) {
         return setIsSubscribed(false);
       }
 
-      const deleted = await axios.delete(`http://localhost:3317/api/v1/comment/${comment.id}`,
+      const deleted = await axios.delete(`https://youtube-backend-pvvc.onrender.com/api/v1/comment/${comment.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`

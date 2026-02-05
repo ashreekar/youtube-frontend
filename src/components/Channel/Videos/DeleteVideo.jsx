@@ -12,7 +12,7 @@ function DeleteVideo({ closePopup, videos = [], setvideoDeleted }) {
             setLoading(true)
             const token = localStorage.getItem("acceasToken")
 
-            const res = await axios.delete(`http://localhost:3317/api/v1/video/${selectedVideo._id}`,
+            const res = await axios.delete(`https://youtube-backend-pvvc.onrender.com/api/v1/video/${selectedVideo._id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`

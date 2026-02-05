@@ -26,7 +26,7 @@ function ReplyItem({ reply, activeMenu, setActiveMenu, deleteComment, renderEdit
         }
 
         const reaction = await axios.get(
-          `http://localhost:3317/api/v1/reaction/comment/${reply.id}`,
+          `https://youtube-backend-pvvc.onrender.com/api/v1/reaction/comment/${reply.id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -59,7 +59,7 @@ function ReplyItem({ reply, activeMenu, setActiveMenu, deleteComment, renderEdit
 
       if ((liked && type) || (disliked && !type)) {
         await axios.delete(
-          `http://localhost:3317/api/v1/reaction/comment/${reply.id}`,
+          `https://youtube-backend-pvvc.onrender.com/api/v1/reaction/comment/${reply.id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -70,7 +70,7 @@ function ReplyItem({ reply, activeMenu, setActiveMenu, deleteComment, renderEdit
         const newType = type ? "like" : "dislike";
 
         await axios.post(
-          `http://localhost:3317/api/v1/reaction/comment/${reply.id}`,
+          `https://youtube-backend-pvvc.onrender.com/api/v1/reaction/comment/${reply.id}`,
           { type: newType },
           { headers: { Authorization: `Bearer ${token}` } }
         );

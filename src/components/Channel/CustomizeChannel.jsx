@@ -46,7 +46,7 @@ function CustomizeChannel() {
                     console.log("Not logged in")
                     return navigate('/');
                 }
-                const res = await axios.get("http://localhost:3317/api/v1/channel", {
+                const res = await axios.get("https://youtube-backend-pvvc.onrender.com/api/v1/channel", {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -84,7 +84,7 @@ function CustomizeChannel() {
                 return navigate('/');
             }
 
-            const result = await axios.put("http://localhost:3317/api/v1/channel", payload,
+            const result = await axios.put("https://youtube-backend-pvvc.onrender.com/api/v1/channel", payload,
                 {
                     headers: { "Authorization": `Bearer ${token}` }
                 }

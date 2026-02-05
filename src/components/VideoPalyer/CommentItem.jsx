@@ -40,7 +40,7 @@ function CommentItem({
     async function init() {
       try {
         const repliesRes = await axios.get(
-          `http://localhost:3317/api/v1/comment/comment/${comment.id}`
+          `https://youtube-backend-pvvc.onrender.com/api/v1/comment/comment/${comment.id}`
         );
 
         // fetches all replies from backend and adds to a reply item
@@ -68,7 +68,7 @@ function CommentItem({
         // getting reaction and status on comment
         // gives the staus of comment like/dislike
         const reaction = await axios.get(
-          `http://localhost:3317/api/v1/reaction/comment/${comment.id}`,
+          `https://youtube-backend-pvvc.onrender.com/api/v1/reaction/comment/${comment.id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -102,7 +102,7 @@ function CommentItem({
       if ((liked && type) || (disliked && !type)) {
         // Remove reaction
         await axios.delete(
-          `http://localhost:3317/api/v1/reaction/comment/${comment.id}`,
+          `https://youtube-backend-pvvc.onrender.com/api/v1/reaction/comment/${comment.id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -115,7 +115,7 @@ function CommentItem({
         const newType = type ? "like" : "dislike";
 
         await axios.post(
-          `http://localhost:3317/api/v1/reaction/comment/${comment.id}`,
+          `https://youtube-backend-pvvc.onrender.com/api/v1/reaction/comment/${comment.id}`,
           { type: newType },
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -165,7 +165,7 @@ function CommentItem({
       }
 
       const reply = await axios.post(
-        `http://localhost:3317/api/v1/comment/comment/${comment.id}`,
+        `https://youtube-backend-pvvc.onrender.com/api/v1/comment/comment/${comment.id}`,
         { content: replyText },
         { headers: { Authorization: `Bearer ${token}` } }
       );

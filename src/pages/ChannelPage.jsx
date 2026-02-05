@@ -52,7 +52,7 @@ function ChannelPage() {
           // channel id exists then rendering channel by id
           setSelf(true);
           const token = localStorage.getItem("acceasToken")
-          const res = await axios.get("http://localhost:3317/api/v1/channel", {
+          const res = await axios.get("https://youtube-backend-pvvc.onrender.com/api/v1/channel", {
             headers: {
               Authorization: `Bearer ${token}`
             }
@@ -60,7 +60,7 @@ function ChannelPage() {
           setData(res.data.data);
         }
         else {
-          const res = await axios.get(`http://localhost:3317/api/v1/channel/${channelId}`);
+          const res = await axios.get(`https://youtube-backend-pvvc.onrender.com/api/v1/channel/${channelId}`);
           setData(res.data.data);
         }
 
@@ -86,7 +86,7 @@ function ChannelPage() {
           console.log("Not logged in")
           return setIsSubscribed(false);
         }
-        const subscription = await axios.get(`http://localhost:3317/api/v1/channel/subscription/${channelId}`, {
+        const subscription = await axios.get(`https://youtube-backend-pvvc.onrender.com/api/v1/channel/subscription/${channelId}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -120,7 +120,7 @@ function ChannelPage() {
         }
 
         await axios.delete(
-          `http://localhost:3317/api/v1/channel/${channelId}`,
+          `https://youtube-backend-pvvc.onrender.com/api/v1/channel/${channelId}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
       } else {
@@ -133,7 +133,7 @@ function ChannelPage() {
         }
 
         await axios.post(
-          `http://localhost:3317/api/v1/channel/${channelId}`,
+          `https://youtube-backend-pvvc.onrender.com/api/v1/channel/${channelId}`,
           {},
           { headers: { Authorization: `Bearer ${token}` } }
         );

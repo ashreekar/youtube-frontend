@@ -43,7 +43,7 @@ const ChannelCreation = ({ closePopup }) => {
       formData.append("handle", data.handle);
       const token = localStorage.getItem("acceasToken")
 
-      const result = await axios.post("http://localhost:3317/api/v1/channel", formData,
+      const result = await axios.post("https://youtube-backend-pvvc.onrender.com/api/v1/channel", formData,
         {
           headers: { "Content-Type": "multipart/form-data", "Authorization": `Bearer ${token}` }
         }

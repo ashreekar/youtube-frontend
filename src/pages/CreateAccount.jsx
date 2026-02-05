@@ -56,7 +56,7 @@ function CreateAccount() {
       formData.append("email", data.email);
       formData.append("password", data.password);
 
-      const user = await axios.post("http://localhost:3317/api/v1/user/create", formData, {
+      const user = await axios.post("https://youtube-backend-pvvc.onrender.com/api/v1/user/create", formData, {
         headers: { "Content-Type": "multipart/form-data" }
       });
 

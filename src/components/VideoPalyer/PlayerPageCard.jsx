@@ -12,7 +12,7 @@ import NotFound from "../NotFound/NotFound";
 
 function PlayerPageCard({ videoId }) {
   const { data, error, loading } = useFetch(
-    `http://localhost:3317/api/v1/video/${videoId}`,
+    `https://youtube-backend-pvvc.onrender.com/api/v1/video/${videoId}`,
     "get"
   );
   // fetching a particular video details
@@ -35,7 +35,7 @@ function PlayerPageCard({ videoId }) {
     async function refreshVideo() {
       try {
         const res = await axios.get(
-          `http://localhost:3317/api/v1/video/${videoId}`
+          `https://youtube-backend-pvvc.onrender.com/api/v1/video/${videoId}`
         );
         setVideo(res.data.data[0]);
       } catch (err) {

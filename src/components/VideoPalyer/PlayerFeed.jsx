@@ -10,7 +10,7 @@ import ErrorFallback from "../ErrorBoundary/ErrorFallback";
 function PlayerFeed({ videoId }) {
   // rendering all videos except video with videoId
   const { data, error, loading } = useFetch(
-    "http://localhost:3317/api/v1/video", "get"
+    "https://youtube-backend-pvvc.onrender.com/api/v1/video", "get"
   );
 
   // structuring videos based on this format of data exists

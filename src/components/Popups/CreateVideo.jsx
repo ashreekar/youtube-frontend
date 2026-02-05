@@ -40,7 +40,7 @@ function CreateVideo() {
 
       const token = localStorage.getItem("acceasToken");
 
-      const response = await axios.post("http://localhost:3317/api/v1/video/", formdata, {
+      const response = await axios.post("https://youtube-backend-pvvc.onrender.com/api/v1/video/", formdata, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

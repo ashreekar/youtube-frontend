@@ -20,7 +20,7 @@ function SubscriptionSidebar() {
     async function getChannels() {
       try {
         const token = localStorage.getItem("acceasToken");
-        const res = await axios.get("http://localhost:3317/api/v1/user", {
+        const res = await axios.get("https://youtube-backend-pvvc.onrender.com/api/v1/user", {
           headers: { Authorization: `Bearer ${token}` }
         });
 

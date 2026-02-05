@@ -28,7 +28,7 @@ function UpdateBanner({ banner, closePopup, setchangeChannelData }) {
                 formdata.append("banner", data.banner[0]);
                 const token = localStorage.getItem("acceasToken")
 
-                const resurl = await axios.put(`http://localhost:3317/api/v1/channel/banner`, formdata, {
+                const resurl = await axios.put(`https://youtube-backend-pvvc.onrender.com/api/v1/channel/banner`, formdata, {
                     headers: {
                         // hanled by multer in backend
                         Authorization: `Bearer ${token}`,

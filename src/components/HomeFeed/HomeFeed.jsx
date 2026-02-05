@@ -9,7 +9,7 @@ import HomePageLoader from '../Loaders/HomePage/HomePageLoader.jsx';
 function HomeFeed() {
     const dispatch = useDispatch();
     // Loading videos for the first time
-    const { data, error, loading } = useFetch("http://localhost:3317/api/v1/video", "get");
+    const { data, error, loading } = useFetch("https://youtube-backend-pvvc.onrender.com/api/v1/video", "get");
 
     // cheking whethe sidebar opened or not
     // important to maintain layout

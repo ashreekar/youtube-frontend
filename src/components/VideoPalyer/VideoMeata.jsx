@@ -44,7 +44,7 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
         }
 
         const subscription = await axios.get(
-          `http://localhost:3317/api/v1/channel/subscription/${video.owner._id}`,
+          `https://youtube-backend-pvvc.onrender.com/api/v1/channel/subscription/${video.owner._id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -82,12 +82,12 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
       // else subscribig
       if (isSubscribed) {
         await axios.delete(
-          `http://localhost:3317/api/v1/channel/${video.owner._id}`,
+          `https://youtube-backend-pvvc.onrender.com/api/v1/channel/${video.owner._id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
       } else {
         await axios.post(
-          `http://localhost:3317/api/v1/channel/${video.owner._id}`,
+          `https://youtube-backend-pvvc.onrender.com/api/v1/channel/${video.owner._id}`,
           {},
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -111,7 +111,7 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
         }
 
         const reaction = await axios.get(
-          `http://localhost:3317/api/v1/reaction/video/${video._id}`,
+          `https://youtube-backend-pvvc.onrender.com/api/v1/reaction/video/${video._id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -160,7 +160,7 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
       // no reaction: addlike, dilike
       if ((isLiked && type) || (isDisliked && !type)) {
         await axios.delete(
-          `http://localhost:3317/api/v1/reaction/video/${video._id}`,
+          `https://youtube-backend-pvvc.onrender.com/api/v1/reaction/video/${video._id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -173,7 +173,7 @@ function VideoMeata({ video, changeSubs, setChangeSubs, setreactionState, videoI
         const input = type ? "like" : "dislike";
 
         await axios.post(
-          `http://localhost:3317/api/v1/reaction/video/${video._id}`,
+          `https://youtube-backend-pvvc.onrender.com/api/v1/reaction/video/${video._id}`,
           { type: input },
           { headers: { Authorization: `Bearer ${token}` } }
         );
